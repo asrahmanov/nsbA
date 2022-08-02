@@ -247,7 +247,8 @@ async function main(textMail, email, subject, id, replyTo, action, attachments =
         secure: true, // true for 465, false for other ports
         auth: {
             user: "crm@crm.i-bios.com", // generated ethereal user
-            pass: "t*poYagKI1I2" // generated ethereal password
+            // pass: "t*poYagKI1I2" // generated ethereal password
+            pass: "VAuu8VPzxAcebwBUVrnP" // generated ethereal password
         }
     });
 

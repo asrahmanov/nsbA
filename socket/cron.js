@@ -8,7 +8,7 @@ var connection = mysql.createConnection({
     connectionLimit: 100,
     connectTimeout: 86000000,
     host: 'localhost',
-    user: 'admin',
+    user: 'root',
     password: 'ghjuhfvvf',
     database: '_nbs',
     port: 3306
@@ -246,8 +246,8 @@ async function main(textMail, email, subject, id, replyTo, action, attachments =
         port: 465,
         secure: true, // true for 465, false for other ports
         auth: {
-            user: "crm@crm.i-bios.com", // generated ethereal user
-            pass: "frerfre2343y45y36453g" // generated ethereal password
+            user: "i-bioscrm@i-bios.com", // generated ethereal user
+            pass: "t*poYagKI1I2" // generated ethereal password
         }
     });
 

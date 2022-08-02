@@ -246,7 +246,7 @@ async function main(textMail, email, subject, id, replyTo, action, attachments =
         port: 465,
         secure: true, // true for 465, false for other ports
         auth: {
-            user: "crm@crm.i-bios.com", // generated ethereal user
+            user: "i-bioscrm@i-bios.com", // generated ethereal user
             // pass: "t*poYagKI1I2" // generated ethereal password
             pass: "t*poYagKI1I2" // generated ethereal password
         }
@@ -258,7 +258,7 @@ async function main(textMail, email, subject, id, replyTo, action, attachments =
 
     // send mail with defined transport object
     let info = await transporter.sendMail({
-        from: 'crm@crm.i-bios.com', // sender address
+        from: 'i-bioscrm@i-bios.com', // sender address
         to: email, // list of receivers
         replyTo: replyTo, // list of receivers
         subject: subject, // Subject line

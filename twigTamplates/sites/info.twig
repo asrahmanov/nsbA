@@ -1,0 +1,1279 @@
+<div class="main-content" id="app" xmlns="http://www.w3.org/1999/html">
+    <div class="content-wrapper">
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><h2>Информация по сайту NBS №: {{ sites.site_code | raw }}</h2></h4>
+                        </div>
+                        <div class="card-content ">
+                            <div class="card-body card-dashboard ">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+
+                                        <div class="form-group">
+                                            <label for="site_name">Сайт</label>
+                                            {% if role == '4' or role == '6' %}
+                                                <input type="text" id="site_name" class="form-control"
+                                                       value="{{ sites.site_name }}">
+                                            {% else %}
+
+                                                <div>{{ sites.site_name | raw }}</div>
+                                            {% endif %}
+
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="site_type">Тип</label>
+
+                                            {% if role == '4' or role == '6' %}
+                                                <select class="form-control" id="site_type">
+                                                    <option value="0">Выберите тип сайта</option>
+                                                    {% for item in siteType %}
+                                                        <option value="{{ item.site_type_id }}"
+                                                                {% if sites.site_type == item.site_type_id %}
+                                                                    selected
+                                                                {% endif %}
+                                                        >{{ item.site_type }} </option>
+                                                    {% endfor %}
+                                                </select>
+                                            {% else %}
+
+                                                <div>
+                                                    {% for item in siteType %}
+                                                        {% if sites.site_type == item.site_type_id %}
+                                                            {{ item.site_type }}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="Город">Город</label>
+
+                                            {% if role == '4' or role == '6' %}
+                                            <select class="form-control" id="city">
+                                                <option value="0">Выберите город</option>
+                                                {% for item in сities %}
+                                                <option value="{{ item.city_id }}"
+                                                        {% if sites.city == item.city_id %}
+                                                        selected
+                                                        {% endif %}
+                                                >{{ item.city_name }} </option>
+                                                {% endfor %}
+                                            </select>
+                                            {% else %}
+
+                                            <div>
+                                                {% for item in сities %}
+                                                {% if sites.city == item.city_id %}
+                                                {{ item.city_name }}
+                                                {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="contract">Регуляторика</label>
+
+                                            {% if role == '4' or role == '6' %}
+                                                <input type="text" id="contract" class="form-control"
+                                                       value="{{ sites.contract }}">
+                                            {% else %}
+
+                                                <div>{{ sites.contract | raw }}</div>
+                                            {% endif %}
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="term_validity">Срок дейсвия</label>
+
+                                            {% if role == '4' or role == '6' %}
+                                                <input type="text" id="term_validity" class="form-control"
+                                                       value="{{ sites.term_validity }}">
+                                            {% else %}
+
+                                                <div>{{ sites.term_validity | raw }}</div>
+                                            {% endif %}
+
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="approved">ЛЭК/НЭК одобрение</label>
+
+                                            {% if role == '4' or role == '6' %}
+                                                <input type="text" id="approved" class="form-control"
+                                                       value="{{ sites.approved }}">
+                                            {% else %}
+
+                                                <div>{{ sites.approved | raw }}</div>
+                                            {% endif %}
+
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="site_status">Статус сайта</label>
+
+                                            {% if role == '4' or role == '6' %}
+                                                <input type="text" id="site_status" class="form-control"
+                                                       value="{{ sites.site_status }}">
+                                            {% else %}
+
+                                                <div>{{ sites.site_status | raw }}</div>
+                                            {% endif %}
+
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="col-md-6 col-sm-12">
+
+
+                                        <div class="form-group">
+                                            <label for="irb_approval">Особенности</label>
+
+                                            {% if role == '4' or role == '6' %}
+                                                <textarea name="" id="irb_approval" id="" cols="30" rows="10">
+                                                {{ sites.irb_approval }}
+                                            </textarea>
+                                            {% else %}
+
+                                                <div>{{ sites.irb_approval | raw }}</div>
+                                            {% endif %}
+
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="level">Уровень</label>
+
+                                            {% if role == '4' or role == '6' or  department_id == '4' %}
+                                                <input type="text" id="level" class="form-control"
+                                                       value="{{ sites.level }}">
+                                            {% else %}
+
+                                                <div>{{ sites.level | raw }}</div>
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="processing">Кто процессирует</label>
+
+                                            {% if role == '4' or role == '6' or  department_id == '4' %}
+                                                <input type="text" id="processing" class="form-control"
+                                                       value="{{ sites.processing }}">
+                                            {% else %}
+
+                                                <div>{{ sites.processing | raw }}</div>
+                                            {% endif %}
+
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="misc"> Ответственный за процессинг</label>
+
+                                            {% if role == '4' or role == '6' or  department_id == '4' %}
+                                                <textarea name="" id="misc" id="" cols="30" rows="10">
+                                             {{ sites.misc }}
+                                             </textarea>
+                                            {% else %}
+
+                                                <div>{{ sites.misc | raw }}</div>
+                                            {% endif %}
+
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="level_id">Уровень лаборатории New</label>
+                                            {% if user_id == '32' %}
+                                                <select name="" id="level_id" class="form-control">
+                                                    <option value="0">Выберите уровень</option>
+                                                    {% for level in lab_levels %}
+                                                        <option value="{{ level.id }}" {% if site_lab_level.id == level.id %} selected {% endif %}>{{ level.level_name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            {% else %}
+                                                <div>{{ site_lab_level.level_name | raw }}</div>
+                                            {% endif %}
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+                                {# Дополнительный блок бывшие данные из битрикс редактирует менеджер #}
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="addr">Адрес</label>
+                                            {% if role == '3' or role == '4' or role == '6' or department_id == '4' or role == '8' %}
+                                                <input type="text" class="form-control" id="addr"
+                                                       value="{{ sites.addr }}">
+                                            {% else %}
+                                                <div>{{ sites.addr | raw }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="company_name">Название компании</label>
+                                            {% if role == '3' or role == '4' or role == '6' or department_id == '4' or role == '8' %}
+                                                <input type="text" class="form-control" id="company_name"
+                                                       value="{{ sites.company_name }}">
+                                            {% else %}
+                                                <div>{{ sites.company_name | raw }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="employee_quant">Кол-во сотрудников</label>
+                                            {% if role == '3' or role == '4'  or role == '6' or role == '1' or department_id == '4' or role == '8' %}
+                                                <input type="text" class="form-control" id="employee_quant"
+                                                       value="{{ sites.employee_quant }}">
+                                            {% else %}
+                                                <div>{{ sites.employee_quant | raw }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="phone">Рабочий телефон</label>
+                                            {% if role == '3' or role == '4'  or role == '6' or role == '1' or department_id == '4' or role == '8' %}
+                                                <input type="text" class="form-control" id="phone"
+                                                       value="{{ sites.phone }}">
+                                            {% else %}
+                                                <div>{{ sites.phone | raw }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="site_addr">Корпоративный сайт</label>
+                                            {% if role == '3' or role == '4'  or role == '6' or role == '1' or department_id == '4' or role == '8' %}
+                                                <input type="text" class="form-control" id="site_addr"
+                                                       value="{{ sites.site_addr }}">
+                                            {% else %}
+                                                <div>{{ sites.site_addr | raw }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="email">Рабочий e-mail</label>
+                                            {% if role == '3' or role == '4'  or role == '6' or role == '1' or department_id == '4' or role == '8' %}
+                                                <input type="text" class="form-control" id="email"
+                                                       value="{{ sites.email }}">
+                                            {% else %}
+                                                <div>{{ sites.email | raw }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="text_city">Город</label>
+                                            {% if role == '3' or role == '4' or role == '6' or department_id == '4' or role == '8' %}
+                                                <input type="text" class="form-control" id="text_city"
+                                                       value="{{ sites.text_city }}">
+                                            {% else %}
+                                                <div>{{ sites.text_city | raw }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="company_type">Тип компании</label>
+                                            {% if role == '3' or role == '4' or role == '6' or department_id == '4' or role == '8' %}
+                                                <select id="company_type" class="form-control"></select>
+                                            {% else %}
+                                                <div>{{ sites.company_type | raw }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                {% if role == '3' or role == '4'  or role == '6' or role == '1' or role == '8' or department_id == '4' %}
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Рабочий статус сайта</label>
+                                                <select id="work_status_manager" class="form-control">
+                                                    <option value="0">Выберите рабочий статус сайта</option>
+                                                    <option value="1" {% if sites.work_status_manager == 1 %}  selected {% endif %} >
+                                                        Работает
+                                                    </option>
+                                                    <option value="2" {% if sites.work_status_manager == 2 %} selected {% endif %}>
+                                                        Частично работает
+                                                    </option>
+                                                    <option value="3" {% if sites.work_status_manager == 3 %} selected {% endif %}>
+                                                        Не работает
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Комментарий к рабочему статусу</label>
+                                                <textarea type="text" class="form-control"
+                                                          id="work_comment_manager">{{ sites.work_comment_manager }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                {% if role == '1'  or role == '6' %}
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Рабочий статус сайта (Аудитор)</label>
+                                                <select id="work_status_auditor" class="form-control">
+                                                    <option value="0">Выберите рабочий статус сайта</option>
+                                                    <option value="1" {% if sites.work_status_auditor == 1 %} selected {% endif %}>
+                                                        Работает
+                                                    </option>
+                                                    <option value="2" {% if sites.work_status_auditor == 2 %} selected {% endif %}>
+                                                        Частично работает
+                                                    </option>
+                                                    <option value="3" {% if sites.work_status_auditor == 3 %} selected {% endif %}>
+                                                        Не работает
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Комментарий к рабочему статусу (Аудитор)</label>
+                                                <textarea type="text" class="form-control"
+                                                          id="work_comment_auditor">{{ sites.work_comment_auditor }}</textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                {% endif %}
+
+                                {% if role == '4' or role == '6' %}
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <div class="form-group row">
+                                                <label class="col-10 col-form-label" for="quotability_toggle">Квотируемый</label>
+                                                <div class="col-2">
+                                                    <input type='checkbox' class='form-control quotability_toggle'
+                                                           id="quotability_toggle"
+                                                           {% if sites.quotable == '1' %}checked{% endif %}>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                {% if role == '3' or role == '4' or role == '6' or role == '1' or role == '8' or  department_id == '4' %}
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <button class="btn btn-default btn-success b10" type="button"
+                                                    id="form-button-save-fixed">
+                                                <i class="fa fa-check"></i>
+                                                Сохранить
+                                            </button>
+                                            {% if role == '1'  or role == '6' %}
+                                                <button class="btn btn-default btn-success b10" type="button"
+                                                        id="auditor_confirm">
+                                                    <i class="fa fa-check"></i>
+                                                    Проверено аудитор
+                                                </button>
+                                            {% endif %}
+                                            {% if role == '3' or role == '4'  or role == '6' or role == '1' or role == '8' or department_id == '4' %}
+                                                <button class="btn btn-default btn-success b10" type="button"
+                                                        id="manager_confirm">
+                                                    <i class="fa fa-check"></i>
+                                                    Проверено менеджер
+                                                </button>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% if role == '4' or role == '6' or user_id == '55' %}
+            <section>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title"><h2>Менеджеры сайта</h2></h4>
+                            </div>
+
+
+                            <div class="card-content ">
+                                <div class="card-body card-dashboard ">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="manager_id">Тип</label>
+                                                <select class="form-control" id="manager_id">
+                                                    <option value="0">Выберите менеджера</option>
+                                                    {% for item in users %}
+                                                        <option value="{{ item.id }}">{{ item.lasttname }} {{ item.firstname }} {{ item.patronymic }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="save_manager">действие</label>
+                                                <button class="btn  btn-success btn-block" type="button"
+                                                        id="save_manager">
+                                                    Добавить менеджера
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+
+
+                                            <div id="managers">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
+
+
+        {% if (role == '6' or role == '3' or role == '2' or role == '8' or role == '1' ) %}
+            <section>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="ca rd-header">
+                                <h4 class="card-title"><h2>Контакты сайта</h2></h4>
+                            </div>
+                            <div class="card-content ">
+                                <div class="card-body card-dashboard ">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                    id="btn_new_contact">
+                                                Добавить
+                                            </button>
+                                            {% if (role == '6') %}
+                                            <a class="btn btn-info btn-sm"
+                                                    href="../../sites/generateContact/?site={{ sites.site_id }}">
+                                                 Excel</a>
+{#                                            <a class="btn btn-info btn-sm"#}
+{#                                                    href="../../sites/generateCSVContact/?site={{ sites.site_id }}">#}
+{#                                                 Outlook (.csv)</a>#}
+                                            <a class="btn btn-info btn-sm"
+                                                    href="../../sites/generateVCFContact/?site={{ sites.site_id }}">
+                                                 Android (.vcf)</a>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="modal fade text-left" id="tr_modal" tabindex="-1" role="dialog"
+                                                 aria-labelledby="myModalLabel2"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <input type="hidden" id="contact_id">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title" id="myModalLabel2">Контакт
+                                                                сайта</h4>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="lastname">Фамилия</label>
+                                                                        <input type="text" id="lastname"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="firstname">Имя</label>
+                                                                        <input type="text" id="firstname"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="patronymic">Отчество</label>
+                                                                        <input type="text" id="patronymic"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="patronymic">Группа контакта</label>
+                                                                        <select id="contact_type" class="form-control">
+                                                                            <option value="doctor">Врачи</option>
+                                                                            <option value="administer">Администрация
+                                                                                ЛПУ
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="job">Должность</label>
+                                                                        <input type="text" id="job"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="contact_source">Тип контакта</label>
+                                                                        <input type="text" id="contact_source"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="form-group">
+                                                                        <label for="contact_special">Специализация</label>
+                                                                        <select id="contact_special"
+                                                                                class="form-control"></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="work_phone">Рабочий телефон</label>
+                                                                        <input type="text" id="work_phone"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="home_phone">Мобильный
+                                                                            телефон</label>
+                                                                        <input type="text" id="home_phone"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="other_phone">Другой телефон</label>
+                                                                        <input type="text" id="other_phone"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="work_email">Рабочий e-mail</label>
+                                                                        <input type="text" id="work_email"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="home_email">Частный e-mail</label>
+                                                                        <input type="text" id="home_email"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="address">Адрес</label>
+                                                                        <input type="text" id="address"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            {% if (role == '6' or role == '1' or role == '2') %}
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="manager_point">Отношение с менеджером</label>
+                                                                        <select  id="manager_point" class="form-control">
+                                                                               <option value="0">Выберите оценку</option>
+                                                                               <option value="1">1</option>
+                                                                               <option value="2">2</option>
+                                                                               <option value="3">3</option>
+                                                                               <option value="4">4</option>
+                                                                               <option value="5">5</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="order_point">Восприятие запросов</label>
+                                                                        <select  id="order_point" class="form-control">
+                                                                            <option value="0">Выберите оценку</option>
+                                                                            <option value="1">1</option>
+                                                                            <option value="2">2</option>
+                                                                            <option value="3">3</option>
+                                                                            <option value="4">4</option>
+                                                                            <option value="5">5</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="nbs_point">Восприятие опыта работы с nbs</label>
+                                                                        <select  id="nbs_point" class="form-control">
+                                                                            <option value="0">Выберите оценку</option>
+                                                                            <option value="1">1</option>
+                                                                            <option value="2">2</option>
+                                                                            <option value="3">3</option>
+                                                                            <option value="4">4</option>
+                                                                            <option value="5">5</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            {% endif %}
+
+                                                            <div class="row">
+                                                                <div class="col-8">
+                                                                    <div class="form-group">
+                                                                        <label for="comment">Комментарий</label>
+                                                                        <input type="text" id="comment"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="nosology">Нозологии</label>
+                                                                        <input type="text" id="nosology"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+
+
+                                                            <div class="row" style="text-align: center;">
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="active">Действующий контакт</label>
+                                                                        <input type="checkbox" class="form-control"
+                                                                               id="active">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="civil_contract">ГПХ</label>
+                                                                        <input type="checkbox" class="form-control"
+                                                                               id="civil_contract">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="newsletter">Участвуют в
+                                                                            рассылке</label>
+                                                                        <input type="checkbox" class="form-control"
+                                                                               id="newsletter">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {% if role != '3' %}
+                                                            <div class="row" style="text-align: center;">
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="quotable">Квотируемый</label>
+                                                                        <input type="checkbox" class="form-control"
+                                                                               id="quotable">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn grey btn-outline-secondary"
+                                                                    data-dismiss="modal">Отмена
+                                                            </button>
+                                                            <button type="button" class="btn btn-outline-primary"
+                                                                    id="save_contact">
+                                                                Сохранить
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div id="site_contacts">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
+        {% if (role == '1' or role == '6') %}
+            <section>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title"><h2>Лог менеджер</h2></h4>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Дата</th>
+                                        <th>Статус</th>
+                                        <th>Пользователь</th>
+                                        <th>Комментарий</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in log %}
+                                        {% if item.profile == 'Менеджер' %}
+                                            <tr>
+                                                <td>{{ item.date_change }}</td>
+                                                <td>{{ item.work_status }}</td>
+                                                <td>{{ item.user_fullname }}</td>
+                                                <td>{{ item.work_comment }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-header">
+                                <h4 class="card-title"><h2>Лог аудитор</h2></h4>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Дата</th>
+                                        <th>Статус</th>
+                                        <th>Пользователь</th>
+                                        <th>Комментарий</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in log %}
+                                        {% if item.profile == 'Аудитор' %}
+                                            <tr>
+                                                <td>{{ item.date_change }}</td>
+                                                <td>{{ item.work_status }}</td>
+                                                <td>{{ item.user_fullname }}</td>
+                                                <td>{{ item.work_comment }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+    </div>
+</div>
+
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        let role = `{{ role }}`, department_id = `{{ department_id }}`, site_id = `{{ sites.site_id }}`,
+            user_id = `{{ user_id }}`
+
+
+        let saveOrder = () => {
+            // console.log(user_id)
+            if (department_id === '4' && user_id !== '32') {
+                let processing = document.getElementById('processing').value, misc = tinymce.get('misc').getContent(),
+                    level = document.getElementById('level').value
+                $.post({
+                    url: '/sites/save/',
+                    data: {
+                        site_id: site_id,
+                        processing: processing,
+                        misc: misc,
+                        level: level
+                    }
+                }).done(toastr.success('Данные сохранены'))
+            } else {
+                let data = {site_id: site_id}, error = false
+                if (document.getElementById('site_type')) {
+                    data.site_type = document.getElementById('site_type').value;
+                    if (site_type == 0) {
+                        toastr.error('Выберите тип сайта');
+                        error = true;
+                    }
+                }
+                if (document.getElementById('site_name')) {
+                    data.site_name = document.getElementById('site_name').value;
+                    if (data.site_name == '') {
+                        toastr.error('Введите название сайта');
+                        error = true;
+                    }
+                }
+                if (document.getElementById('city')) {
+                    data.city = document.getElementById('city').value;
+                    if (data.city == 0) {
+                        toastr.error('Выберите город');
+                        error = true;
+                    }
+                }
+                if (document.getElementById('contract')) {
+                    data.contract = document.getElementById('contract').value;
+                }
+                if (document.getElementById('term_validity')) {
+                    data.term_validity = document.getElementById('term_validity').value;
+                }
+                if (document.getElementById('approved')) {
+                    data.approved = document.getElementById('approved').value;
+                }
+                if (document.getElementById('site_status')) {
+                    data.site_status = document.getElementById('site_status').value;
+                }
+                if (document.getElementById('processing')) {
+                    data.processing = document.getElementById('processing').value;
+                }
+                if (document.getElementById('level')) {
+                    data.level = document.getElementById('level').value;
+                }
+                if (document.getElementById('addr')) {
+                    data.addr = document.getElementById('addr').value;
+                }
+                if (document.getElementById('company_name')) {
+                    data.company_name = document.getElementById('company_name').value;
+                }
+                if (document.getElementById('company_type')) {
+                    data.company_type = document.getElementById('company_type').value;
+                }
+                if (document.getElementById('employee_quant')) {
+                    data.employee_quant = document.getElementById('employee_quant').value;
+                }
+                if (document.getElementById('phone')) {
+                    data.phone = document.getElementById('phone').value;
+                }
+                if (document.getElementById('site_addr')) {
+                    data.site_addr = document.getElementById('site_addr').value;
+                }
+                if (document.getElementById('email')) {
+                    data.email = document.getElementById('email').value;
+                }
+                if (document.getElementById('text_city')) {
+                    data.text_city = document.getElementById('text_city').value;
+                }
+                if (document.getElementById('misc')) {
+                    data.misc = tinymce.get('misc').getContent()
+                }
+                if (document.getElementById('irb_approval')) {
+                    data.irb_approval = tinymce.get('irb_approval').getContent()
+                }
+                if (document.getElementById('work_status_manager')) {
+                    data.work_status_manager = document.getElementById('work_status_manager').value;
+                }
+                if (document.getElementById('work_comment_manager')) {
+                    data.work_comment_manager = document.getElementById('work_comment_manager').value;
+                }
+                if (document.getElementById('work_status_auditor')) {
+                    data.work_status_auditor = document.getElementById('work_status_auditor').value;
+                }
+                // if (document.getElementById('work_comment_auditor')) {
+                //     data.work_comment_auditor = document.getElementById('work_comment_auditor').value;
+                // }
+                if (document.getElementById('work_comment_auditor')) {
+                    data.work_comment_auditor = tinymce.get('work_comment_auditor').getContent()
+                }
+                if (document.getElementById('work_comment_manager')) {
+                    data.work_comment_manager = tinymce.get('work_comment_manager').getContent()
+                }
+                if (document.getElementById('level_id')) {
+                    data.level_id = document.getElementById('level_id').value
+                }
+
+                if (!error) {
+                    $.post({
+                        url: '/sites/save/',
+                        data: data
+                    }).done(function (res) {
+                        toastr.success('Данные сохранены');
+                    });
+                }
+            }
+        }
+
+        if (document.getElementById('form-button-save-fixed')) {
+            document.getElementById('form-button-save-fixed').addEventListener('click', () => {
+                saveOrder();
+            });
+        }
+
+        if (document.getElementById('save_manager')) {
+            document.getElementById('save_manager').addEventListener('click', () => {
+                saveManager();
+            });
+        }
+
+
+        let eventBtnDell = () => {
+            let btn = document.querySelectorAll('.btn-dell-site');
+            let btns = [...btn];
+            btns.forEach(el => {
+                el.addEventListener('click', (e) => {
+
+                    $.ajax({
+                        url: '/ManagerSites/dell/',
+                        method: 'POST',
+                        data: {
+                            id: el.dataset.id
+                        }
+                    })
+                        .done(function (res) {
+                            loadManagersTable();
+                        })
+                })
+
+            })
+        }
+
+
+        let loadManagersTable = () => {
+
+            if (document.getElementById('managers')) {
+
+                let site_id = `{{ sites.site_id }}`;
+                $.ajax({
+                    url: '/ManagerSites/getSiteManagerbySites/',
+                    method: 'POST',
+                    data: {
+                        site_id: site_id
+                    }
+                })
+                    .done(function (res) {
+                        let data = JSON.parse(res);
+                        let managers = document.getElementById('managers');
+                        let infoTable = '';
+                        data.result.forEach(el => {
+                            infoTable += `
+                    <tr>
+                        <td>${el.lasttname} ${el.firstname}  ${el.patronymic}</td>
+                        <td>
+                         <button class="btn btn-danger btn-success btn-sm btn-dell-site" type="button" data-id='${el.id}'>
+                          <i class="ft-delete btn-dell"  ></i>
+                         </button>
+                        </td>
+                    </tr>
+                    `;
+                        })
+
+                        managers.innerHTML = `<table class="table">
+                <tr>
+                <td>ФИО</td>
+                <td>Действие</td>
+                <tr>
+                 ${infoTable}
+                </table>`;
+
+                        eventBtnDell();
+
+                    });
+            }
+
+        }
+
+        loadManagersTable();
+
+
+        let saveManager = () => {
+
+            let site_id = `{{ sites.site_id }}`;
+            let user_id = document.getElementById('manager_id').value;
+
+            if (user_id == 0) {
+                toastr.error('Выберите менеджера');
+            } else {
+
+                $.ajax({
+                    url: '/ManagerSites/save/',
+                    method: 'POST',
+                    data: {
+                        user_id: user_id,
+                        site_id: site_id
+                    }
+                })
+                    .done(function (res) {
+                        if (res > 0) {
+                            toastr.success('Успешно', ' Добавлен');
+                            loadManagersTable();
+                        } else {
+                            toastr.info('Ошибка', 'Такой Менеджер уже есть');
+                        }
+                    });
+
+            }
+        }
+
+        $("#auditor_confirm").click(() => {
+            $.post({
+                url: '/sites/save/',
+                data: {site_id: site_id, auditor_confirm: 1}
+            }).done(() => {
+                toastr.info('Подтверждено')
+                $("#auditor_checkbox").prop('checked', true)
+            })
+        })
+        $("#manager_confirm").click(() => {
+            $.post({
+                url: '/sites/save/',
+                data: {site_id: site_id, manager_confirm: 1}
+            }).done(() => {
+                toastr.info('Подтверждено')
+                $("#manager_checkbox").prop('checked', true)
+            })
+        })
+
+    })
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let loadContacts = () => {
+            let role = `{{ role }}`;
+            if (document.getElementById('site_contacts')) {
+                let site_id = `{{ sites.site_id }}`;
+                $.post({
+                    url: '/CompaniesContacts/getSiteContactsBySiteId/',
+                    data: {
+                        site_id: site_id
+                    }
+                }).done(function (res) {
+                    let data = JSON.parse(res);
+                    let contacts = document.getElementById('site_contacts');
+                    let infoTable = '';
+                    data.result.forEach(el => {
+                        infoTable += `
+                                <tr>
+                                    <td>${el.lastname} ${el.firstname} ${el.patronymic}</td>
+                                    <td>${el.contact_type === 'doctor' ? 'Врачи' : 'Администрация ЛПУ'}</td>
+                                    <td>
+                                     <button class="btn btn-info btn-sm btn-edit-contact" type="button" data-id='${el.id}'>
+                                      <i class="ft-edit"></i></button>
+                                    </td>
+                                    <td>
+                                     ${role === '6' ? `<button class="btn btn-danger btn-sm btn-dell-contact" type="button" data-id='${el.id}'>
+                                      <i class="ft-delete btn-dell"></i></button>` : ''}
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-info btn-sm"
+                                            href="../../sites/generateVCFContactOne/?id=${el.id}"> Android (.vcf)</a>
+                                    </td>
+                                </tr>`;
+                    })
+                    contacts.innerHTML = `<table class="table">
+                            <tr>
+                            <td>ФИО</td>
+                            <td>Группа</td>
+                            <td>Редактировать</td>
+                            <td>${role === '6' ? 'Удалить' : ''}</td>
+                            <td>Контакт</td>
+                            <tr>
+                            ${infoTable}
+                            </table>`;
+                    eventBtnDell();
+                    eventBtnEdit();
+                });
+            }
+        }
+        loadContacts();
+        let loadSpecials = () => {
+            $.post({
+                url: '/CompaniesContactsSpecial/getAll/'
+            }).done(function (res) {
+                let data = JSON.parse(res);
+                console.log(data);
+                let specials = document.getElementById('contact_special');
+                data.result.forEach(el => {
+                    specials.innerHTML += `<option value='${el.id}'>${el.special}</option>`;
+                });
+            });
+        }
+        loadSpecials();
+
+        let eventBtnDell = () => {
+            let btn = document.querySelectorAll('.btn-dell-contact');
+            let btns = [...btn];
+            btns.forEach(el => {
+                el.addEventListener('click', (e) => {
+                    $.post({
+                        url: '/CompaniesContacts/del/',
+                        data: {
+                            id: el.dataset.id
+                        }
+                    }).done(loadContacts)
+                })
+            })
+        }
+        let eventBtnEdit = () => {
+            let btn = document.querySelectorAll('.btn-edit-contact');
+            let btns = [...btn];
+            btns.forEach(el => {
+                el.addEventListener('click', (e) => {
+                    $.get({
+                        url: '/CompaniesContacts/getone/',
+                        cache: false,
+                        data: {
+                            id: el.dataset.id
+                        }
+                    }).done((res) => {
+                        let Response = JSON.parse(res)
+                        let data = Response.result;
+                        $("#contact_id").val(data.id)
+                        $("#firstname").val(data.firstname)
+                        $("#lastname").val(data.lastname)
+                        $("#patronymic").val(data.patronymic)
+                        $("#contact_type").val(data.contact_type)
+                        $("#job").val(data.job)
+                        $("#contact_source").val(data.contact_source)
+                        $("#work_phone").val(data.work_phone)
+                        $("#home_phone").val(data.home_phone)
+                        $("#other_phone").val(data.other_phone)
+                        $("#work_email").val(data.work_email)
+                        $("#manager_point").val(data.manager_point)
+                        $("#order_point").val(data.order_point)
+                        $("#nbs_point").val(data.nbs_point)
+                        $("#home_email").val(data.home_email)
+                        $("#address").val(data.address)
+                        $("#comment").val(data.comment)
+                        $("#nosology").val(data.nosology)
+                        $("#contact_special").val(data.special_id)
+                        $("#active").prop('checked', data.active)
+                        $("#civil_contract").prop('checked', data.civil_contract)
+                        $("#newsletter").prop('checked', data.newsletter)
+                        $("#quotable").prop('checked', data.quotable)
+                        $("#tr_modal").modal('show')
+                    });
+                })
+            })
+        }
+
+        $("#btn_new_contact").click(() => {
+            $(".modal-dialog input").val('').prop('checked', false)
+            $("#tr_modal").modal('show')
+        });
+
+        $("#save_contact").click(() => {
+            let firstname = $("#firstname").val(), lastname = $("#lastname").val(), patronymic = $("#patronymic").val(),
+                job = $("#job").val(), home_phone = $("#home_phone").val(), work_email = $("#work_email").val(),
+                quotable = (home_phone && work_email) ? 1 : 0
+            if ($("#quotable").length)
+                quotable = $("#quotable").prop('checked') ? 1 : 0
+            $.post({
+                url: '/CompaniesContacts/save/',
+                data: {
+                    id: $("#contact_id").val(),
+                    company_id: `{{ sites.site_id }}`,
+                    firstname, lastname, patronymic,
+                    contact_type: $("#contact_type").val(),
+                    job,
+                    contact_source: $("#contact_source").val(),
+                    work_phone: $("#work_phone").val(),
+                    home_phone,
+                    other_phone: $("#other_phone").val(),
+                    work_email,
+                    home_email: $("#home_email").val(),
+                    address: $("#address").val(),
+                    comment: $("#comment").val(),
+                    nosology: $("#nosology").val(),
+                    active: $("#active").prop('checked') ? 1 : '',
+                    civil_contract: $("#civil_contract").prop('checked') ? 1 : '',
+                    newsletter: $("#newsletter").prop('checked') ? 1 : '',
+                    special_id: $("#contact_special").val(),
+                    manager_point: $("#manager_point").val(),
+                    order_point: $("#order_point").val(),
+                    nbs_point: $("#nbs_point").val(),
+                    quotable
+                }
+            }).done(() => {
+                $("#tr_modal").modal('hide')
+                loadContacts()
+            })
+        })
+
+        if (document.getElementById('company_type')) {
+            $.get({
+                url: '/sites/gettypes/'
+            }).done((res) => {
+                let Types = JSON.parse(res)['result']
+                Types.forEach((type) => {
+                    $("#company_type").append(`<option value="${type.id}">${type.type_name}</option>`)
+                });
+                $("#company_type").val('{{ sites.company_type }}');
+            })
+        }
+
+        $(".quotability_toggle").click(e => {
+            let tgt = $(e.currentTarget), site_id = `{{ sites.site_id }}`,
+                quotable = tgt.prop('checked') ? 1 : 0, data = { site_id, quotable }
+            $.post({ url: '/sites/save', data })
+        })
+    })
+</script>

@@ -1,0 +1,95 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper"><!--Statistics cards Starts-->
+        <!--Statistics cards Ends-->
+
+        <!--Line with Area Chart 1 Starts-->
+
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"></h4>
+                        </div>
+                        <div class="card-content ">
+                            <div class="card-body card-dashboard ">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+
+                                        <div class="form-group">
+                                            <label for="status_name">Status name</label>
+                                            <input type="text" id="status_name" class="form-control"value="{{ status.fr_status_values }}" >
+                                        </div>
+
+                                        {% if role == '2' %}
+
+                                        {% else %}
+                                            <button class="btn btn-default btn-success b10" type="button"
+                                                    id="saveStatus">
+                                                <i class="fa fa-check"></i>
+                                                Update changes
+                                            </button>
+
+{#                                            <button class="btn btn-danger  b10" type="button"#}
+{#                                                    id="dellStatus">#}
+{#                                                <i class="fa fa-check"></i>#}
+{#                                               Удалить статус#}
+{#                                            </button>#}
+                                        {% endif %}
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+</div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        let addStatus = () => {
+            let name = document.getElementById('status_name').value;
+            let id = `{{ status.fr_status_id }}`;
+            if(name.length < 3) {
+                toastr.error('Статус не может быть менее 3 символов');
+            }  else {
+
+                $.ajax({
+                    url: '/Frstatus/save/',
+                    method: 'POST',
+                    data: {
+                        name: name,
+                        id:id
+                    }
+                })
+                    .done(function (id) {
+
+                        location.href = '../frstatus';
+
+                    });
+            }
+        }
+
+        document.getElementById('saveStatus').addEventListener('click', () => {
+            addStatus();
+        });
+
+
+
+
+
+
+
+    })
+</script>
+

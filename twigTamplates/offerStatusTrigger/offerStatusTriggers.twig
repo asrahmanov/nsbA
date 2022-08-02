@@ -1,0 +1,91 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Задачи</h4>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-6">
+                                <form action="/offerStatusTrigger/offerStatusTriggers/" id="loadForm">
+                                    <input type="date" value="{{ date }}" class="form-control" name="date">
+                                </form>
+                            </div>
+                            <div class="col-3">
+                                <input type="submit" value="Загрузить" class="btn btn-info" form="loadForm">
+                            </div>
+                            <div class="col-3">
+                                <form action="/offerStatusTrigger/offerStatusTriggersPDF/">
+                                    <input type="hidden" name="date" value="{{ date }}">
+                                    <input type="submit" value="Загрузить PDF" class="btn btn-info">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        {% for key, user in users %}
+                            <h1>{{ user.lasttname }} {{ user.firstname }} {{ user.patronymic }}</h1>
+                            <form action="/offerStatusTrigger/offerStatusTriggersPDF/">
+                                <input type="hidden" name="user_id" value="{{ key }}">
+                                <input type="hidden" name="date" value="{{ date }}">
+                                <input type="submit" value="Загрузить PDF" class="btn btn-info">
+                            </form>
+                            <div class="row">
+                                <div class="col-6">
+                                    <h3>Не выполнено</h3>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Дата постановки</th>
+                                            <th>Идентификатор</th>
+                                            <th>External id</th>
+                                            <th>Компания</th>
+                                            <th>Задача</th>
+                                            <th>Необходимые результаты</th>
+                                        </tr>
+                                        </thead>
+                                        {% for task in user.tasks_undone %}
+                                            <tr>
+                                                <td>{{ task.task_date }}</td>
+                                                <td><a href="/orders/info/?idFR={{ task.offer_id }}">{{ task.internal_id }}</a></td>
+                                                <td>{{ task.external_id }}</td>
+                                                <td>{{ task.company_name }}</td>
+                                                <td>{{ task.comment }}</td>
+                                                <td>{{ task.status_name }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                <div class="col-6">
+                                    <h3>Выполнено</h3>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Дата постановки</th>
+                                            <th>Идентификатор</th>
+                                            <th>External id</th>
+                                            <th>Компания</th>
+                                            <th>Задача</th>
+                                        </tr>
+                                        </thead>
+                                        {% for task in user.tasks_done %}
+                                            <tr>
+                                                <td>{{ task.task_date }}</td>
+                                                <td><a href="../orders/info/?idFR={{ task.offer_id }}"> {{ task.internal_id }}</a></td>
+                                                <td>{{ task.external_id }}</td>
+                                                <td>{{ task.company_name }}</td>
+                                                <td>{{ task.comment }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

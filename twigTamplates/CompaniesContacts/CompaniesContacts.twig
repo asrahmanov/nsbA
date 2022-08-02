@@ -1,0 +1,262 @@
+<div class="modal fade text-left" id="tr_modal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel2"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <input type="hidden" id="contact_id">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel2">Контакт
+                    сайта</h4>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="lastname">Фамилия</label>
+                            <input type="text" id="lastname"
+                                   class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="firstname">Имя</label>
+                            <input type="text" id="firstname"
+                                   class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="patronymic">Отчество</label>
+                            <input type="text" id="patronymic"
+                                   class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="patronymic">Группа контакта</label>
+                            <select id="contact_type" class="form-control" disabled>
+                                <option value="doctor">Врачи</option>
+                                <option value="administer">Администрация
+                                    ЛПУ
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="job">Должность</label>
+                            <input type="text" id="job" disabled
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="contact_source">Тип контакта</label>
+                            <input type="text" id="contact_source" disabled
+                                   class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="contact_special">Специализация</label>
+                            <select id="contact_special" disabled
+                                    class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="work_phone">Рабочий телефон</label>
+                            <input type="text" id="work_phone" disabled
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="home_phone">Мобильный
+                                телефон</label>
+                            <input type="text" id="home_phone" disabled
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="other_phone">Другой телефон</label>
+                            <input type="text" id="other_phone" disabled
+                                   class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="work_email">Рабочий e-mail</label>
+                            <input type="text" id="work_email" disabled
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="home_email">Частный e-mail</label>
+                            <input type="text" id="home_email" disabled
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="address">Адрес</label>
+                            <input type="text" id="address" disabled
+                                   class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label for="comment">Комментарий</label>
+                            <input type="text" id="comment" disabled
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="nosology">Нозологии</label>
+                            <input type="text" id="nosology" disabled
+                                   class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="text-align: center;">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="active">Действующий контакт</label>
+                            <input type="checkbox" class="form-control" disabled
+                                   id="active">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="civil_contract">ГПХ</label>
+                            <input type="checkbox" class="form-control" disabled
+                                   id="civil_contract">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="newsletter">Участвуют в
+                                рассылке</label>
+                            <input type="checkbox" class="form-control" disabled
+                                   id="newsletter">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn grey btn-outline-secondary"
+                        data-dismiss="modal">Закрыть
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Sites Contacts</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body card-dashboard">
+                            <table width="100%" id="contacts" class="table table-striped table-bordered file-export">
+                                <thead>
+                                <tr>
+                                    <th>Contact</th>
+                                    <th>Site</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        $.post({
+            url: '/companiesContacts/getAll'
+        }).then(data => {
+            // console.log(JSON.parse(data))
+            let Contacts = JSON.parse(data)
+            console.log(Contacts)
+            Contacts.forEach(contact => {
+                $("#contacts tbody").append(`<tr id="row_${contact.id}" class="dbrow">
+                            <td><a href="#" id="details_${contact.id}">${contact.lastname} ${contact.firstname} ${contact.patronymic}</a></td>
+                            <td><a href="sites/info/?site=${contact.company_id}" target="_blank">${contact.site_name}</a></td>
+                        </tr>`)
+                $(`#details_${contact.id}`).click(() => {
+                    $.get({
+                        url: '/CompaniesContacts/getone/',
+                        cache: false,
+                        data: {
+                            id: contact.id
+                        }
+                    }).done((res) => {
+                        let Response = JSON.parse(res)
+                        let data = Response.result;
+                        $("#contact_id").val(data.id)
+                        $("#firstname").val(data.firstname)
+                        $("#lastname").val(data.lastname)
+                        $("#patronymic").val(data.patronymic)
+                        $("#contact_type").val(data.contact_type)
+                        $("#job").val(data.job)
+                        $("#contact_source").val(data.contact_source)
+                        $("#work_phone").val(data.work_phone)
+                        $("#home_phone").val(data.home_phone)
+                        $("#other_phone").val(data.other_phone)
+                        $("#work_email").val(data.work_email)
+                        $("#home_email").val(data.home_email)
+                        $("#address").val(data.address)
+                        $("#comment").val(data.comment)
+                        $("#nosology").val(data.nosology)
+                        $("#contact_special").val(data.special_id)
+                        $("#active").prop('checked', data.active)
+                        $("#civil_contract").prop('checked', data.civil_contract)
+                        $("#newsletter").prop('checked', data.newsletter)
+                        $("#tr_modal").modal('show')
+                    });
+                })
+            })
+            // $("#diseases").dataTable({
+            //     drawCallback: () => {
+            //         $(".dbrow").dblclick(e => {
+            //             let id = $(e.currentTarget).attr('id').split('_')[1], biotype = $(`#biotype_${id}`).html(),
+            //                 biotype_russian = $(`#rbiotype_${id}`).html()
+            //             $("#biospecimen_type").val(biotype)
+            //             $("#biospecimen_type_russian").val(biotype_russian)
+            //             $("#tr_modal").modal('show')
+            //             biospecimenId = id;
+            //         })
+            //     }
+            // })
+            $("#contacts").dataTable()
+        })
+    })
+
+</script>

@@ -1,0 +1,187 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper"><!--Statistics cards Starts-->
+        <!--Statistics cards Ends-->
+
+        <!--Line with Area Chart 1 Starts-->
+
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><h2>Добавление  пользователя</h2></h4>
+                        </div>
+                        <div class="card-content ">
+                            <div class="card-body card-dashboard ">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+{#                                        <h2>Информация</h2>#}
+
+
+                                        <div class="form-group">
+                                            <label for="lasttname">Lasttname</label>
+                                            <input type="text" id="lasttname" class="form-control"
+                                                   value="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="firstname">Firstname</label>
+                                            <input type="text" id="firstname" class="form-control"
+                                                   value="">
+                                        </div>
+
+
+                                        <div class="form-group">
+
+                                            <label for="patronymic">Patronymic</label>
+                                            <input type="text" id="patronymic" class="form-control"
+                                                   value="">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="logins">Login</label>
+                                            <input type="text" id="logins" class="form-control"
+                                                   value="">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="password">password</label>
+                                            <input type="password" id="password" class="form-control"
+                                                   value="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email">email</label>
+                                            <input type="text" id="email" class="form-control"
+                                                   value="">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="role_id">Role</label>
+                                            <select class="form-control" id="role_id">
+                                                <option value="0">Выберите роль</option>
+                                                {% for item in roles %}
+                                                    <option value="{{ item.id }}">{{ item.name }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="role_id">Department</label>
+                                            <select class="form-control" id="department_id">
+                                                {% for item in departments %}
+                                                    <option value="{{ item.id }}"
+
+                                                    >{{ item.department_name }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        {% if role == '2' %}
+
+                                        {% else %}
+                                            <button class="btn btn-default btn-success b10" type="button"
+                                                    id="form-button-save">
+                                                <i class="fa fa-check"></i>
+                                                ADD
+                                            </button>
+                                        {% endif %}
+                                    </div>
+
+
+                                    <div class="col-md-6 col-sm-12">
+
+                                    </div>
+
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+</div>
+
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Выделяем нужны select
+
+        document.getElementById('form-button-save').addEventListener('click', () => {
+            saveOrder();
+        });
+
+
+
+        let role = `{{ role }}`;
+
+        if (role == '2') {
+            let arrayInput = document.querySelectorAll('.form-control');
+            [...arrayInput].forEach((el) => {
+                el.disabled = 'true';
+
+            })
+        }
+
+    })
+
+
+
+
+    let saveOrder = () => {
+
+        let role_id = document.getElementById('role_id').value;
+        let email = document.getElementById('email').value;
+        let login = document.getElementById('logins').value;
+        let patronymic = document.getElementById('patronymic').value;
+        let lasttname = document.getElementById('lasttname').value;
+        let firstname = document.getElementById('firstname').value;
+        let password = document.getElementById('password').value;
+        let department_id = document.getElementById('department_id').value;
+
+        if (role_id == 0) {
+            toastr.error('Выберите роль пользоватлея');
+        } else if (login.length < 3) {
+            toastr.error('Login не может быть менее 3 знаков');
+        } else {
+
+            $.ajax({
+                url: '/users/save/',
+                method: 'POST',
+                data: {
+                    role_id: role_id,
+                    email: email,
+                    login: login,
+                    patronymic: patronymic,
+                    lasttname: lasttname,
+                    firstname: firstname,
+                    password:password,
+                    department_id:department_id
+                }
+            })
+                .done(function (id) {
+                    if(id == '0') {
+                        toastr.error('Ошибка')
+                    } else {
+                        location.href = '../users/info/?id=' + id;
+                    }
+                });
+        }
+    };
+
+
+</script>
+

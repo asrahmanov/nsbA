@@ -1,0 +1,360 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Sites</h4>
+                        </div>
+                        <div class="card-content ">
+                            <div class="card-body card-dashboard ">
+                                {% if role == '4' %}
+                                    <a href="../sites/add" class="btn btn-success btn-sm">
+                                        Добавить Сайт
+                                    </a>
+                                {% endif %}
+
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal"
+                                            data-target="#tr_modal">
+                                        Настройки
+                                    </button>
+
+                                    <div class="modal fade text-left" id="tr_modal" tabindex="-1" role="dialog"
+                                         aria-labelledby="myModalLabel1"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="myModalLabel1">TR Настройки</h4>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h5>Отметьте нужные</h5>
+
+                                                    <input type="checkbox" checked id="actions" class="toggle-vis"
+                                                           data-column="0"/><span class="ml-1">Actions</span><br>
+                                                    <input type="checkbox" checked id="site_code" class="toggle-vis"
+                                                           data-column="1"/><span class="ml-1">NBS № </span><br>
+                                                    <input type="checkbox" checked id="site_name" class="toggle-vis"
+                                                           data-column="2"/><span class="ml-1">Сайт</span><br>
+                                                    <input type="checkbox" checked id="type_name" class="toggle-vis"
+                                                           data-column="3"/><span class="ml-1">Тип</span><br>
+                                                    <input type="checkbox" checked id="city_name" class="toggle-vis"
+                                                           data-column="4"/><span class="ml-1">Город</span><br>
+                                                    <input type="checkbox" checked id="contract" class="toggle-vis"
+                                                           data-column="5"/><span class="ml-1">Регуляторика</span><br>
+                                                    <input type="checkbox" checked id="term_validity" class="toggle-vis"
+                                                           data-column="6"/><span class="ml-1">Срок действия</span><br>
+                                                    <input type="checkbox" checked id="approved" class="toggle-vis"
+                                                           data-column="7"/><span class="ml-1">ЛЭК/НЭК</span><br>
+                                                    <input type="checkbox" checked id="site_status" class="toggle-vis"
+                                                           data-column="8"/><span class="ml-1">Статус</span><br>
+                                                    <input type="checkbox" checked id="irb_approval" class="toggle-vis"
+                                                           data-column="9"/><span class="ml-1">Особенности</span><br>
+                                                    <input type="checkbox" checked id="level" class="toggle-vis"
+                                                           data-column="10"/><span class="ml-1">Уровень</span><br>
+                                                    <input type="checkbox" checked id="processing" class="toggle-vis"
+                                                           data-column="11"/><span
+                                                            class="ml-1">Кто процессирует</span><br>
+                                                    <input type="checkbox" checked id="misc" class="toggle-vis"
+                                                           data-column="12"/><span class="ml-1">Ответственный за процессинг</span><br>
+                                                    <input type="checkbox" checked id="menegers" class="toggle-vis"
+                                                           data-column="13"/><span class="ml-1">Менеджер</span><br>
+                                                    <hr>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    {# <button type="button" class="btn grey btn-outline-secondary" #}
+                                                    {# data-dismiss="modal">Close #}
+                                                    {# </button> #}
+                                                    {# <button type="button" class="btn btn-outline-primary">Save changes #}
+                                                    {# </button> #}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="wrapper-table__scrolled">
+                                    <table class="table table-striped table-bordered file-export" id="datatable">
+                                        <thead>
+                                        <tr>
+                                            <th>action</th>
+                                            <th><input type="text" class="form-control" placeholder="NBS №" id="nbs_number_filter"> </th>
+                                            <th>Сайт</th>
+                                            <th>Тип</th>
+                                            <th>Город</th>
+                                            <th>Регуляторика</th>
+                                            <th>Срок действия</th>
+                                            <th>ЛЭК/НЭК одобрение</th>
+                                            <th>Статус</th>
+                                            <th>Особенности</th>
+                                            <th>Уровень лаборатории</th>
+                                            <th>Уровень лаборатории New</th>
+                                            <th>Кто процессирует</th>
+                                            <th>Ответственный за процессинг</th>
+                                            <th>Менеджер</th>
+                                            {% if role == '4' or role == '6' %}
+                                                <th>Квотируемый</th>
+                                            {% endif %}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th>action</th>
+                                            <th>NBS №</th>
+                                            <th>Сайт</th>
+                                            <th>Тип</th>
+                                            <th>Город</th>
+                                            <th>Регуляторика</th>
+                                            <th>Срок действия</th>
+                                            <th>ЛЭК/НЭК одобрение</th>
+                                            <th>Статус</th>
+                                            <th>Особенности</th>
+                                            <th>Уровень лаборатории</th>
+                                            <th>Уровень лаборатории New</th>
+                                            <th>Кто процессирует</th>
+                                            <th>Ответственный за процессинг</th>
+                                            <th>Менеджер</th>
+                                            {% if role == '4' or role == '6' %}
+                                                <th>Квотируемый</th>
+                                            {% endif %}
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        let datatable = $('#datatable').DataTable({
+            'ajax': '/sites/getSitesAll/',
+            'method': 'POST',
+            'dom': 'Bfrtip',
+            'buttons': [
+                'excel'
+            ],
+            'columnDefs': [
+                {
+                    targets: 0,
+                    data: 'site_id',
+                    render: function (data, type, full, meta) {
+                        return `<a target='_blank' href='../sites/info/?site=${data}' data-id='${data}' class='btn  btn-block btn-info pull-right'>Открыть</a>`;
+                    }
+                },
+                {
+                    targets: 1,
+                    data: 'site_code',
+                },
+                {
+                    targets: 2,
+                    data: 'site_name',
+                },
+                {
+                    targets: 3,
+                    data: 'type_name',
+                },
+                {
+                    targets: 4,
+                    data: 'city_name',
+                },
+                {
+                    targets: 5,
+                    data: 'contract',
+                },
+                {
+                    targets: 6,
+                    data: 'term_validity',
+                    render: function (data, type, full, meta) {
+                        return ` ${data}`;
+                    }
+
+                },
+                {
+                    targets: 7,
+                    data: 'approved',
+                    render: function (data, type, full, meta) {
+                        return `${data}`;
+                    }
+                },
+                {
+                    targets: 8,
+                    data: 'work_status_manager',
+                    render: function (data, type, full, meta) {
+                        return data === '0' ? '' :
+                            data === '1' ? 'Работает' :
+                                data === '2' ? 'Частично работает' : 'Не работает'
+                    }
+                },
+                {
+                    targets: 9,
+                    data: 'irb_approval',
+                },
+                {
+                    targets: 10,
+                    data: 'level',
+                },
+                {
+                    targets: 11,
+                    data: 'lab_level',
+                },
+                {
+                    targets: 12,
+                    data: 'processing',
+                },
+                {
+                    targets: 13,
+                    data: 'misc',
+                },
+                {
+                    targets: 14,
+                    data: 'managers',
+                    render: function (data, type, full, meta) {
+                        let html = '';
+                        if (data.length > 0) {
+                            for (let i = 0; i < data.length; i++) {
+                                html += data[i].lasttname + ' ' + data[i].firstname + '<br>'
+                            }
+                        }
+                        return `${html}`;
+                    }
+                },
+                {% if role == '4' or role == '6' %}
+                    {
+                        targets: 15,
+                        data: 'quotable',
+                        render: function (data, type, row, meta) {
+                            let checked = data === '1' ? 'checked' : ''
+                            return `<input type='checkbox' class='form-control quotability_toggle' ${checked} id='qtoggle_${row.site_id}'>`;
+                        }
+                    },
+                {% endif %}
+            ],
+            language: { sLoadingRecords: '<span style="width:100%;"><img src="../app-assets/img/loaders/rolling.gif" alt="loading" class="loading_item"></span>' },
+            initComplete: function (settings, json) {
+                let loadheck = () => {
+                    $.post({
+                        url: 'users/getviews',
+                        data: { table_name: 'fr_sites' }
+                    }).done(function (array) {
+                        let obj = JSON.parse(array);
+                        obj.forEach(el => {
+                            if (!el.checkeds) {
+                                document.getElementById(`${el.column_name}`).click()
+                            }
+                        })
+                    })
+                }
+                loadheck()
+            },
+            drawCallback: () => {
+                $(".quotability_toggle").click(e => {
+                    let tgt = $(e.currentTarget), site_id = tgt.attr('id').split('_')[1],
+                        quotable = tgt.prop('checked') ? 1 : 0, data = { site_id, quotable }
+                    $.post({ url: 'sites/save', data })
+                })
+            }
+        });
+
+        let checkAll = (search, text) => {
+            if (search == 0) {
+                return true;
+            } else {
+                if (search == text) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+               let nbs_number_filter = $('#nbs_number_filter').val();
+                let chek_nbs_number_filter = false;
+                if (checkAll(nbs_number_filter, data[1])) {
+                    chek_nbs_number_filter = true;
+
+                }
+                return chek_nbs_number_filter
+
+            }
+        );
+
+        $('#nbs_number_filter').keyup(function (e) {
+            datatable.draw();
+            let value = $('#nbs_number_filter').val();
+            localStorage.setItem('nbs_number_filter', value);
+        });
+
+
+        $('.toggle-vis').on('click', function (e) {
+            let column_name = e.target.id
+            let table_name = 'fr_sites'
+            let checked = e.target.checked
+            $.ajax({
+                url: 'users/Viewsave',
+                method: 'POST',
+                data: {
+                    column_name: column_name,
+                    table_name: table_name,
+                    checked: checked
+                }
+            }).done(function (save) { })
+            let column = datatable.column($(this).attr('data-column'))
+            column.visible(!column.visible())
+        });
+
+        function getDoubleScroll(elem) {
+            let element = document.querySelector(elem)
+            let table = element.querySelector('table')
+            let maxCount = 300
+            let intervalId = setInterval(()=>{
+                if(document.readyState === 'complete' && !table.querySelector('.loading_item')){
+                    initDoubleScroll(element)
+                    clearInterval(intervalId)
+                }
+                maxCount = maxCount - 1
+                if(maxCount === 0){
+                    clearInterval(intervalId)
+                }
+            }, 200)
+        }
+        function initDoubleScroll(element) {
+            var scrollbar = document.createElement('div');
+            scrollbar.appendChild(document.createElement('div'));
+            scrollbar.style.overflow = 'auto';
+            scrollbar.style.overflowY = 'hidden';
+            scrollbar.classList.add('scroll-block');
+            scrollbar.firstChild.style.width = element.scrollWidth + 'px';
+            scrollbar.firstChild.appendChild(document.createTextNode('\xA0'));
+            scrollbar.onscroll = function () {
+                element.scrollLeft = scrollbar.scrollLeft;
+            };
+            element.onscroll = function () {
+                scrollbar.scrollLeft = element.scrollLeft;
+            };
+            element.parentNode.insertBefore(scrollbar, element);
+        }
+        getDoubleScroll('.wrapper-table__scrolled')
+    });
+
+
+</script>
+
+

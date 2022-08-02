@@ -1,0 +1,257 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper"><!--Statistics cards Starts-->
+        <!--Statistics cards Ends-->
+
+        <!--Line with Area Chart 1 Starts-->
+
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"></h4>
+                        </div>
+                        <div class="card-content ">
+                            <div class="card-body card-dashboard ">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+
+                                        <h2>CUSTOMERS ADD</h2>
+
+                                        <div class="form-group">
+                                            <label for="_script">Script</label>
+                                            <input type="text" id="_script" class="form-control"
+                                                   value="{{ company.script }}">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="_company_name">Сompany name</label>
+                                            <input type="text" id="_company_name" class="form-control"
+                                                   value="{{ company.company_name }}">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="_contacts">Contacts</label>
+
+                                            {% if role == '2' %}
+                                                <div>{{ company.contacts | raw }}</div>
+                                            {% else %}
+                                                <textarea id="_contacts" cols="30"
+                                                          rows="15">{{ company.contacts }}</textarea>
+                                            {% endif %}
+
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="_last_script_num">Last_script num</label>
+                                            <input type="text" id="_last_script_num" class="form-control"
+                                                   value="{{ company.last_script_num }}">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="_currency">Currency</label>
+                                            <select class="form-control" id="_currency">
+                                                {% for item in currency %}
+                                                    <option value="{{ item.currency_id }}"
+                                                            {% if item.currency_id == company.currency %}
+                                                                selected
+                                                            {% endif %}
+                                                    >{{ item.currency }}</option>
+                                                {% endfor %}
+                                            </select>
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="_script_type">Script type</label>
+                                            <select class="form-control" id="_script_type">
+                                                {% for item in company_type %}
+                                                    <option value="{{ item.id }}"
+                                                            {% if item.id == company.script_type %}
+                                                                selected
+                                                            {% endif %}
+                                                    >{{ item.type_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="_script_type">Origin</label>
+                                            <select class="form-control" id="_origin">
+                                                <option value="0" {% if company.origin == '' %}
+                                                selected
+                                                        {% endif %}>Не выбран
+                                                </option>
+                                                <option value="Foreign" {% if company.origin == 'Foreign' %}
+                                                selected
+                                                        {% endif %}>Foreign
+                                                </option>
+                                                <option value="Local" {% if company.origin == 'Local' %}
+                                                selected
+                                                        {% endif %}>Local
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="_script_type">Status</label>
+                                            <select class="form-control" id="_status">
+                                                <option value="0" {% if company.status == '' %}
+                                                selected
+                                                        {% endif %}>Не выбран
+                                                </option>
+                                                <option value="Inactive" {% if company.status == 'Inactive' %}
+                                                selected
+                                                        {% endif %}>Inactive
+                                                </option>
+                                                <option value="Active" {% if company.status == 'Active' %}
+                                                selected
+                                                        {% endif %}>Active
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="_script_type">Marketplace</label>
+                                            <select class="form-control" id="_marketplace_id">
+                                                {% for item in marketplace %}
+                                                    <option value="{{ item.id }}"
+                                                            {% if item.id == company.marketplace_id %}
+                                                                selected
+                                                            {% endif %}
+                                                    >{{ item.short_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="form-_priority">
+                                            <label for="fr_date">Priority </label>
+                                            <input type="text" id="_priority" class="form-control"
+                                                   value="{{ company.priority }}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="_payment_terms">Payment terms </label>
+                                            <input type="text" id="_payment_terms" class="form-control"
+                                                   value="{{ company.payment_terms }}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="_payment_terms">Legal address</label>
+                                            <input type="text" id="_legal_address" class="form-control"
+                                                   value="{{ company.legal_address }}">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                {% if role == '2' %}
+
+                                {% else %}
+                                    <button class="btn btn-default btn-success b10" type="button"
+                                            id="form-button-save">
+                                        <i class="fa fa-check"></i>
+                                        Add
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+</div>
+
+
+
+<script src="https://cdn.tiny.cloud/1/71j1qczmxow9ec79z0b3tz3q6rzzsq933b2rxwuc2lgjyxlu/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
+<script>tinymce.init({selector: 'textarea'});</script>
+
+<script>
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        let role = `{{ role }}`;
+
+        if (role == '2') {
+            let arrayInput = document.querySelectorAll('.form-control');
+            [...arrayInput].forEach((el) => {
+                el.disabled = 'true';
+
+            })
+        }
+
+    })
+
+
+    document.getElementById('form-button-save').addEventListener('click', () => {
+
+        let script = document.getElementById('_script').value;
+        let company_name = document.getElementById('_company_name').value;
+        // let contacts = document.getElementById('_contacts').value;
+        let contacts = tinymce.get('_contacts').getContent();
+        let last_script_num = document.getElementById('_last_script_num').value;
+        let currency = document.getElementById('_currency').value;
+        let script_type = document.getElementById('_script_type').value;
+        let priority = document.getElementById('_priority').value;
+        let payment_terms = document.getElementById('_payment_terms').value;
+        let legal_address = document.getElementById('_legal_address').value;
+        let origin = document.getElementById('_origin').value;
+        let status = document.getElementById('_status').value;
+        let marketplace_id = document.getElementById('_marketplace_id').value;
+
+
+        $.ajax({
+            url: '/company/save/',
+            method: 'POST',
+            data: {
+                script: script,
+                company_name: company_name,
+                contacts: contacts,
+                last_script_num: last_script_num,
+                currency: currency,
+                script_type: script_type,
+                priority: priority,
+                payment_terms: payment_terms,
+                legal_address: legal_address,
+                origin: origin,
+                status: status,
+                marketplace_id: marketplace_id
+
+            }
+        })
+            .done(function(id) {
+                if(id > 0){
+                    location.href = '../company/info/?companyId=' + id;
+                } else {
+                    toastr.error ('Не все обязательный поля заполнены');
+                }
+
+            });
+
+    });
+</script>
+
+
+
+
+
+
+
+
+
+

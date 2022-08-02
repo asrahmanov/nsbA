@@ -1,0 +1,337 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12">
+                <div class="content-header">API</div>
+            </div>
+        </div>
+        <!-- Basic Usage -->
+        <section id="basic-usage" class="row">
+            <div class=" col-12">
+
+
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        {# <img src="../../../app-assets/img/api/order.png" alt=""  width="500px" style="margin-bottom: 20px"> #}
+                        <h4 class="card-title">Получение всех заявок по id компании - GetOrderByScriptId()</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p>/api/GetOrderByScriptId/?token={TOKEN}</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Пример ответа:</p>
+                            <pre class="language-markup"><code class="language-markup">
+{
+   "result":[
+      {
+         "fr_date":"2021-04-16",
+         "internal_id":"C19-1",
+         "external_id":"91AA7B",
+         "project_name":"Human Fresh Tissue",
+         "client_status":{
+            "ru":"\u0422\u0440\u0435\u0431\u0443\u0435\u043c\u044b\u0435 \u043e\u0431\u0440\u0430\u0437\u0446\u044b \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u044b, \u0433\u043e\u0442\u043e\u0432\u0438\u0442\u0441\u044f \u043a\u0432\u043e\u0442\u0430",
+            "en":"The required samples are available. Proposal in progress"
+         },
+         "staf":"Jess Magee ",
+         "comments":"Комментарий"
+      },
+      {
+         "fr_date":"2021-04-21",
+         "internal_id":"O3-1",
+         "external_id":"71DCEE",
+         "project_name":"Human Frozen Tissue Vendor Review",
+         "staf":"Jess Magee ",
+         "comments":"Комментарий",
+         "client_status":{
+            "ru":"\u0422\u0440\u0435\u0431\u0443\u0435\u043c\u044b\u0435 \u043e\u0431\u0440\u0430\u0437\u0446\u044b \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u044b, \u0433\u043e\u0442\u043e\u0432\u0438\u0442\u0441\u044f \u043a\u0432\u043e\u0442\u0430",
+            "en":"The required samples are available. Proposal in progress"
+      }
+   ]
+}
+</code></pre>
+                            <p>Где</p>
+                            <pre class="language-css"><code class="language-css">
+         "fr_date": - Дата создания заявки
+         "internal_id": внутренний номер
+         "external_id": внешний номер
+         "project_name": - имя проекта
+         "client_status":{ - массив со статусом для клиента - возвращаем всегда EN
+            "ru":"\u0422\u0440\u0435\u0431\u0443\u0435\u043c\u044b\u0435 \u043e\u0431\u0440\u0430\u0437\u0446\u044b \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u044b, \u0433\u043e\u0442\u043e\u0432\u0438\u0442\u0441\u044f \u043a\u0432\u043e\u0442\u0430",
+            "en":"The required samples are available. Proposal in progress"
+         },
+         "staf":"Jess Magee " - Имя ответственного со стороны компаниии заказчика
+</code></pre>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class=" col-12">
+
+
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        {# <img src="../../../app-assets/img/api/order.png" alt=""  width="500px" style="margin-bottom: 20px"> #}
+                        <h4 class="card-title">Получение одной заявки  по proj_id - GetOrderByOrderId()</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p>/api/GetOrderByOrderId/?token={TOKEN}</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Пример ответа:</p>
+                            <pre class="language-markup"><code class="language-markup">
+{
+   "result":[
+      {
+         "fr_date":"2021-04-16",
+         "internal_id":"C19-1",
+         "external_id":"91AA7B",
+         "project_name":"Human Fresh Tissue",
+         "comments":"Комментарий",
+         "fr_script_id": id компании
+         "client_status":{
+            "ru":"\u0422\u0440\u0435\u0431\u0443\u0435\u043c\u044b\u0435 \u043e\u0431\u0440\u0430\u0437\u0446\u044b \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u044b, \u0433\u043e\u0442\u043e\u0432\u0438\u0442\u0441\u044f \u043a\u0432\u043e\u0442\u0430",
+            "en":"The required samples are available. Proposal in progress"
+         },
+      }
+   ]
+}
+</code></pre>
+                            <p>Где</p>
+                            <pre class="language-css"><code class="language-css">
+         "fr_date": - Дата создания заявки
+         "internal_id": внутренний номер
+         "external_id": внешний номер
+         "project_name": - имя проекта
+         fr_script_id": id компании
+         "client_status":{ - массив со статусом для клиента - возвращаем всегда EN
+            "ru":"\u0422\u0440\u0435\u0431\u0443\u0435\u043c\u044b\u0435 \u043e\u0431\u0440\u0430\u0437\u0446\u044b \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u044b, \u0433\u043e\u0442\u043e\u0432\u0438\u0442\u0441\u044f \u043a\u0432\u043e\u0442\u0430",
+            "en":"The required samples are available. Proposal in progress"
+         },
+</code></pre>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class=" col-12">
+
+
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        <img src="../../../app-assets/img/api/order.png" alt="" width="100%"
+                             style="margin-bottom: 20px">
+                        <h4 class="card-title">Создание и редактирование заявки OrderCreate()</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p>/api/OrderCreate/?token={TOKEN}</p>
+                        <p>Результатом выполнения будет id - созданной заявки </p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Парамтеры:</p>
+                            <pre class="language-markup"><code class="language-markup">
+{
+        fr_date = '0000-00-00', - Дата создания запроса
+        internal_id = null, - Внутренний номер
+        external_id = null, - Внешний номер
+        currency = 0, - Валюта огранищации
+        comments = null, доп инфонрмации от компании
+        answering_id = 90,   - это id сотрудника всегда ( 90 = nbs_market )
+        fr_script_id =   id компании,
+        project_name = Название заявки
+        project_details = Описание заявки
+
+}
+
+                                </code></pre>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class=" col-12">
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        <img src="../../../app-assets/img/api/nbs_orders_diseases.png" alt="" width="50%">
+                        <h4 class="card-title">Получение болезний по id заявки - GetDiseaseByOrder()</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p>/api/GetDiseaseByOrder/?token={TOKEN}&proj_id={proj_id}</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Пример ответа:</p>
+                            <pre><code class="language-css">
+{
+   "result":[
+      {
+         "id":"2",
+         "order_id":"5093",
+         "disease_id":"2",
+         "created_at":"",
+         "deleted":"0",
+         "group_id":"2",
+         "disease_name":"Larynx ,
+         "disease_name_russian":"",
+         "disease_name_russian_old":""
+      }
+   ]
+}
+                                </code></pre>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class=" col-12">
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        <img src="../../../app-assets/img/api/nbs_orders_diseases.png" alt="" width="50%">
+                        <h4 class="card-title">Добавление болезний к заявке - AddDiseaseByOrder()</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p>/api/AddDiseaseByOrder/?token={TOKEN}&proj_id=5093&disease_id=2</p>
+                        <p>Возвращает id созанный записи</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Принимает на вход два параметра:</p>
+                            <pre><code class="language-css">
+         "order_id":"5093", - номер заявки ( отпраяляем как proj_id )
+         "disease_id":"2", - id болезни
+
+
+                                </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-12">
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        <img src="../../../app-assets/img/api/nbs_diseases_biospecimen_types.png" alt="" width="50%">
+                        <h4 class="card-title">Добавленени  семплов к болезни в связке с заявкой addDiseaseAndSample()</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p style="color:red">"Если передается id то строчка не создается а редактируется
+                        к одному семплу только одна модификация</p>
+                        <p>/api/addDiseaseAndSample/?token={TOKEN}</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Принимает на вход 4(5) параметров :</p>
+                            <pre><code class="language-css">
+                "id" - id если передается id то строчка не создается а редактируется
+                "order_id" - id заявки отправляется как proj_id
+                "disease_id"  - id болезни
+                "biospecimen_type_id" - id sample
+                "mod_id" - id модификации
+                "sample_count" - кол-во
+
+</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class=" col-12">
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        <img src="../../../app-assets/img/api/nbs_diseases_biospecimen_types.png" alt="" width="50%">
+                        <h4 class="card-title">Получение списка болезней и семплов по id заявки</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p>/api/GetALlBiospecimenTypesByOrder/?token={TOKEN}&proj_id=8039</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Принимает на вход 1 параметра  proj_id - id заявки Результат:</p>
+                            <pre><code class="language-css">
+
+{
+   "result":[
+      {
+         "id":"12251",
+         "order_id":"8039",
+         "disease_id":"45",
+         "biospecimen_type_id":"5",
+         "created_at":"2020-09-18 13:43:18",
+         "deleted":"0",
+         "mod_id":"4",
+         "group_id":"36",
+         "disease_name":"Crohn's disease (CD)",
+         "disease_name_russian":"\u0411\u043e\u043b\u0435\u0437\u043d\u044c \u041a\u0440\u043e\u043d\u0430",
+         "disease_name_russian_old":null,
+         "biospecimen_type":"Viable PBMCs",
+         "biospecimen_type_russian":"\u0416\u0438\u0437\u043d\u0435\u0441\u043f\u043e\u0441\u043e\u0431\u043d\u044b\u0435 \u041c\u041a\u041f\u041a "
+         "sample_count":"1"
+      },
+      {
+         "id":"12252",
+         "order_id":"8039",
+         "disease_id":"45",
+         "biospecimen_type_id":"93",
+         "created_at":"2020-10-27 17:57:04",
+         "deleted":"0",
+         "mod_id":"4",
+         "group_id":"36",
+         "disease_name":"Crohn's disease (CD)",
+         "disease_name_russian":"\u0411\u043e\u043b\u0435\u0437\u043d\u044c \u041a\u0440\u043e\u043d\u0430",
+         "disease_name_russian_old":null,
+         "biospecimen_type":"Frozen serum",
+         "biospecimen_type_russian":"1"
+      }
+   ]
+}
+
+</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class=" col-12">
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        <img src="../../../app-assets/img/api/nbs_diseases_biospecimen_types.png" alt="" width="50%">
+                        <h4 class="card-title">Удаление семпла из заявки</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p>/api/DeleteBiospecimenTypesOrder/?token={TOKEN}&id=</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Принимает на вход 1 параметра  id - строки:</p>
+                            <pre><code class="language-css">
+
+</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-12">
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        <h4 class="card-title">Удаление болезни из заявки вызывать только после удаления всех семплов</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p>/api/DeleteDiseasesOrder/?token={TOKEN}&id=</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Принимает на вход 1 параметра  id - строки:</p>
+                            <pre><code class="language-css">
+
+</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+    </div>
+</div>

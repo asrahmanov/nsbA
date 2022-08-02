@@ -1,0 +1,187 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <div class="card-body">
+            {% if (ticket.reason == 'manager') %}
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="feas_russian"><b>Request(Russian text:)</b></label>
+                                    <div class="minBlock">{{ fr.feas_russian | raw }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="col-12" id="chat_history"></div>
+            <div class="col-6">
+                <div class="form-group" >
+                    <label for="new_chat_message">Сообщение</label>
+                    <textarea id="new_chat_message" class="form-control" ></textarea>
+                </div>
+            </div>
+            <div class="col-6"></div>
+            <div class="col-12">
+                <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Отмена
+                </button>
+                <button type="button" class="btn btn-outline-primary" id="send_message">
+                    Отправить
+                </button>
+                {% if (user_id == ticket.author_id and ticket.done != 1) %}
+                    <button type="button" class="btn btn-danger" id="close_ticket">
+                        Закрыть
+                    </button>
+                {% elseif (user_id == ticket.author_id and ticket.done == 1) %}
+                    <button type="button" class="btn btn-danger" id="open_ticket">
+                        Открыть
+                    </button>
+                {% endif %}
+            </div>
+            <div class="col-12">
+                {% if (ticket.reason == 'manager') %}
+                    <label>Ответ</label><br>
+                    <score
+                            ticket_id="{{ ticket.id }}"
+                            proj_id="{{ id }}"
+
+                ></score>
+                {% endif %}
+            </div>
+            {% if (ticket.reason == 'manager') %}
+                {% if (role == '3' or role == '8') %}
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title"><h3>Квотирование Quote {{ id }}</h3></h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body card-dashboard ">
+                                    {% for item in order %}
+                                        <quote
+                                                :proj_id="{{ item.proj_id }}"
+                                                :mode="0"
+                                                :languages = "'ru'"
+                                                :order_diseases="{{ order_diseases }}"
+                                                :diseases_biospecimen_types="{{ diseases_biospecimen_types }}"
+                                                :biospecimen_types="{{ biospecimen_types }}"
+                                                :back_url = "'newTickets/index'"
+                                                :quotecreatevisible ="1"
+                                        ></quote>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            <div class="col-12">
+                Автор заявки: {{ author }}<br>
+                {% if target != 0 %}
+                    Кому: {{ target }}
+                {% else %}
+                    <br>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.tiny.cloud/1/71j1qczmxow9ec79z0b3tz3q6rzzsq933b2rxwuc2lgjyxlu/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: '#edit_comment',
+        height : "240"
+    })
+    tinymce.init({
+        selector: '#new_comment',
+        height : "240"
+    })
+    tinymce.init({
+        selector: '#new_chat_message',
+        height : "240"
+    })
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let Chat = $("#chat_history"), ScreenTickets = {}, UserNamesById = {}, SendMessageButton = $("#send_message"),
+            user_id = parseInt(`{{ user_id }}`), CloseTicketButton = $("#close_ticket"), OpenTicketButton = $("#open_ticket"),
+            /*ManagerTakeButton = $("#manager_take"), ManagerRefuseButton = $("#manager_refuse"),  */
+            AnswerButtons = $(".answer")
+
+        $.get({ url: '/users/getEverybody'}).done((res) => {
+            let Users = JSON.parse(res)
+            Users.data.forEach(user => {
+                let fullname = `${user.lasttname} ${user.firstname} ${user.patronymic || ''}`
+                UserNamesById[user.id] = fullname
+            })
+            $.get({url: '/newTickets/getMy/'}).done(res => {
+                let MyTickets = JSON.parse(res)
+                MyTickets.result.forEach(ticket => {
+                    ScreenTickets[ticket.id] = ticket
+                })
+                let ticket = ScreenTickets[`{{ ticket.id }}`], chat = ticket.chat
+                Chat.html(`<h1>${ticket.message}</h1>`)
+                chat.forEach((msg) => {
+                    Chat.append(`
+                            <div class="${parseInt(msg.author_id) === user_id ? 'ticket_my' : 'ticket_in'}">
+                                ${msg.message}
+                            </div>
+                            <div class="${parseInt(msg.author_id) === user_id ? 'ticket_author_my' : 'ticket_author_in'}">
+                                ${UserNamesById[msg.author_id]}
+                            </div>
+                            <div class="${parseInt(msg.author_id) === user_id ? 'ticket_date_my' : 'ticket_date_in'}">
+                                ${msg.created_at.split(' ')[0].split('-').reverse().join('/') + ' ' +
+                                    msg.created_at.split(' ')[1].split(':')[0] + ':' +
+                                    msg.created_at.split(' ')[1].split(':')[1]}
+                            </div>
+                            `)
+                    if (parseInt(msg.author_id) !== user_id) {
+                        $.post({ url: '/newTicketChats/save/', data: { id: msg.id, viewed: 1}})
+                    }
+                })
+                SendMessageButton.off('click').click(() => {
+                    let NewMsg = tinymce.get('new_chat_message').getContent(),
+                        data = { ticket_id: ticket.id, message: NewMsg }
+                    $.post({ url: '/newTicketChats/save/', data }).done((res) => {
+                        location.reload()
+                    })
+                })
+                CloseTicketButton.off('click').click(() => {
+                    let data = { id: ticket.id, done: 1 }
+                    $.post({ url: '/newTickets/save/', data }).done((res) => {
+                        location.reload()
+                    })
+                })
+                OpenTicketButton.off('click').click(() => {
+                    let data = {id: ticket.id, done: 0}
+                    $.post({url: '/newTickets/save/', data}).done((res) => {
+                        location.reload()
+                    })
+                })
+            })
+        })
+
+        AnswerButtons.each(function( index , btn) {
+            $(this).click((e) => {
+                let ticket_id = `{{ ticket.id }}`, data = { ticket_id: ticket_id, message: $(e.currentTarget).val() }
+                $.post({ url: '/newTicketChats/save/', data }).done(() => {
+                    location.href = '/newTickets/index/'
+                })
+            })
+        });
+
+    })
+</script>
+
+<script  src="../../../js/dist/vue.js"></script>
+<script  src="../../../js/components/worksheets.js"></script>
+<script  src="../../../js/components/quote.js?v=24"></script>
+<script  src="../../../js/components/sites.js"></script>
+<script  src="../../../js/components/tickets/score.js?v=1.02"></script>
+<script  src="../../../js/main.js"></script>

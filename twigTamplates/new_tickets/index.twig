@@ -1,0 +1,657 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12">
+                <div class="">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 class="card-title pull-left"><i class="fa fa-life-ring" aria-hidden="true"> </i>
+                                    Задачи</h2>
+                                {% if role_id == 3 or role_id == 6 %}
+                                    <button class="btn btn-round btn-success pull-right" id="new_ticket_btn">
+                                        Создать задачу
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content ">
+                        <div class="card-body card-dashboard">
+                            <!-- NEW TICKET MODAL -->
+                            <div class="modal fade text-left" id="new_ticket_modal" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel2"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <input type="hidden" id="contact_id">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel2">Заявка</h4>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="new_title">Тема <span
+                                                                    style="color:red;">*</span></label>
+                                                        <input type="text" id="new_title" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="new_target">Кому <span
+                                                                    style="color:red;">*</span></label>
+                                                        <select id="new_target" class="form-control">
+                                                            <option value="0">Выеберите сотрудника...</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="new_message">Сообщение <span
+                                                                    style="color:red;">*</span></label>
+                                                        <textarea id="new_message" class="form-control"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn grey btn-outline-secondary"
+                                                    data-dismiss="modal">Отмена
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary"
+                                                    id="save_ticket">
+                                                Сохранить
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /NEW TICKET MODAL -->
+                            <!-- CHAT MODAL -->
+                            <div class="modal fade text-left" id="chat_modal" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel2"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <input type="hidden" id="contact_id">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel2">Заявка № <span
+                                                        id="chat_modal_header_ticket_id"></span></h4>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-12" id="chat_history"></div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="new_chat_message">Сообщение</label>
+                                                        <textarea id="new_chat_message" class="form-control"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn grey btn-outline-secondary"
+                                                    data-dismiss="modal">Отмена
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary"
+                                                    id="send_message">
+                                                Отправить
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /CHAT MODAL -->
+                            <!-- MANAGER TICKET RESPONSES MODAL -->
+                            <div class="modal fade" id="manager_responses_modal" tabindex="-1" role="dialog"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close page_reload" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <table class="table table-bordered table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Менеджер</th>
+                                                            <th>Ответ</th>
+                                                            <th>Чат</th>
+                                                            <th>Баллы</th>
+                                                            <th>Закрыть</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="manager_responses_table"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /MANAGER TICKET RESPONSES MODAL -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <select id="statuses_active" class="form-control">
+                            <option value="all">Все</option>
+                            <option value="open" selected>Открытые</option>
+                            <option value="closed">Архив</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div id="my_tickets"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.tiny.cloud/1/71j1qczmxow9ec79z0b3tz3q6rzzsq933b2rxwuc2lgjyxlu/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
+<script>tinymce.init({
+        selector: 'textarea',
+        height: "480"
+    });</script>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        let a = {
+            "Ё": "YO",
+            "Й": "I",
+            "Ц": "TS",
+            "У": "U",
+            "К": "K",
+            "Е": "E",
+            "Н": "N",
+            "Г": "G",
+            "Ш": "SH",
+            "Щ": "SCH",
+            "З": "Z",
+            "Х": "H",
+            "ё": "yo",
+            "й": "i",
+            "ц": "ts",
+            "у": "u",
+            "к": "k",
+            "е": "e",
+            "н": "n",
+            "г": "g",
+            "ш": "sh",
+            "щ": "sch",
+            "з": "z",
+            "х": "h",
+            "Ф": "F",
+            "Ы": "I",
+            "В": "V",
+            "А": "a",
+            "П": "P",
+            "Р": "R",
+            "О": "O",
+            "Л": "L",
+            "Д": "D",
+            "Ж": "ZH",
+            "Э": "E",
+            "ф": "f",
+            "ы": "i",
+            "в": "v",
+            "а": "a",
+            "п": "p",
+            "р": "r",
+            "о": "o",
+            "л": "l",
+            "д": "d",
+            "ж": "zh",
+            "э": "e",
+            "Я": "Ya",
+            "Ч": "CH",
+            "С": "S",
+            "М": "M",
+            "И": "I",
+            "Т": "T",
+            "Ь": "_",
+            "Б": "B",
+            "Ю": "YU",
+            "я": "ya",
+            "ч": "ch",
+            "с": "s",
+            "м": "m",
+            "и": "i",
+            "т": "t",
+            "ь": "_",
+            "б": "b",
+            "ю": "yu",
+            " ": "-",
+            "/": "_",
+            ",": "_",
+            "-": "_",
+            "(": "_",
+            ")": "_",
+            ":": "_",
+        };
+
+        function transliterate(word) {
+            if (!word) {
+                return ''
+            } else {
+                let returned = word.split('').map(function (char) {
+                    return a[char] || char
+                }).join("")
+                return returned.replace(/[^A-Za-z]+/g, "_")
+            }
+
+
+        }
+
+        let NewTargetSelect = $("#new_target"), NewTitleInput = $("#new_title"),/* NewMessageTextarea = $("#new_message"),*/
+            MyTicketsStatusesVisibleSelect = $("#statuses_active"), NewTicketModal = $("#new_ticket_modal"),
+            ChatModal = $("#chat_modal"), Chat = $("#chat_history"), SendMessageButton = $("#send_message"),
+            ScreenTickets = {}, user_id = parseInt(`{{ user_id }}`), UserNamesById = {}, ScreenManagerTickets = {},
+            role_id = parseInt(`{{ role_id }}`), ManagerResponsesTable = $("#manager_responses_table")
+
+        $("#new_ticket_btn").click(() => {
+            NewTicketModal.modal('show')
+        })
+
+        $.get({url: '/users/getEverybody'}).done((res) => {
+            let Users = JSON.parse(res)
+            Users.data.forEach(user => {
+                let fullname = `${user.lasttname} ${user.firstname} ${user.patronymic || ''}`;
+                NewTargetSelect.append(`<option value='${user.id}'>${fullname}</option>`)
+                UserNamesById[user.id] = fullname
+            })
+        })
+
+        let refreshMyTickets = () => {
+            ScreenManagerTickets = {}
+            $.get({url: '/newTickets/getMy/'}).done(res => {
+                let statusesShown = MyTicketsStatusesVisibleSelect.val()
+                $("#my_tickets").empty()
+                let MyTickets = JSON.parse(res)
+                MyTickets.result.filter(t => t.reason === 'manager' || t.reason === 'none').forEach((ticket, i, TicketsArr) => {
+                    let unviewedMessages
+                    let chat = ticket.chat
+                    if (chat && chat.length)
+                        unviewedMessages = parseInt(chat[chat.length - 1].author_id) !== user_id
+                    else
+                        unviewedMessages = parseInt(ticket.author_id) !== user_id
+                    if (ticket.done)
+                        unviewedMessages = false
+                    if (statusesShown === 'open' && parseInt(ticket.done) !== 1 || statusesShown === 'closed' && parseInt(ticket.done) === 1 || statusesShown === 'all' || ticket.reason === 'manager' && (role_id !== 3 && role_id !== 8)) {
+                        let upDate = ticket.updated_at.split(' ')[0].split('-').reverse().join('/') + ' ' +
+                            ticket.updated_at.split(' ')[1].split(':').slice(0, 2).join(':'),
+                            crDate = ticket.created_at.split(' ')[0].split('-').reverse().join('/') + ' ' +
+                                ticket.created_at.split(' ')[1].split(':').slice(0, 2).join(':'), ticketDisplayedTarget
+                        if (ticket.reason !== 'manager' && role_id !== 3 && role_id !== 8 && role_id !== 1) {
+                            ticketDisplayedTarget = UserNamesById[parseInt(ticket.target_id)]
+                            $("#my_tickets").prepend(``);
+                            // тут была вставка как понял которая была до перезагрузки страницы
+                            ScreenTickets[ticket.id] = ticket
+                        } else if (ticket.reason === 'manager' && !ScreenManagerTickets[`${ticket.order_id}_${transliterate(ticket.title)}`]) {
+                            ScreenManagerTickets[`${ticket.order_id}_${transliterate(ticket.title)}`] = []
+                            let ticketInfo, ticketBtn, ticketHeaderm, ticketDeadline, ticketScore, ticketDate,
+                                ticketCompany;
+                            let myReply = ticket.chat.length ? `${ticket.chat[0].message}` : ''
+                            if (role_id !== 3 && role_id !== 8) {
+                                ticketHeader = `<a href="/orders/info/?idFR=${ticket.order_id}" target="_blank" style="color:#fff;">Запрос № ${ticket.order_id} (${ticket.internal_id})</a>`;
+                                ticketDeadline = `${ticket.deadline ? ticket.deadline.split('-').reverse().join('/') : ''}`;
+                                ticketCompany = `${ticket.company_name}`
+                                ticketScore = `
+
+                                    ${ticket.score !== null ? `<div class="cloth-card-footer-head__card">
+                                                            <span class="card__text-small">Баллы</span>
+                                                            <span class="card__text-big">${ticket.score}</span>
+                                                        </div>` : ''}`
+
+
+                                ticketDate = `${ticket.fr_date.split('-').reverse().join('/')}`;
+
+                                ticketDate = `<div class="wrap-data">
+                            <p class="data-changes">
+                                 Дата получения запроса
+                            </p>
+                            <div class="data-and-time">
+                                <span class="data-day">${ticketDate}</span>
+                            </div>
+                        </div>`
+
+
+                                ticketInfo = ``
+                                ticketDisplayedTarget = TicketsArr.filter((t) => {
+                                    return t.order_id === ticket.order_id && t.title === ticket.title
+                                }).reduce((acc, curVal) => {
+                                    return acc + UserNamesById[parseInt(curVal.target_id)] + '; '
+                                }, '')
+                                ticketBtn = `
+<span class="card__text-close manager_responses" id="responses_${ticket.order_id}_${transliterate(ticket.title)}">Ответы</span>`
+                            } else {
+                                let myReply = ticket.chat.length ? `${ticket.chat[ticket.chat.length - 1].message}` : '';
+                                //console.log('---->',ticket.chat)
+                                ticketHeader = `<a href="/orders/info/?idFR=${ticket.order_id}" target="_blank" style="color:#fff;">Запрос № ${ticket.order_id}</a>`;
+                                ticketDeadline = `${ticket.deadline ? ticket.deadline.split('-').reverse().join('/') : ''}`
+                                ticketInfo = ` ${myReply}`
+                                ticketDisplayedTarget = UserNamesById[parseInt(ticket.target_id)]
+                                ticketBtn = `<a href="/newTickets/view/?id=${ticket.id}">
+                                       <span class="card__text-close" id="responses_${ticket.order_id}_${transliterate(ticket.title)}">
+                                            ${parseInt(ticket.done) ? 'Закрыт' : 'Открыть'}</span></a>`
+                                ticketDate = '';
+                                ticketCompany = '';
+                                ticketScore = `
+
+                                    ${ticket.score !== null ? `<div class="cloth-card-footer-head__card">
+                                                            <span class="card__text-small">Баллы</span>
+                                                            <span class="card__text-big">${ticket.score}</span>
+                                                        </div>` : ''}`
+                            }
+                            let ticket_status_color = 'none';
+
+                            let ticket_status = (role_id === 3 || [23, 25].indexOf(user_id) !== -1) ?
+                                (ticket.closed_status === 'ok' ? 'Все хорошо, задача закрывается' :
+                                    (ticket.closed_status === 'late' ? 'Задача выполнена с опозданием' :
+                                        (ticket.closed_status === 'fail' ? 'Задача не выполнена' : ''))) : ''
+
+                            ticket_status_color = (role_id === 3 || [23, 25].indexOf(user_id) !== -1) ?
+                                (ticket.closed_status === 'ok' ? '#32CC70' :
+                                    (ticket.closed_status === 'late' ? '#ff903d' :
+                                        (ticket.closed_status === 'fail' ? '#ff0009' : ''))) : ''
+
+                            $("#my_tickets").prepend(`
+
+<div class="row">
+<div class="col-md-12">
+<div class="cloth-card"  id='tcard_${ticket.order_id}_${transliterate(ticket.title)}' style='display: none;'>
+        <div class="cloth-card-head ${ticket.priority === '1' ? 'gradient-pomegranate' : 'gradient-mint'}" >
+            <div class="cloth-card-number" style='color:#fff'>
+                  ${ticketHeader}<br>
+                  ${ticketCompany}
+            </div>
+            <div class="cloth-card-content">
+                <h2 class="cloth-card-title"></h2>
+                <div class="cloth-card-text">
+                    <p class="cloth-card-text__p">От: ${UserNamesById[parseInt(ticket.author_id)]}</p>
+                    <p class="cloth-card-text__p">Кому: ${ticketDisplayedTarget}</p>
+                </div>
+            </div>
+        </div>
+        <div class="cloth-card-footer">
+            <div class="cloth-card-footer-head">
+                <div class="cloth-card-footer-content">
+                    <h3>${ticket.title}</h3>
+                    <p class="cloth-card-footer__p">${ticketInfo}</p>
+                </div>
+                <div class="cloth-card-footer-head-cards">
+                    ${ticketScore}
+                    <div class="cloth-card-footer-head__card card__close-ml">
+                        <span class="card__text-close">${ticketBtn}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="cloth-card-footer-bottom">
+                <div class="cloth-card-footer-bottom-task">
+                    <span class="cloth__task" style="background: ${ticket_status_color}"></span>
+                    <p class="task__text"> ${ticket_status}</p>
+                </div>
+                <div class="deadline-wrapper">
+                    <div class="cloth-card-footer-bottom-data">
+                        <div class="data__deadline">
+                            <p>Дата дедлайна</p>
+                            <div class="block-data__deadline">
+                                <span class="data-day">${ticketDeadline}</span>
+                                <span class="data-icon"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cloth-card-footer-bottom-data-info">
+                        <div class="wrap-data">
+                            <p class="data-receipt">
+                                Дата получения
+                            </p>
+                            <div class="data-and-time">
+                                <span class="data-day">${crDate}</span>
+                            </div>
+                        </div>
+                        <div class="wrap-data">
+                            <p class="data-changes">
+                                 Дата изменения
+                            </p>
+                            <div class="data-and-time">
+                                <span class="data-day">${upDate}</span>
+                            </div>
+                        </div>
+                        ${ticketDate}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+                            `)
+                            ScreenManagerTickets[`${ticket.order_id}_${transliterate(ticket.title)}`].push(ticket)
+                        } else {
+                            if (!ScreenManagerTickets[`${ticket.order_id}_${transliterate(ticket.title)}`])
+                                ScreenManagerTickets[`${ticket.order_id}_${transliterate(ticket.title)}`] = []
+                            ScreenManagerTickets[`${ticket.order_id}_${transliterate(ticket.title)}`].push(ticket)
+                        }
+                    }
+                })
+                // ScreenManagerTickets.forEach((man_tick) => {
+                for (let id in ScreenManagerTickets) {
+                    if (statusesShown === 'all' ||
+                        statusesShown === 'open' && ScreenManagerTickets[id].some(t => t.done !== '1') ||
+                        statusesShown === 'closed' && ScreenManagerTickets[id].every(t => t.done === '1')) {
+                        $(`#tcard_${id}`).css('display', 'block')
+                    }
+                }
+                $(".manager_responses").off('click').click(e => {
+                    let btnPressed = $(e.currentTarget), btnId = btnPressed.attr('id'), idFrags = btnId.split('_');
+                    let manTickId = '';
+
+                    for (let i = 1; i < idFrags.length; i++) {
+                        manTickId = manTickId + `${idFrags[i]}_`;
+                    }
+
+                    manTickId = manTickId.substring(0, manTickId.length - 1);
+
+
+                    let tickIds = []
+                    ManagerResponsesTable.empty()
+                    $("#manager_responses_modal").modal('show')
+                    ScreenManagerTickets[manTickId].forEach(mantick => {
+
+
+                        // let msg = mantick.chat.length ? mantick.chat[mantick.chat.length - 1].message : '',
+                        //     closeTickBtn
+                        // if (msg)
+                        //     msg += `<br>${mantick.chat[mantick.chat.length - 1].created_at.split(' ')[0].split('-').reverse().join('/')}`
+
+                        let msg = '';
+                        let data = {
+                            'ticket_id': mantick.id
+                        }
+
+
+                        async function postData(url, data) {
+                            // Default options are marked with *
+                            const response = await fetch(url, {
+                                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                                mode: 'cors', // no-cors, *cors, same-origin
+                                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                                credentials: 'same-origin', // include, *same-origin, omit
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                redirect: 'follow', // manual, *follow, error
+                                referrerPolicy: 'no-referrer', // no-referrer, *client
+                                body: JSON.stringify(data) // body data type must match "Content-Type" header
+                            });
+                            return await response.json(); // parses JSON response into native JavaScript objects
+                        }
+
+
+                        postData('/TicketsScore/getInfobyTicketId/', data)
+                            .then((data) => {
+                                if (data.length > 0) {
+                                    data.forEach(el => {
+                                        msg += `<p style="font-size: 12px;">${el.action} <br> ${el.created_at}</p>`
+                                    })
+                                }
+
+
+                                if (!mantick.done || mantick.done === '0') {
+                                    closeTickBtn = `
+                                <div class="display-inline-block">
+                                    <select class="form-control" id="close_score_${mantick.id}">
+                                        <option value="10">Все хорошо, задача закрывается</option>
+                                        <option value="0">Задача не выполнена</option>
+                                        <option value="5">Задача выполнена с опозданием</option>
+                                    </select>
+                                    <br>
+                                    <button type="button" class="btn btn-danger close_manager_ticket" id="close_${mantick.id}">
+                                        Закрыть</button>
+                                    <button type="button" class="btn btn-secondary open_manager_ticket invisible" id="open_${mantick.id}">
+                                        Открыть</button>                                
+                                </div>
+                                `
+                                } else {
+                                    closeTickBtn = `
+                                <div class="display-inline-block">
+                                    <select class="form-control invisible" id="close_score_${mantick.id}">
+                                        <option value="10">Все хорошо, задача закрывается</option>
+                                        <option value="0">Задача не выполнена</option>
+                                        <option value="5">Задача выполнена с опозданием</option>
+                                    </select>
+                                    <br>
+                                    ${mantick.closed_status === 'ok' ? 'Все хорошо, задача закрывается<br><br>' :
+                                        (mantick.closed_status === 'late' ? 'Задача выполнена с опозданием<br><br>' :
+                                            (mantick.closed_status === 'fail' ? 'Задача не выполнена<br><br>' : ''))}
+                                    <button type="button" class="btn btn-danger close_manager_ticket invisible" id="close_${mantick.id}">
+                                        Закрыть</button>
+                                    <button type="button" class="btn btn-secondary open_manager_ticket" id="open_${mantick.id}">
+                                        Открыть</button>
+                                </div>`
+                                }
+                                ManagerResponsesTable.append(`<tr>
+                            <td>${UserNamesById[mantick.target_id]}</td>
+                            <td>${msg}</td>
+                            <td style="font-size: 12px;">${mantick.chat ? mantick.chat.map(cmsg => cmsg.message).join('<br><br>') : ''}</td>
+                            <td id="score_${mantick.id}">${mantick.done === '1' ? mantick.score : ''}</td>
+                            <td style="min-width: 300px;">${closeTickBtn}</td>
+                        </tr>`)
+                                tickIds.push(mantick.id)
+                                console.log(mantick)
+
+                                $(".close_manager_ticket").off('click').click(e => {
+                                    let tId = $(e.currentTarget).attr('id').split('_')[1],
+                                        score = $(`#close_score_${tId}`).val(),
+                                        data = {id: tId, score: score, done: 1}
+                                    $.post({url: '/newTickets/save/', data}).done((res) => {
+                                        let Result = JSON.parse(res), newScore = Result.score
+                                        $(`#score_${tId}`).html(newScore)
+                                        $(`#close_${tId}, #open_${tId}, #close_score_${tId}`).toggleClass('invisible')
+                                    })
+                                })
+                                $(".open_manager_ticket").off('click').click(e => {
+                                    let tId = $(e.currentTarget).attr('id').split('_')[1], data = {id: tId, done: 0}
+                                    $(`#score_${tId}`).html('')
+                                    $.post({url: '/newTickets/save/', data}).done(() => {
+                                        $(`#close_${tId}, #open_${tId}, #close_score_${tId}`).toggleClass('invisible')
+                                    })
+                                })
+
+                            })
+
+                    });
+
+                })
+                $(".quickView").off('click').click(e => {
+                    let divPressed = $(e.currentTarget), tId = divPressed.attr('id').split('_')[1],
+                        ticket = ScreenTickets[tId]
+                    $("#chat_modal_header_ticket_id").html(tId)
+
+                    Chat.html(ticket.message)
+                    let chat = ticket.chat
+                    chat.forEach((msg) => {
+                        Chat.append(`
+                            <div class="${parseInt(msg.author_id) === user_id ? 'ticket_my' : 'ticket_in'}">
+                                ${msg.message}
+                            </div>
+                            <div class="${parseInt(msg.author_id) === user_id ? 'ticket_author_my' : 'ticket_author_in'}">
+                                ${UserNamesById[msg.author_id]}
+                            </div>
+                            <div class="${parseInt(msg.author_id) === user_id ? 'ticket_date_my' : 'ticket_date_in'}">
+                                ${msg.created_at.split(' ')[0].split('-').reverse().join('/') + ' ' +
+                        msg.created_at.split(' ')[1].split(':')[0] + ':' +
+                        msg.created_at.split(' ')[1].split(':')[1]}
+                            </div>
+                            `)
+                        if (parseInt(msg.author_id) !== user_id) {
+                            $.post({url: '/newTicketChats/save/', data: {id: msg.id, viewed: 1}})
+                        }
+                    })
+                    ChatModal.modal('show')
+                    SendMessageButton.off('click').click(() => {
+                        let NewMsg = tinymce.get('new_chat_message').getContent(),
+                            data = {ticket_id: ticket.id, message: NewMsg}
+                        $.post({url: '/newTicketChats/save/', data}).done((res) => {
+                            tinymce.get('new_chat_message').setContent('')
+                            ChatModal.modal('hide')
+                            refreshMyTickets()
+                        })
+                    })
+                })
+            })
+        }
+
+        refreshMyTickets()
+
+        $("#save_ticket").click(() => {
+            let target_id = parseInt(NewTargetSelect.val()), title = NewTitleInput.val(),
+                message = tinymce.get('new_message').getContent()/*NewMessageTextarea.val()*/,
+                data = {target_id, title, message}
+            if (!target_id)
+                toastr.error('Выберите сотрудника')
+            else if (!title)
+                toastr.error('Введите тему')
+            else if (!message)
+                toastr.error('Введите сообщение')
+            else
+                $.post({url: '/newTickets/save/', data}).done(() => {
+                    NewTicketModal.modal('hide')
+                    refreshMyTickets()
+                })
+        })
+
+        MyTicketsStatusesVisibleSelect.change(refreshMyTickets)
+
+        $(".page_reload").click(() => location.reload())
+
+    })
+
+</script>
+
+

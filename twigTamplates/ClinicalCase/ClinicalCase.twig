@@ -1,0 +1,472 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Clinical case</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body card-dashboard ">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <form>
+                                            <input type="file" class="form-control-lg mb-2" id="excel">
+                                            <input type="submit" class="btn btn-dark " id="submit_excel">
+                                        </form>
+                                        <div id="file-container"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                       <div class="card-content">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <ul id="drafts" class="list-style-circle ml-2 "></ul>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-dark" onclick="sendMailGroup()">Отправить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="status_checked" checked>
+                                <label class="form-check-label" for="status_checked">CRF предоставлен</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="status_unchecked" checked>
+                                <label class="form-check-label" for="status_unchecked">CRF отсутствует</label>
+                            </div>|&nbsp;
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="status_paid" checked>
+                                <label class="form-check-label" for="status_paid">НИР Оплачено</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="status_unpaid" checked>
+                                <label class="form-check-label" for="status_unpaid">НИР Не оплачено</label>
+                            </div>|&nbsp;
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="status_valid" checked>
+                                <label class="form-check-label" for="status_valid">Тренинговая форма предоставлена</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="status_invalid" checked>
+                                <label class="form-check-label" for="status_invalid">Тренинговая форма отсутсвует</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12">
+                                    <label for="">Дата с</label>
+                                    <input type="date" class="form-control" value="{{ dateTwo }}" id="dateTwo" >
+
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <label for="">Дата по</label>
+                                    <input type="date" class="form-control" value="{{ dateOne }}" id="dateOne" >
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <label for="">Фильтр</label><br>
+                                    <button class="btn btn-dark" id="clinicallSearch">Поиск</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <table class="table table-striped table-bordered file-export" id="datatable_fr"
+                                   border="1">
+                                <thead>
+                                <tr>
+                                    <th>Project ID</th>
+                                    <th>Site</th>
+                                    <th>Manager</th>
+                                    <th>Clinical case ID (CIDp)</th>
+                                    <th>Site index</th>
+                                    <th>Clinical date</th>
+                                    <th>Comment</th>
+                                    <th>CRF статус</th>
+                                    <th>Статус оплаты НИР</th>
+                                    <th>Статус тренинговой формы</th>
+                                    <th>Не участвует в рассылке</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Send count</th>
+                                    <th>Send</th>
+                                    <th>Draft</th>
+                                    <th>Last send</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Project ID</th>
+                                    <th>Site</th>
+                                    <th>Manager</th>
+                                    <th>Clinical case ID (CIDp)</th>
+                                    <th>Site index</th>
+                                    <th>Clinical date</th>
+                                    <th>Comment</th>
+                                    <th>CRF статус</th>
+                                    <th>Статус оплаты НИР</th>
+                                    <th>Статус тренинговой формы</th>
+                                    <th>Не участвует в рассылке</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Send count</th>
+                                    <th>Send</th>
+                                    <th>Draft</th>
+                                    <th>Last send</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    let input = $('#excel'), button = $('#submit_excel'), container = $('#file-container'),
+        Drafts, draftContainer = $('#drafts'), nbs_user_id = `{{ user_id }}`
+
+    input.on('change', function () {
+        var files = $(this).prop('files')
+        for (var file of files) {
+            var elem = $('<div class="file-info"><p>' + file.name + '</p><progress class="progress-bar" max="100" value="0"></progress></div>').appendTo(container)
+            //добавляем инфу о файле в свойство превью
+            elem.get(0).file = file
+        }
+    });
+
+    button.on('click', async function (evt) {
+        evt.preventDefault();
+        //пускаем закачку каждого файла параллельно с помощью Promise.all и дожидаемся закачки всех файлов с помощью await.
+        await Promise.all($('.file-info').map(upload))
+    });
+
+    async function upload(index, elem) {
+        var data = new FormData()
+        data.append('file', elem.file)
+        var progress = $(elem).find('.progress-bar')
+        //ждем ответа об успешной обработке файла на стороне сервера
+        const res = await $.ajax({
+            url: '/clinicalCase/upload',
+            contentType: false,
+            processData: false,
+            data: data,
+            type: 'post',
+            xhr: function () {
+                var xhr = new XMLHttpRequest()
+                xhr.upload.onprogress = function (evt) {
+                    var percent = Math.ceil(evt.loaded / evt.total * 100)
+                    progress.attr('value', percent)
+                }
+                return xhr
+            }
+        }).done((data) => {
+            toastr.info(data)
+        })
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let ManagerOptions = [], ManagerNamesById = {};
+        $.get({ url: '/users/getAll/' }).done(res => {
+            let users_res = JSON.parse(res)
+            users_res.data.forEach(user => {
+                ManagerOptions.push({
+                    value: user.id,
+                    display: `${user.lasttname} ${user.firstname} ${user.patronymic || ''}`
+                })
+                ManagerNamesById[user.id] = `${user.lasttname} ${user.firstname} ${user.patronymic || ''}`
+            })
+            let dateOne = document.getElementById('dateOne').value;
+            let dateTwo = document.getElementById('dateTwo').value;
+            let datatable = $('#datatable_fr').DataTable({
+                ajax: `/ClinicalCase/table/?dateOne=${dateOne}&dateTwo=${dateTwo}`,
+                columnDefs: [
+                    {
+                        targets: 0,
+                        data: 'project_id'
+                    },
+                    {
+                        targets: 1,
+                        data: 'site_name',
+                        render: function (data, type, row, meta) {
+                            let id = row['id']
+                            return `${row['site_id']} -  ${data}`;
+                        }
+                    },
+
+
+                    {
+                        targets: 2,
+                        data: 'manager_id',
+                        render: function (data,type, row, meta) {
+                            if (ManagerNamesById.hasOwnProperty(row.manager_id))
+                                return ManagerNamesById[row.manager_id]
+                            else
+                                return ''
+                        }
+                    },
+                    {
+                        targets: 3,
+                        data: 'clinical_case_id'
+                    },
+                    {
+                        targets: 4,
+                        data: 'site_index'
+                    },
+                    {
+                        targets: 5,
+                        data: 'clinical_date'
+                    },
+                    {
+                        targets: 6,
+                        data: 'comment',
+                        render: function (data, type, row, meta) {
+                            return `<textarea class="form-control" id="comment_${row['id']}">${data}</textarea>`;
+                        }
+                    },
+                    {
+                        targets: 7,
+                        data: 'checked',
+                        render: function (data, type, row, meta) {
+                            let id = row['id']
+                            return `<input type="checkbox" class="form-control" id="checked_${row['id']}" ${data === '1' ? 'checked' : ''} onclick="saveData(${id})">`;
+                        }
+                    },
+                    {
+                        targets: 8,
+                        data: 'paid',
+                        render: function (data, type, row, meta) {
+                            let id = row['id']
+                            return `<input type="checkbox" class="form-control" id="paid_${row['id']}" ${data === '1' ? 'checked' : ''} onclick="saveData(${id})">`;
+                        }
+                    },
+                    {
+                        targets: 9,
+                        data: 'form_valid',
+                        render: function (data, type, row, meta) {
+                            let id = row['id']
+                            return `<input type="checkbox" class="form-control" id="form_valid_${row['id']}" ${data === '1' ? 'checked' : ''} onclick="saveData(${id})">`;
+                        }
+                    },
+                    {
+                        targets: 10,
+                        data: 'not_on_mailing_list',
+                        render: function (data, type, row, meta) {
+                            let id = row['id']
+                            return `<input type="checkbox" class="form-control" id="not_on_mailing_list_${row['id']}" ${data === '1' ? 'checked' : ''} onclick="saveData(${id})">`;
+                        }
+                    },
+                    {
+                        targets: 11,
+                        data: 'id',
+                        render: function (data, type, row, meta) {
+                            return `<input id="save_${data}" type="button" class="btn btn-block btn-info save_case" value="Save" onclick="saveData(${data})">`;
+                        }
+                    },
+                    {
+                        targets: 12,
+                        data: 'checked',
+                        visible: false
+                    },
+                    {
+                        targets: 13,
+                        data: 'send_count',
+                        render: function (data, type, row, meta) {
+                            if(data == null) {
+                                return `<input id="count_${row['id']}" type="button" class="btn btn-block btn-primary" value="0">`;
+                            } else {
+                                return `<input id="count_${row['id']}" type="button" class="btn btn-block btn-primary" value="${data}">`;
+
+                            }
+                        }
+                    },
+                    {
+                        targets: 14,
+                        data: 'id',
+                        render: function (data, type, row, meta) {
+                            return `<input id="send_${data}" type="button" class="btn btn-block btn-dark send_meneger" value="Send to manager" onclick="sendMail(${data})">`;
+                        }
+                    },
+                    {
+                        targets: 15,
+                        data: 'id',
+                        render: function (data, type, row, meta) {
+                            return `<input id="draft_${data}" type="button" class="btn btn-block btn-warning draft_meneger" value="Draft" onclick="Draft(${data}, '${row['clinical_case_id']}')">`;
+                        }
+                    }
+                    ,
+                    {
+                        targets: 16,
+                        data: 'last_send',
+                        render: function (data, type, row, meta) {
+                            return `${data}`;
+                        }
+                    },
+                    {
+                        targets: 17,
+                        data: 'paid',
+                        visible: false
+                    },
+                    {
+                        targets: 18,
+                        data: 'form_valid',
+                        visible: false
+                    },
+                ],
+                language: { sLoadingRecords: '<span style="width:100%;"><img src="../app-assets/img/loaders/rolling.gif" alt="loading" ></span>' },
+                initComplete: function (settings, json) {
+                    $("#status_checked, #status_unchecked, #status_paid, #status_unpaid, #status_valid, #status_invalid").click(() => {
+                        datatable.draw();
+                    })
+
+                }
+            })
+
+            $("#clinicallSearch").click(() => {
+                let dateOne = document.getElementById('dateOne').value;
+                let dateTwo = document.getElementById('dateTwo').value;
+                datatable.ajax.url(`/ClinicalCase/table/?dateOne=${dateOne}&dateTwo=${dateTwo}`).load();
+            });
+
+            datatable.MakeCellsEditable({
+                onUpdate: rowEditedCallback,
+                columns: [2],
+                inputTypes: [
+                    {
+                        column: 2,
+                        type: "list",
+                        options: ManagerOptions
+                    }]
+            })
+
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    let status_checked_active = $("#status_checked").prop('checked'),
+                        status_unchecked_active = $("#status_unchecked").prop('checked'),
+                        status_paid_active = $("#status_paid").prop('checked'),
+                        status_unpaid_active = $("#status_unpaid").prop('checked'),
+                        status_valid_active = $("#status_valid").prop('checked'),
+                        status_invalid_active = $("#status_invalid").prop('checked'),
+                        checked = data[11] === '1', paid = data[16] === '1', valid = data[17] === '1'
+                    return !(checked && !status_checked_active || !checked && !status_unchecked_active ||
+                        paid && !status_paid_active || !paid && !status_unpaid_active ||
+                        valid && !status_valid_active || !valid && !status_invalid_active);
+                }
+            )
+        })
+
+        let rowEditedCallback = (updatedCell, updatedRow, oldValue) => {
+            let NewData = updatedRow.data()
+            $.post({
+                url: '/ClinicalCase/save/',
+                data: {
+                    id: NewData.id,
+                    manager_id: NewData.manager_id
+                }
+            })
+        }
+
+        $.post({ url: '/ClinicalCaseDraft/', data: { user_id: nbs_user_id } }).done((res) => {
+            Drafts = JSON.parse(res)
+            Drafts.forEach(draft => {
+                draftContainer.append(`<li id="draft_${draft.id}">${draft.clinical_case_id}
+
+ <i class="ft-delete" style="color: red; margin-left: 10px; cursor: pointer;" onclick="DeleteDraft(${draft.id})"></i>
+
+</li>`)
+            })
+        })
+
+    })
+
+
+   function saveData(caseId) {
+        let comment = $(`#comment_${caseId}`).val(),
+            checked = $(`#checked_${caseId}`).prop('checked') ? 1 : 0,
+            paid = $(`#paid_${caseId}`).prop('checked') ? 1 : 0,
+            form_valid = $(`#form_valid_${caseId}`).prop('checked') ? 1 : 0,
+            not_on_mailing_list = $(`#not_on_mailing_list_${caseId}`).prop('checked') ? 1 : 0,
+            data = { id: caseId, comment, checked, paid, form_valid, not_on_mailing_list }
+        $.post({url: '/ClinicalCase/save/', data}).done()
+    }
+
+
+function sendMail(caseId) {
+    let data = {id: caseId}
+    let count = +$(`#count_${caseId}`).val();
+    $(`#count_${caseId}`).val(count + 1);
+    $.post({url: '/ClinicalCase/sendMail/', data})
+}
+
+
+
+function Draft(caseId, clinical_case_id) {
+    let data = { clinical_case_id: caseId, user_id: nbs_user_id }
+    $.post({url: '/ClinicalCaseDraft/save/', data}).done((id) => {
+        if (id !== '0') {
+            toastr.success('Добавлен', clinical_case_id, {
+                positionClass: 'toast-bottom-right',
+                containerId: 'toast-bottom-right'
+            });
+            draftContainer.append(`<li id="draft_${id}">${clinical_case_id}  <i class="ft-delete" style="color: red; margin-left: 10px; cursor: pointer;" onclick="DeleteDraft(${id})"></i></li>`)
+        } else {
+            toastr.error('Такой уже есть', clinical_case_id, {
+                positionClass: 'toast-bottom-right',
+                containerId: 'toast-bottom-right'
+            });
+        }
+    })
+}
+
+function DeleteDraft(id) {
+        let data = { id }
+        $.post({ url: '/ClinicalCaseDraft/delete/', data }).done(() => {
+            $(`#draft_${id}`).remove()
+
+            toastr.success('Удалено', 'Удалено', {
+                positionClass: 'toast-bottom-right',
+                containerId: 'toast-bottom-right'
+            });
+
+        })
+    }
+
+
+    function sendMailGroup() {
+        $.post({ url: '/ClinicalCaseDraft/sendMail/' }).done((data) => {
+
+            toastr.success('Рассылка запущена', data,  {
+                positionClass: 'toast-bottom-right',
+                containerId: 'toast-bottom-right'
+            });
+
+            $(`#drafts`).html('');
+        })
+    }
+
+</script>

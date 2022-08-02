@@ -1,0 +1,237 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Заявки</h4>
+                        </div>
+                        <div class="card-content ">
+                            <div class="card-body card-dashboard">
+                                {% if department_id == '3' or department_id == '4' or role_id == '6' %}
+                                    <a class="btn btn-success btn-sm" id="new_ticket_btn">
+                                        Добавить заявку
+                                    </a>
+                                {% endif %}
+                                <div class="modal fade text-left" id="tr_modal" tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel2"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <input type="hidden" id="contact_id">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myModalLabel2">Заявка</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <div class="form-group">
+                                                            <label for="mail_date">Дата письма</label>
+                                                            <input type="date" id="mail_date" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <div class="form-group">
+                                                            <label for="client_identifier">Идентификатор
+                                                                клиента</label>
+                                                            <input type="text" id="client_identifier"
+                                                                   class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label for="task">Текст</label>
+                                                            <input type="text" id="task" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% if role_id == '1' %}
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="task">Ответ</label>
+                                                                <input type="text" id="reply" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn grey btn-outline-secondary"
+                                                        data-dismiss="modal">Отмена
+                                                </button>
+                                                <button type="button" class="btn btn-outline-primary"
+                                                        id="save_ticket">
+                                                    Сохранить
+                                                </button>
+                                                <button type="button" class="btn btn-outline-primary hidden"
+                                                        id="reply_ticket">
+                                                    Ответить
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <table class="table table-striped table-bordered file-export" id="datatable">
+                                    <thead>
+                                    <tr>
+                                        <th>Дата письма</th>
+                                        <th>Идентификатор клиента</th>
+                                        <th>Текст</th>
+                                        <th>Ответ</th>
+                                        <th>Отправлено</th>
+                                        <th>Обработано</th>
+                                        <th>Статус</th>
+                                        <th>Кто создал</th>
+                                        <th>Кто ответил</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Дата письма</th>
+                                        <th>Идентификатор клиента</th>
+                                        <th>Текст</th>
+                                        <th>Ответ</th>
+                                        <th>Отправлено</th>
+                                        <th>Обработано</th>
+                                        <th>Статус</th>
+                                        <th>Кто создал</th>
+                                        <th>Кто ответил</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const myRoleId = {{ role_id }}, myDepartmentId = {{ department_id }};
+        let ajaxUrl = "/tickets/getTickets/";
+        const datatable = $('#datatable').DataTable({
+            "ajax": ajaxUrl,
+            dom: 'Bfrtip',
+            buttons: [
+                'excel'
+            ],
+            columnDefs: [
+                {
+                    targets: 0,
+                    data: 'mail_date',
+                },
+                {
+                    targets: 1,
+                    data: 'client_identifier',
+                },
+                {
+                    targets: 2,
+                    data: 'task',
+                },
+                {
+                    targets: 3,
+                    data: 'reply',
+                    render: function (data, type, full, meta) {
+                        if (myRoleId === 1 && data === null) {
+                            return `<button class="btn btn-info btn-block reply" id="t${full.id}" type="button">Ответить</button>`
+                        } else {
+                            return `${data}`;
+                        }
+                    }
+                },
+                {
+                    targets: 4,
+                    data: 'created_at',
+                },
+                {
+                    targets: 5,
+                    data: 'updated_at',
+                },
+                {
+                    targets: 6,
+                    data: 'status',
+                },
+                {
+                    targets: 7,
+                    data: 'create_user_id',
+                },
+                {
+                    targets: 8,
+                    data: 'update_user_id',
+                },
+
+            ],
+            language: {
+                sLoadingRecords: '<span style="width:100%;"><img src="../app-assets/img/loaders/rolling.gif" alt="loading" ></span>',
+            },
+            initComplete: function (settings, json) {
+                $(".reply").click((e) => {
+                    $("#tr_modal").modal('show')
+                    let tid = $(e.currentTarget).attr('id').substr(1)
+                    let Ticket = json.data.find((el) => {
+                        return el.id === tid
+                    })
+                    $("#mail_date").val(Ticket.mail_date).prop('disabled', true)
+                    $("#client_identifier").val(Ticket.client_identifier).prop('disabled', true)
+                    $("#task").val(Ticket.task).prop('disabled', true)
+                    $("#contact_id").val(Ticket.id)
+                    $("#save_ticket").hide()
+                    $("#reply_ticket").show()
+                })
+            }
+        });
+        $("#new_ticket_btn").click(() => {
+            $(".modal-dialog input").val('').prop('checked', false)
+            $("#tr_modal").modal('show')
+        });
+        $("#save_ticket").click(() => {
+            $.post({
+                url: '/tickets/save/',
+                data: {
+                    client_identifier: $("#client_identifier").val(),
+                    mail_date: $("#mail_date").val(),
+                    task: $("#task").val(),
+                    department_id: myDepartmentId,
+                    author_id: 3,
+                    role_id: myRoleId,
+                    status: 'new'
+                }
+            }).done(() => {
+                $("#tr_modal").modal('hide')
+                datatable.ajax.reload()
+            })
+        })
+        $("#reply_ticket").click(() => {
+            $.post({
+                url: '/tickets/save/',
+                data: {
+                    id: $("#contact_id").val(),
+                    reply: $("#reply").val(),
+                    status: 'done'
+                }
+            }).done(() => {
+                $("#tr_modal").modal('hide')
+                datatable.ajax.reload()
+            })
+        })
+
+    });
+</script>
+
+

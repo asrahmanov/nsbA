@@ -1,0 +1,178 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+    <div class="row">
+        <div class="col-12">
+            <div class="content-header">API</div>
+        </div>
+    </div>
+    <!-- Basic Usage -->
+    <section id="basic-usage" class="row">
+        <div class=" col-12">
+            <div class="card" name="#manager">
+                <div class="card-header">
+                    <img src="../../../app-assets/img/api/site.png" alt="" width="60%">
+
+                    <h4 class="card-title">Получение спика сайтов  - getSites()</h4><a class="heading-elements-toggle"></a>
+                    <p>/api/getSites/?token={TOKEN}</p>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <p>Таблица осталась в наследство поэтому не все поля соответсвуют типу и не все используются</p>
+                        <p>Пример ответа:</p>
+                        <pre class="language-markup"><code class="language-markup">
+{
+   "result":[
+      {
+         "site_id":"1",
+         "site_name":"",
+         "site_code":"0",
+         "site_type":"5",
+         "site_manager_primary":null,
+         "city":"1",
+         "contract":"",
+         "term_validity":null,
+         "irb_approval":null,
+         "site_status":"",
+         "misc":"",
+         "timestamp1":"2021-05-21 12:49:22",
+         "processing":"",
+         "approved":,
+         "level":"",
+         "addr":"",
+         "company_name":null,
+         "company_type":"0",
+         "employee_quant":null,
+         "phone":null,
+         "site_addr":null,
+         "email":null,
+         "text_city":"",
+         "trigger_user_id":"44",
+         "work_status_auditor":"0",
+         "work_status_manager":"0",
+         "work_comment_manager":null,
+         "work_comment_auditor":null,
+         "auditor_confirm":"1",
+         "manager_confirm":"1",
+         "level_id":null
+      }
+   ]
+}
+</code></pre>
+                        <p>Где</p>
+                        <pre class="language-css"><code class="language-css">
+"site_id" - идентификатор сайта
+"site_name" - наименование сайта
+"site_code" - номер сайта использвется как идентификатор внутри компании
+"site_type" - Тип сайта не используется
+"site_manager_primary" - Старый тип поля сейчас не используется
+"city" - Город сайта - выведу текстовое значение если будет нужно
+"contract" - Наличие договора
+"term_validity" - срок действия договора
+"irb_approval" - Использовался как коментарий
+"site_status" - Текстовый статус сайта
+"misc" - Контакт или комментарий - устаревшее поле
+"timestamp1" - Дата и время создание
+"processing" - Наименование лабаратории
+"approved" - не используется
+"level" - Текстовое поле Уровня сайта - не ииспользуется
+"addr" - Адрес
+"company_name" - Новое поле добавлено для сопоставление данных выгрузка из Битрикаса
+"company_type" - Новое поле тип сайта
+"employee_quant" - Кол-во работников
+"phone" - Телефон
+"site_addr" - адрес сайта www
+"email" - email
+"text_city" - Текстовое наименование города из Битрикс
+"trigger_user_id" - идентификатор пользователя сделавший последнее изменение
+"work_status_auditor" - Статус сайта выставленный аудитором
+"work_status_manager" - Статус сайта выставленный менеджером
+"work_comment_manager" - комментарий сайта выставленный менеджером
+"work_comment_auditor" - комментарий сайта выставленный аудитором
+"auditor_confirm" - проработан ли сайт аудитором
+"manager_confirm" - проработан ли сайт менеджером
+"level_id" - идентификатор уровень сайта новое поле
+
+
+</code></pre>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class=" col-12">
+            <div class="card" name="#manager">
+                <div class="card-header">
+                    <h4 class="card-title">Получение сайтов по идентификатору менеджера - getUserJoinSitesByUserId()</h4><a class="heading-elements-toggle"></a>
+                    <p>/api/getUserJoinSitesByUserId/?token={TOKEN}&user_id={USER_ID}</p>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <p>Пример ответа:</p>
+                        <pre class="language-markup"><code class="language-markup">
+{
+   "result":[
+      {
+         "id":"10",
+         "user_id":"10",
+         "site_id":"20",
+         "created_at":"2020-03-23 12:00:13",
+         "deleted":"0",
+         "firstname":"Ivan",
+         "lasttname":"Anashkin",
+         "patronymic":null,
+         "login":"Ivan_Anashkin",
+         "password":"$2y$10$uUgbEErO.ksxBz1HV1aHrOVTy7tyhdWtMsIgvWcsCd0HdMvmgY.Me",
+         "phone":"78122737442",
+         "email":"lenonkodispanser@mail.ru",
+         "role_id":"3",
+         "color":"success",
+         "img_bg":"..\/..\/app-assets\/img\/sidebar-bg\/01.jpg",
+         "department_id":"1",
+         "en_name":null,
+         "en_position":null,
+         "project_name":"\u0418\u0432\u0430\u043d \u0410\u043d\u0430\u0448\u043a\u0438\u043d",
+         "ru_position":null,
+         "site_name":"\u0413\u0411\u0423\u0417 \"\u041b\u0435\u043d\u0438\u043d\u0433\u0440\u0430\u0434\u0441\u043a\u0438\u0439 \u043e\u0431\u043b\u0430\u0441\u0442\u043d\u043e\u0439 \u043e\u043d\u043a\u043e\u043b\u043e\u0433\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0434\u0438\u0441\u043f\u0430\u043d\u0441\u0435\u0440\" (\u041b\u0438\u0442\u0435\u0439\u043d\u044b\u0439)",
+         "site_code":"19",
+         "site_type":"1",
+         "site_manager_primary":null,
+         "city":"1",
+         "contract":"\u0418\u043c\u0435\u0435\u0442\u0441\u044f",
+         "term_validity":"\u0431\u0435\u0441\u0441\u0440\u043e\u0447\u043d\u044b\u0439 ",
+         "irb_approval":null,
+         "site_status":"\u0410\u043a\u0442\u0438\u0432\u043d\u044b\u0439",
+         "misc":"
+\u0410\u043d\u0430\u0441\u0442\u0430\u0441\u0438\u044f \u041a\u0438\u0440\u0438\u0447\u0435\u043d\u043a\u043e<\/p>\n +7 966 752 19 68<\/p>",
+         "timestamp1":"2020-11-24 12:27:58",
+         "processing":"\u041b\u0430\u0431\u043e\u0440\u0430\u0442\u043e\u0440\u0438\u044f \u041d\u0411\u0421-\u0421\u041f\u0431",
+         "approved":null,
+         "level":"\u0423\u0440\u043e\u0432\u0435\u043d\u044c 5",
+         "addr":"\u041b\u0438\u0442\u0435\u0439\u043d\u044b\u0439 \u043f\u0440\u043e\u0441\u043f\u0435\u043a\u0442, \u0434\u043e\u043c 37 191104 \u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433 \u0420\u043e\u0441\u0441\u0438\u044f",
+         "company_name":"\u0413\u0411\u0423\u0417 \u00ab\u041b\u0435\u043d\u0438\u043d\u0433\u0440\u0430\u0434\u0441\u043a\u0438\u0439 \u043e\u0431\u043b\u0430\u0441\u0442\u043d\u043e\u0439 \u043a\u043b\u0438\u043d\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u043e\u043d\u043a\u043e\u043b\u043e\u0433\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0434\u0438\u0441\u043f\u0430\u043d\u0441\u0435\u0440\u00bb (\u0413\u0411\u0423\u0417 \u00ab\u041b\u041e\u041a\u041e\u0414\u00bb)",
+         "company_type":"5",
+         "employee_quant":"50-250",
+         "site_addr":"http:\/\/www.lood.ru\/",
+         "text_city":"\u0421\u0430\u043d\u043a\u0442-\u041f\u0435\u0442\u0435\u0440\u0431\u0443\u0440\u0433",
+         "trigger_user_id":"41",
+         "work_status_auditor":"0",
+         "work_status_manager":"0",
+         "work_comment_manager":null,
+         "work_comment_auditor":null,
+         "auditor_confirm":"0",
+         "manager_confirm":"0",
+         "level_id":null
+      }
+   ]
+}
+</code></pre>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    </div>
+</div>

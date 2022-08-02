@@ -1,0 +1,74 @@
+
+<div class='main-content' >
+    <div class='content-wrapper'>
+        <section id='file-export'>
+            <div class='row'>
+                <div class='col-12'>
+                    <div class='card'>
+                        <div class='card-header'>
+                            <h4 class='card-title'></h4>
+                        </div>
+                        <div class='card-content'>
+                            <div class='card-body card-dashboard '>
+
+                                <table  border='1'>
+                                        <th>Фамилия</th>
+                                        <th>Имя</th>
+                                        <th>Отчество</th>
+                                        <th>Группа контакта</th>
+                                        <th>Должность</th>
+                                        <th>Тип контакта</th>
+                                        <th>Специализация</th>
+                                        <th>Рабочий телефон</th>
+                                        <th>Мобильный телефон</th>
+                                        <th>Рабочий e-mail</th>
+                                        <th>Рабочий e-mail</th>
+                                        <th>Частный e-mail</th>
+                                        <th>Адрес</th>
+                                        <th>Комментарий</th>
+                                        <th>Нозологии</th>
+                                        <th>Действующий контакт</th>
+                                        <th>ГПХ</th>
+                                        <th>Участвуют в рассылке</th>
+                                        <th>Квотируемый</th>
+                                    </thead>
+                                    <tbody>
+                                    {% for contact in contacts %}
+                                        <tr>
+                                           <td> {{ contact.firstname }} </td>
+                                           <td> {{ contact.lastname }} </td>
+                                           <td> {{ contact.patronymic }} </td>
+                                           <td> {{ contact.contact_type }} </td>
+                                           <td> {{ contact.job }} </td>
+                                           <td> {{ contact.contact_source }} </td>
+                                           <td> {{ contact.work_phone }} </td>
+                                           <td> {{ contact.home_phone }} </td>
+                                           <td> {{ contact.other_phone }} </td>
+                                           <td> {{ contact.work_email }} </td>
+                                           <td> {{ contact.home_email }} </td>
+                                           <td> {{ contact.address }} </td>
+                                           <td> {{ contact.comment }} </td>
+                                           <td> {{ contact.nosology }} </td>
+                                           <td> {{ contact.active }} </td>
+                                           <td> {{ contact.civil_contract }} </td>
+                                           <td> {{ contact.newsletter }} </td>
+                                           <td> {{ contact.special_id }} </td>
+                                           <td> {{ contact.quotable }} </td>
+                                        </tr>
+                                    {% endfor %}
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+

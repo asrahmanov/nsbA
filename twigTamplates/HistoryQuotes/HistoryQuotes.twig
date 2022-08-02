@@ -1,0 +1,227 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Historical Quotes</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body card-dashboard ">
+                                <br><br>
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-12">
+                                        <label for="filter_script">Компания</label>
+                                        <input list="filter_script_list" class="form-control" id="filter_script" onclick="this.value=''">
+                                        <datalist id="filter_script_list">
+                                            {% for item in script %}
+                                                <option value="{{ item.company_name }}">
+                                                    {{ item.company_name }} - {{ item.script }}</option>
+                                            {% endfor %}
+                                        </datalist>
+                                    </div>
+                                    <div class="col-md-2 col-sm-12">
+                                        <label for="disease_filter">Disease</label>
+                                        <input list="disease_filter_list" class="form-control" id="disease_filter" onclick="this.value=''">
+                                        <datalist id="disease_filter_list">
+                                            {% for disease in diseases %}
+                                                <option
+                                                        value="{{ disease.disease_name }} ({{ disease.disease_name_russian_old }})"
+                                                        data-id="{{ disease.id }}">
+                                                </option>
+                                            {% endfor %}
+                                        </datalist>
+                                    </div>
+                                    <div class="col-md-2 col-sm-12">
+                                        <label for="biospecimen_type_filter">Biospecimen type</label>
+                                        <input list="biospecimen_type_filter_list" class="form-control"
+                                               id="biospecimen_type_filter" onclick="this.value=''">
+                                        <datalist id="biospecimen_type_filter_list">
+                                            {% for item in biospecimen_types %}
+                                                {% if (item.biospecimen_type != '') %}
+                                                    <option
+                                                            value="{{ item.biospecimen_type }}"
+                                                            data-id="{{ item.id }}">
+                                                    </option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </datalist>
+                                    </div>
+                                    <div class="col-md-2 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="status_client">Клиент: </label>
+                                            <select id="status_client" class="form-control">
+                                                <option value="0">Любой статус</option>
+                                                <option value="26">Отсутствует</option>
+                                                <option value="27">Квотировано</option>
+                                                <option value="28">Запрос отменен</option>
+                                                <option value="29">Выполнение запроса невозможно</option>
+                                                <option value="30">Инвентори предоставлено</option>
+                                                <option value="33" selected="selected">ПО получено</option>
+                                                <option value="36">Получен вопрос или уточнение от заказчика</option>
+                                                <option value="37">Вернуться к запросу клиента </option>
+                                                <option value="38">Вопросы посланы заказчику</option>
+                                                <option value="39">Регистрация запроса не закончена</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br><br>
+                                <table class="table table-striped table-bordered file-export" id="datatable">
+                                    <thead>
+                                    <tr>
+                                        <th>Дата fr</th>
+                                        <th>Компания</th>
+                                        <th>FR number</th>
+                                        <th>Болезни</th>
+                                        <th>status_client</th>
+                                        <th>diseases</th>
+                                        <th>biospecimen_types</th>
+                                        <th>history_quotes_search</th>
+                                        <th>Specific features</th>
+                                        <th>Request (original text)</th>
+                                        <th>Request (russian text)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Дата fr</th>
+                                        <th>Компания</th>
+                                        <th>FR number</th>
+                                        <th>Болезни</th>
+                                        <th>status_client</th>
+                                        <th>diseases</th>
+                                        <th>biospecimen_types</th>
+                                        <th>history_quotes_search</th>
+                                        <th>Specific features</th>
+                                        <th>Request (original text)</th>
+                                        <th>Request (russian text)</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let datatable = $('#datatable').DataTable({
+            ajax: "/historyQuotes/getAll/",
+            columnDefs: [
+                {
+                    targets: 0,
+                    data: 'fr_date',
+                },
+                {
+                    targets: 1,
+                    data: 'company_name',
+                },
+                {
+                    targets: 2,
+                    data: 'internal_id',
+                    render: function (data, type, row, meta) {
+                        return `<a href="/orders/info/?idFR=${row.proj_id}" target="_blank">${data}</a>`
+                    }
+                },
+                {
+                    targets: 3,
+                    data: 'diseases',
+                    render: function (data, type, row, meta) {
+                        let out = ''
+                        for (let disease_id in data) {
+                            out += data[disease_id].name + '<br>'
+                            out += `(<span style="font-size: 10px;">${data[disease_id].name_russian_old}</span>)<br>`
+                            for (let biospecimen_id in data[disease_id].biospecimen_types)
+                                out += `<span style="font-size: 10px;">${data[disease_id].biospecimen_types[biospecimen_id]}</span><br>`
+                        }
+                        return out
+                    }
+                },
+                {
+                    targets: 4,
+                    data: 'status_client',
+                    visible: false
+                },
+                {
+                    targets: 5,
+                    data: 'diseases',
+                    visible: false,
+                    render: function (data, type, row, meta) {
+                        let keys = []
+                        Object.keys(data).forEach(key => {
+                            keys.push(key)
+                        });
+                        return keys.join(',')
+                    }
+                },
+                {
+                    targets: 6,
+                    data: 'diseases',
+                    visible: false,
+                    render: function (data, type, row, meta) {
+                        let keys = []
+                        for (disease_key in data) {
+                            let disease = data[disease_key], disease_keys = []
+                            Object.keys(disease.biospecimen_types).forEach(key => {
+                                disease_keys.push(key)
+                            })
+                            keys = keys.concat(disease_keys)
+                        }
+                        return keys.join(',')
+                    }
+                },
+                {
+                    targets: 7,
+                    data: 'history_quotes_search',
+                    visible: false,
+                },
+                {
+                    targets: 8,
+                    data: 'clinical_inclusion',
+                    visible: true,
+                },
+                {
+                    targets: 9,
+                    data: 'project_details',
+                    visible: true,
+                },
+                {
+                    targets: 10,
+                    data: 'feas_russian',
+                    visible: true,
+                }
+            ],
+            language: {
+                sLoadingRecords: '<span style="width:100%;"><img src="../app-assets/img/loaders/rolling.gif" alt="loading" ></span>'
+            }
+        })
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                let client_status_selected = $("#status_client").val(),
+                    company_selected = $("#filter_script").val(),
+                    disease_name = $("#disease_filter").val(),
+                    disease_selected = $(`#disease_filter_list option[value="${disease_name}"]`).data('id'),
+                    biospecimen_name = $("#biospecimen_type_filter").val(),
+                    biospecimen_type_selected = $("#biospecimen_type_filter_list option[value='" + biospecimen_name + "']").data('id')
+                if (client_status_selected !== '0' &&  data[4] !== client_status_selected)
+                    return false
+                if (company_selected !== '' && company_selected !== data[1])
+                    return false
+                if (disease_selected && data[5].split(',').indexOf(disease_selected + '') === -1)
+                    return false
+                if (biospecimen_type_selected && data[6].split(',').indexOf(biospecimen_type_selected + '') === -1)
+                    return false
+                return true
+            }
+        )
+        $("#filter_script, #disease_filter, #biospecimen_type_filter, #status_client").on('click change', () => {
+            datatable.draw();
+        })
+    })
+</script>

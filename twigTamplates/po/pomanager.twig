@@ -1,0 +1,44 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper"><!--Statistics cards Starts-->
+
+        <div class="row">
+            {% for item in po %}
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body text-left">
+                                    <h3 class="mb-1 success">{{ item.proj_id }}  {{ item.po_number }}</h3>
+                                    <span>{{ item.project_name}}</span>
+                                    <br>
+                                    {% for qoute in poqoute %}
+                                        {% if (item.proj_id == qoute.proj_id ) and (qoute.user_id == user_id ) and qoute.disabled == 1 %}
+                                            <span class="badge bg-success ">{{ qoute.quote_value }}</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="media-right align-self-center">
+                                    <a href="../../poWorksheets/quote/?id={{ item.id }}" class="btn btn-dark">Открыть</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+
+<script src="../../../app-assets/js/jquery.multi-select.js"></script>
+<script src="../../../app-assets/js/jquery.quicksearch.js"></script>
+
+<script>
+
+
+
+
+
+</script>

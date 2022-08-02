@@ -1,0 +1,411 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12">
+                <div class="">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2 class="card-title pull-left"><i class="fa fa-life-ring" aria-hidden="true"> </i> Задачи</h2>
+                                <button class="btn btn-round btn-success pull-right" id="new_ticket_btn">
+                                    Создать задачу
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content ">
+                        <div class="card-body card-dashboard">
+                            <!-- NEW TICKET MODAL -->
+                            <div class="modal fade text-left" id="new_ticket_modal" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel2"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <input type="hidden" id="contact_id">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel2">Заявка</h4>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="new_title">Тема <span style="color:red;">*</span></label>
+                                                        <input type="text" id="new_title" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="new_target">Кому <span style="color:red;">*</span></label>
+                                                        <select id="new_target" class="form-control">
+                                                            <option value="0">Выеберите сотрудника...</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="new_message">Сообщение <span style="color:red;">*</span></label>
+                                                        <textarea id="new_message" class="form-control"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn grey btn-outline-secondary"
+                                                    data-dismiss="modal">Отмена
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary"
+                                                    id="save_ticket">
+                                                Сохранить
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /NEW TICKET MODAL -->
+                            <!-- CHAT MODAL -->
+                            <div class="modal fade text-left" id="chat_modal" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel2"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <input type="hidden" id="contact_id">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel2">Заявка № <span id="chat_modal_header_ticket_id"></span></h4>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-12" id="chat_history"></div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="new_chat_message">Сообщение</label>
+                                                        <textarea id="new_chat_message" class="form-control"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn grey btn-outline-secondary"
+                                                    data-dismiss="modal">Отмена
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary"
+                                                    id="send_message">
+                                                Отправить
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /CHAT MODAL -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <select id="statuses_active" class="form-control">
+                            <option value="all">Все</option>
+                            <option value="open" selected>Открытые</option>
+                            <option value="closed">Архив</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div id="my_tickets"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.tiny.cloud/1/71j1qczmxow9ec79z0b3tz3q6rzzsq933b2rxwuc2lgjyxlu/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
+<script>tinymce.init({
+        selector: 'textarea',
+        height : "480"
+    });</script>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        let NewTargetSelect = $("#new_target"), NewTitleInput = $("#new_title"),/* NewMessageTextarea = $("#new_message"),*/
+            MyTicketsStatusesVisibleSelect = $("#statuses_active"), NewTicketModal = $("#new_ticket_modal"),
+            ChatModal = $("#chat_modal"), Chat = $("#chat_history"), SendMessageButton = $("#send_message"),
+            // CloseTicketButton = $("#close_ticket"),
+            ScreenTickets = {}, user_id = parseInt(`{{ user_id }}`), UserNamesById = {}
+
+        $("#new_ticket_btn").click(() => {
+            NewTicketModal.modal('show')
+        })
+
+        $.get({ url: '/users/getEverybody'}).done((res) => {
+            let Users = JSON.parse(res)
+            Users.data.forEach(user => {
+                let fullname = `${user.lasttname} ${user.firstname} ${user.patronymic || ''}`;
+                NewTargetSelect.append(`<option value='${user.id}'>${fullname}</option>`)
+                UserNamesById[user.id] = fullname
+            })
+            let refreshMyTickets = () => {
+                let statusesShown = MyTicketsStatusesVisibleSelect.val(), url = '/newTickets/getMy/',
+                    data = {status: statusesShown}
+                $.get({ url, data }).done(res => {
+                    $("#my_tickets").empty()
+                    let MyTickets = JSON.parse(res)
+                    MyTickets.result.filter(t =>  t.reason !== 'manager').forEach(ticket => {
+                        let unviewedMessages
+                        let chat = ticket.chat
+                        if (chat.length)
+                            unviewedMessages = parseInt(chat[chat.length-1].author_id) !== user_id
+                        else
+                            unviewedMessages = parseInt(ticket.author_id) !== user_id
+                        if (ticket.done && ticket.done !== '0')
+                            unviewedMessages = false
+                        if (ticket.order_id) {
+                            let upDate = ticket.updated_at.split(' ')[0].split('-').reverse().join('/') + ' ' +
+                                ticket.updated_at.split(' ')[1].split(':').slice(0, 2).join(':'),
+                                crDate = ticket.created_at.split(' ')[0].split('-').reverse().join('/') + ' ' +
+                                    ticket.created_at.split(' ')[1].split(':').slice(0, 2).join(':')
+                            let approvements = ''
+                            for (let app_user_id in ticket.approved) {
+                                if (ticket.approved[app_user_id] === '1') {
+                                    approvements += `<div>
+                    <span class="cloth__task" style="background: lightgreen; display: inline-block;"></span>
+                    <span class="task__text" > Согласовано ${UserNamesById[parseInt(app_user_id)]}
+                                         ${ticket.approved_dates[parseInt(app_user_id)]}</span></div>
+                        `
+                                }
+                            }
+                            let ratingAvg = ''
+                            let ticketBtn = `<a href="/newTickets/view/?id=${ticket.id}">
+                                       <span class="card__text-close">
+                                            ${parseInt(ticket.done) ? 'Закрыт' : 'Открыть'}</span></a>`
+
+                            let newMessage = '';
+                            if(unviewedMessages){
+                                newMessage = `<div class="cloth-card-footer-head__card">
+
+                                                            <span class="card__text-big"  style="color:#e03e2d; font-size: 18px;">
+                                       New
+                                    </span>
+                                                        </div>`
+                            }
+                            let ticketScore = '';
+                            if (ticket.ratings) {
+                                ticketScore = `
+
+                                    ${ticket.score !== null ? `<div class="cloth-card-footer-head__card">
+                                                            <span class="card__text-small">Оценка</span>
+                                                            <span class="card__text-big">${ticket.ratings}</span>
+                                                        </div>` : ''}`
+                            }
+
+
+
+                            $("#my_tickets").prepend(`
+
+
+<div class="row">
+<div class="col-md-12">
+<div class="cloth-card"   id='tcard_${ticket.id}'>
+        <div class="cloth-card-head ${ticket.priority === '1' ? 'gradient-pomegranate' : 'gradient-mint'}" >
+            <div class="cloth-card-number" style='color:#fff;'>
+                  ${ticket.title} <br>
+                   id - ${ticket.id} <br>
+                  ${ticket.company_name !== '' ? `${ticket.company_name}<br>` : ''}
+            </div>
+            <div class="cloth-card-content">
+                <h2 class="cloth-card-title">
+
+                </h2>
+                <div class="cloth-card-text">
+                    <p class="cloth-card-text__p">
+                        От: ${UserNamesById[parseInt(ticket.author_id)]}
+                    </p>
+                    <p class="cloth-card-text__p">
+
+                Кому: ${parseInt(ticket.target_id) !== 4 ? UserNamesById[parseInt(ticket.target_id)] : 'Руководство компании'}
+
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="cloth-card-footer">
+            <div class="cloth-card-footer-head">
+                <div class="cloth-card-footer-content">
+                    <h3>${ticket.project_name !== '' ? `Project name: ${ticket.project_name}<br>` : ''}</h3>
+
+                <p>${ticket.message == null ? '' : ticket.message} </p>
+                  <p class="cloth-card-footer__p">
+
+
+                    </p>
+                </div>
+
+
+                <div class="cloth-card-footer-head-cards">
+
+        <div class="cloth-card-footer-head__card" style="margin-right: 40px;">
+
+                                                            <span style="cursor: pointer" href="#" id="ticketdetails_${ticket.id}" class="quickView">
+
+<span class="card__text-big">ЧАТ</span></span>
+                                                        </div>
+
+
+${ticketScore}
+
+${newMessage}
+                    <div class="cloth-card-footer-head__card card__close-ml">
+                        <span class="card__text-close">${ticketBtn}</span>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+            <div class="cloth-card-footer-bottom">
+<div class="cloth-card-footer-bottom-task" style="flex-direction: column;">
+             ${approvements}
+</div>
+
+                <div class="deadline-wrapper">
+                    <div class="cloth-card-footer-bottom-data">
+                        <div class="data__deadline">
+                            <p>Дата дедлайна</p>
+                            <div class="block-data__deadline">
+                                <span class="data-day">${ticket.deadline_remainder ?  `${ticket.deadline_remainder}` : ''}</span>
+                                <span class="data-icon"></span>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="cloth-card-footer-bottom-data-info">
+                        <div class="wrap-data">
+                            <p class="data-receipt">
+
+                              Дата создания FR
+                            </p>
+                            <div class="data-and-time">
+                                <span class="data-day"> ${ticket.fr_date !== '' ? `${ticket.fr_date.split('-').reverse().join('/')}<br>` : ''}</span>
+                            </div>
+                        </div>
+
+                        <div class="wrap-data">
+                            <p class="data-changes">
+                                 Дата создания reminder
+                            </p>
+                            <div class="data-and-time">
+                                <span class="data-day">${crDate}</span>
+
+                            </div>
+                        </div>
+
+
+
+
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+
+
+
+                        `)
+                            ScreenTickets[ticket.id] = ticket
+                        }
+                    })
+                    $(".quickView").off('click').click(e => {
+                        let divPressed = $(e.currentTarget), tId = divPressed.attr('id').split('_')[1],
+                            ticket = ScreenTickets[tId]
+                        $("#chat_modal_header_ticket_id").html(tId)
+                        Chat.html(ticket.message)
+                        let chat = ticket.chat
+                        chat.forEach((msg) => {
+                            Chat.append(`
+                            <div class="${parseInt(msg.author_id) === user_id ? 'ticket_my' : 'ticket_in'}">
+                                ${msg.message}
+                            </div>
+                            <div class="${parseInt(msg.author_id) === user_id ? 'ticket_author_my' : 'ticket_author_in'}">
+                                ${UserNamesById[msg.author_id]}
+                            </div>
+                            <div class="${parseInt(msg.author_id) === user_id ? 'ticket_date_my' : 'ticket_date_in'}">
+                                ${msg.created_at.split(' ')[0].split('-').reverse().join('/') + ' ' +
+                            msg.created_at.split(' ')[1].split(':')[0] + ':' +
+                            msg.created_at.split(' ')[1].split(':')[1]}
+                            </div>
+                            `)
+                            if (parseInt(msg.author_id) !== user_id) {
+                                $.post({ url: '/newTicketChats/save/', data: { id: msg.id, viewed: 1}})
+                            }
+                        })
+                        ChatModal.modal('show')
+                        SendMessageButton.off('click').click(() => {
+                            let NewMsg = tinymce.get('new_chat_message').getContent(),
+                                data = { ticket_id: ticket.id, message: NewMsg }
+                            $.post({ url: '/newTicketChats/save/', data }).done((res) => {
+                                tinymce.get('new_chat_message').setContent('')
+                                ChatModal.modal('hide')
+                                refreshMyTickets()
+                            })
+                        })
+                        /*if (parseInt(ticket.author_id) === user_id) {
+                            CloseTicketButton.show()
+                            CloseTicketButton.off('click').click(() => {
+                                let data = { id: ticket.id, done: 1 }
+                                $.post({ url: '/newTickets/save/', data }).done((res) => {
+                                    ChatModal.modal('hide')
+                                    refreshMyTickets()
+                                })
+                            })
+                        } else {
+                            CloseTicketButton.hide()
+                        }*/
+                    })
+                    // $(".openTicket").off('click').click(e => {
+                    //     let divPressed = $(e.currentTarget), tId = divPressed.attr('id').split('_')[1]
+                    // })
+                })
+            }
+
+            refreshMyTickets()
+
+            $("#save_ticket").click(() => {
+                let target_id = parseInt(NewTargetSelect.val()), title = NewTitleInput.val(), message = tinymce.get('new_message').getContent()/*NewMessageTextarea.val()*/,
+                    data = { target_id, title, message }
+                if (!target_id)
+                    toastr.error('Выберите сотрудника')
+                else if (!title)
+                    toastr.error('Введите тему')
+                else if (!message)
+                    toastr.error('Введите сообщение')
+                else
+                    $.post({ url: '/newTickets/save/', data }).done(() => {
+                        NewTicketModal.modal('hide')
+                        refreshMyTickets()
+                    })
+            })
+
+            MyTicketsStatusesVisibleSelect.change(refreshMyTickets)
+        })
+
+    })
+
+</script>
+
+

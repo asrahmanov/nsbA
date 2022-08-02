@@ -1,0 +1,74 @@
+alter table `_nbs`.fr_sites
+    add column addr VARCHAR(1023),
+    add column company_name VARCHAR(1023),
+    add column company_type INT not NULL,
+    add column employee_quant VARCHAR(255),
+    add column phone VARCHAR(255),
+    add column site_addr VARCHAR(255),
+    add column email VARCHAR(255),
+    add column text_city VARCHAR(255);
+
+DROP TABLE IF EXISTS `_nbs`.nbs_company_types;
+CREATE TABLE `_nbs`.nbs_company_types (
+	id INT auto_increment NOT NULL,
+	type_name varchar(255) unique NOT NULL,
+	CONSTRAINT company_types_pk PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE `_nbs`.fr_sites ADD CONSTRAINT fr_sites_FK FOREIGN KEY (company_type) REFERENCES `_nbs`.nbs_company_types(id) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+DROP TABLE IF EXISTS `_nbs`.nbs_companies_contacts;
+CREATE TABLE `_nbs`.nbs_companies_contacts (
+	id INT auto_increment NOT NULL,
+	company_id INT NOT NULL,
+	firstname varchar(255) NULL,
+	lastname varchar(255) NULL,
+	patronymic varchar(255) NULL,
+	contact_type ENUM('doctor', 'administer') NULL,
+	CONSTRAINT nbs_companies_contacts_pk PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci
+COMMENT='contact persons for fr_sites';
+
+ALTER TABLE `_nbs`.nbs_companies_contacts ADD CONSTRAINT nbs_companies_contacts_FK FOREIGN KEY (company_id) REFERENCES `_nbs`.fr_sites(site_id);
+
+alter table `_nbs`.nbs_companies_contacts
+    add column job varchar(1023),
+	add column contact_source varchar(255),
+	add column work_phone varchar(255),
+	add column home_phone varchar(255),
+	add column other_phone varchar(255),
+	add column work_email varchar(255),
+	add column home_email varchar(255),
+	add column address varchar(1023),
+	add column comment text,
+	add column nosology text,
+	add column active boolean,
+	add column civil_contract boolean,
+	add column newsletter boolean;
+
+DROP TABLE IF EXISTS `_nbs`.nbs_tickets;
+CREATE TABLE `_nbs`.nbs_tickets (
+    id INT auto_increment NOT NULL,
+    client_identifier TEXT COMMENT 'индефикатор заказчика',
+    mail_date DATE COMMENT 'дата письма',
+    task VARCHAR(1023) COMMENT 'задача',
+    reply VARCHAR(1023) COMMENT 'ответ на задачу',
+    department_id BIGINT UNSIGNED COMMENT 'id nbs_department кто создал',
+    author_id BIGINT UNSIGNED COMMENT 'id nbs_users кто создал',
+    role_id BIGINT UNSIGNED COMMENT 'id nbs_role какой роли отправлена задача',
+    worker_id BIGINT UNSIGNED COMMENT 'id nbs_users кто обработал',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата создания',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Дата обновленияя',
+    status ENUM('new', 'done') DEFAULT 'new' COMMENT 'статус',
+    deleted boolean,
+    CONSTRAINT nbs_companies_contacts_pk PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;

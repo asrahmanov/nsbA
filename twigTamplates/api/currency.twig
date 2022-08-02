@@ -1,0 +1,61 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12">
+                <div class="content-header">API</div>
+            </div>
+        </div>
+        <!-- Basic Usage -->
+        <section id="basic-usage" class="row">
+            <div class=" col-12">
+
+
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        <img src="../../../app-assets/img/api/currency.png" alt="" width="300px">
+                        <h4 class="card-title">Получение спика валют - GetCurrency()</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p>/api/GetCurrency/?token={TOKEN}</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Пример ответа:</p>
+                            <pre class="language-markup"><code class="language-markup">
+{
+   "result":[
+      {
+         "currency_id":"31",
+         "currency":"EUR",
+         "currency_fullname":"Euro",
+         "symbol":"\u20ac"
+      },
+      {
+         "currency_id":"98",
+         "currency":"USD",
+         "currency_fullname":"US Dollar",
+         "symbol":"$"
+      },
+      {
+         "currency_id":"105",
+         "currency":"RUB",
+         "currency_fullname":"Rub",
+         "symbol":"\u20bd"
+      }
+   ]
+}
+</code></pre>
+                            <p>Где</p>
+                            <pre class="language-css"><code class="language-css">
+         "currency_id" -  идентификатор ( автоикремент )
+         "currency" - Наименование
+         "currency_fullname" – Наименование полное
+         "symbol" – символьный код валюты
+</code></pre>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

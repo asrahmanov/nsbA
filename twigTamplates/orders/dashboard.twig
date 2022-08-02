@@ -1,0 +1,79 @@
+<style>
+    .yell {
+        background-color: yellow !important;
+    }
+</style>
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <section id="file-export">
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body card-dashboard ">
+                                <static></static>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><h2>DASHBOARD</h2></h4>
+                        </div>
+                        <div class="card-content ">
+                            <div class="card-body card-dashboard ">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <dashbord
+                                                :role_id={{ role_id }}
+                                        ></dashbord>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="card-body card-dashboard ">
+                                <h4 class="card-title"><h2>Приоритетные компании</h2></h4>
+                                <div class="row">
+                                    <div class="card-body">
+                                        В данный список попадают заявки компаний которые имеют приоритет CUSTOMERS ( priority > 0 ).
+                                        <br>
+                                        1 - Высокий  приоритет далее по убыванию ( чем больше цифра тем ниже приоритет )<br>
+                                        0 – Приоритет отсутствует<br>
+
+                                        <span>Если у заявки нет статуса (поле FR STATUS )  * то есть он не выбран,
+                                            заявка в выборку не попадет.</span>
+                                        <ordersnotstatus></ordersnotstatus>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <dashbord
+                                                :company='1'
+                                                :user_id={{ user_id }}
+                                        ></dashbord>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<script src="../../../js/dist/vue.js"></script>
+<script src="../../../js/components/Orders/static.js?v=3"></script>
+<script src="../../../js/components/Orders/dashbord.js?v=1.21"></script>
+<script src="../../../js/components/Orders/ordersnotstatus.js?v=3"></script>
+<script src="../../../js/main.js"></script>
+
+<script>
+
+
+
+</script>
+

@@ -1,0 +1,32 @@
+{
+  "name": "socket",
+  "version": "2.0.4",
+  "description": "Socket.io",
+  "dependencies": {
+    "async": "^2.6.1",
+    "async-await": "^0.1.40",
+    "async-es": "^2.6.1",
+    "async-mysql": "^1.0.1",
+    "asyncawait": "^1.0.7",
+    "criteo-mapi": "^0.9.3",
+    "cron": "^1.8.2",
+    "curlrequest": "^1.0.1",
+    "fs": "0.0.1-security",
+    "ig-markets": "^1.0.0",
+    "moment-timezone": "^0.5.23",
+    "mysql": "^2.18.1",
+    "mysql2": "^1.5.3",
+    "net": "^1.0.2",
+    "node-telegram-bot-api": "^0.30.0",
+    "nodejs-nodemailer-outlook": "^1.2.3",
+    "nodemailer": "^6.4.6",
+    "promise-mysql": "^3.2.1",
+    "promise-mysql2": "^1.0.0",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2017": "^6.24.1"
+  }
+}

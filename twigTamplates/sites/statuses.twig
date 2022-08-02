@@ -1,0 +1,126 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Sites statuses</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body card-dashboard ">
+                                <div class="row">
+                                    <div class="col-6"></div>
+                                    <div class="col-6">
+                                        <select id="managers" class="form-control">
+                                            <option value="0">Все менеджеры</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <table class="table table-striped table-bordered file-export" id="datatable">
+                                    <thead>
+                                        <th>Сайт</th>
+                                        <th>Статус менеджера</th>
+                                        <th>Статус аудитора</th>
+                                        <th></th>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        $.fn.dataTable.ext.search.push(
+            function( settings, data, dataIndex ) {
+                let manager_selected = $("#managers").val()
+                let site_managers = data[3].split(',')
+                return site_managers.indexOf(manager_selected) !== -1 || manager_selected === '0'
+            }
+        )
+
+        $.post({
+            url: '/users/getAll'
+        }).done(res => {
+            let Users = (JSON.parse(res))['data']
+            let managers = {}, managers_select = $("#managers"), table = $('#datatable').DataTable({
+                ajax: "/sites/getSitesAll/",
+                dom: 'Bfrtip',
+                buttons: [
+                    'excel'
+                ],
+                columnDefs: [
+                    {
+                        targets: 0,
+                        data: 'site_id',
+                        render: function (data, type, full, meta) {
+                            return `<a target="_blank" href="../sites/info/?site=${data}" data-id='${data}'
+                                class='btn btn-block btn-info pull-right
+                                ${full.work_status_auditor !== full.work_status_manager ? 'lightRed' : ''}'>
+                                    ${full.site_name}
+                                </a>`;
+                        }
+                    },
+                    {
+                        targets: 1,
+                        data: 'work_status_auditor',
+                        render: function (data, type, full, meta) {
+                            return data === '0' ? '' :
+                                data === '1' ? 'Работает' :
+                                    data === '2' ? 'Частично работает' : 'Не работает'
+                        }
+                    },
+                    {
+                        targets: 2,
+                        data: 'work_status_manager',
+                        render: function (data, type, full, meta) {
+                            return data === '0' ? '' :
+                                data === '1' ? 'Работает' :
+                                    data === '2' ? 'Частично работает' : 'Не работает'
+                        }
+                    },
+                    {
+                        targets: 3,
+                        data: 'managers',
+                        render: function (data, type, full, meta) {
+                            let ids = []
+                            for (let key in data) {
+                                let man_id = data[key].user_id
+                                if (!managers[man_id])
+                                    managers[man_id] = true
+                                ids.push(man_id)
+                            }
+                            return ids.join(',');
+                        },
+                        visible: false
+                    }
+                ],
+                language: {
+                    sLoadingRecords: '<span style="width:100%;"><img src="../app-assets/img/loaders/rolling.gif" alt="loading" ></span>',
+
+                },
+                initComplete: function (settings, json) {
+                    for (let i in managers) {
+                        let User = (Users.filter(el => el.id === i))[0]
+                        if (User.deleted !== 1)
+                            managers_select.append(`<option value="${i}">${User.lasttname} ${User.firstname}</option>`)
+                    }
+                    managers_select.change(() => table.draw())
+                }
+            });
+        })
+
+    });
+
+</script>
+
+

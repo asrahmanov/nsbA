@@ -1,0 +1,179 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+    <div class="row">
+        <div class="col-12">
+            <div class="content-header">API</div>
+        </div>
+    </div>
+    <!-- Basic Usage -->
+    <section id="basic-usage" class="row">
+        <div class=" col-12">
+
+
+            <div class="card" name="#manager">
+                <div class="card-header">
+                    <img src="../../../app-assets/img/api/script.png" alt="" width="60%">
+                    <h4 class="card-title">Получение спика компаний  - GetScripts()</h4><a class="heading-elements-toggle"></a>
+                    <p>/api/GetScripts/?token={TOKEN}</p>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <p>Пример ответа:</p>
+                        <pre class="language-markup"><code class="language-markup">
+"result":[
+   {
+      "script_id":"1",
+      "script":"C1",
+      "company_name":" Inc.",
+      "contacts":"""last_script_num":"284",
+      "currency":"98",
+      "currency_string":null,
+      "script_type":"4",
+      "priority":"0",
+      "payment_terms":null,
+      "legal_address":null,
+      "origin":"0",
+      "status":"0",
+      "marketplace_id":"1",
+      "contract_off":null,
+      "contract_comm":" renewal, 8a",
+      "is_contract":"0"
+   }
+]
+</code></pre>
+                        <p>Где</p>
+                        <pre class="language-css"><code class="language-css">
+         "script_id" -  идентификатор ( автоикремент )
+         "script" - внутренний номер ( текстовое поле )
+         "company_name" – Наименование компании
+         "contacts" – текстовое поле ( оставляем пустым пока )
+         "last_script_num" - номер проекта ( пишем 0 ) при создании
+         "currency" - номер валюты и связного списка ( метод получения GetCurrency - раздел Валюты )
+         "currency_string" – null -пишем null досталось в наследство
+         "script_type" – тип компании для тебя 1
+         "priority" – приоритет по умолчанию ставим 0
+         "payment_terms"  - null
+         "legal_address"  - null,
+         "origin":"0",
+         "status":"0",
+         "marketplace_id":"1",
+         "contract_off":null,
+         "contract_comm": текстовое поле уточные по контактам
+         "is_contract":"0" – если ли договор ( по умолчанию 0 )
+
+
+
+</code></pre>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class=" col-12">
+            <div class="card" name="#manager">
+                <div class="card-header">
+                    <img src="../../../app-assets/img/api/onlyscript.png" alt="" width="300px" style="margin-bottom: 10px">
+                    <br>
+                    <h4 class="card-title">Метод создания и update компании  ModifyAndCreateScript()</h4><a class="heading-elements-toggle"></a>
+                    <p>/api/ModifyAndCreateScript/?token={TOKEN}</p>
+                        <p>Принимает как GET так и POST запросы</p>
+                        <p>Если не передать script_id то запрос решит и будет создана новая компания</p>
+                        <p>Если передать script_id то обновятся только те поля которые переданны</p>
+                        <p>При успешном создании ответом будет ID новый записи (script_id - новой компании)</p>
+                    </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <p>Пепременные:</p>
+                        <pre class="language-markup"><code class="language-markup">
+         "script_id" -  идентификатор ( автоикремент )
+         "script" - внутренний номер ( текстовое поле )
+         "company_name" – Наименование компании
+         "contacts" – текстовое поле ( оставляем пустым пока )
+         "last_script_num" - номер проекта ( пишем 0 ) при создании
+         "currency" - номер валюты и связного списка ( метод получения GetCurrency - раздел Валюты )
+         "currency_string" – null -пишем null досталось в наследство
+         "script_type" – тип компании для тебя 1
+         "priority" – приоритет по умолчанию ставим 0
+         "payment_terms"  - null
+         "legal_address"  - null,
+         "origin":"0",
+         "status":"0",
+         "marketplace_id":"1",
+         "contract_off":null,
+         "contract_comm": текстовое поле уточные по контактам
+         "is_contract":"0" – если ли договор ( по умолчанию 0 )
+
+
+</code></pre>
+
+</code></pre>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class=" col-12">
+            <div class="card" name="#manager">
+                <div class="card-header">
+                    <img src="../../../app-assets/img/api/staf.png" alt="" width="500px" style="margin-bottom: 10px">
+                    <br>
+                    <h4 class="card-title">Получения списка сотрудников по script_id getCompanyStafByScriptId()</h4><a class="heading-elements-toggle"></a>
+                    <p>/api/getCompanyStafByScriptId/?token={TOKEN}</p>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <p>Пример ответа:</p>
+                        <pre class="language-markup"><code class="language-markup">
+{
+   "result":[
+      {
+         "id":"46",
+         "script_id":"137",
+         "name":"Irie Oda",
+         "position":null,
+         "email":null,
+         "phone":null,
+         "created_at":"2020-09-14 13:41:02",
+         "deleted":null
+      },
+      {
+         "id":"2",
+         "script_id":"137",
+         "name":"Kenshiro Shigematsu",
+         "position":"CEO",
+         "email":"ken@shigematsu.co.jp, ken@viroquest.co.jp",
+         "phone":"81-6-6152-9940",
+         "created_at":"2020-08-27 13:20:35",
+         "deleted":null
+      }
+   ]
+}
+
+
+</code></pre>
+
+                        <p>Где</p>
+<pre class="language-css"><code class="language-css">
+         "id": -  id Автоинремент
+         "script_id": - id компании
+         "name":"Kenshiro Shigematsu"  - имя сотруника
+         "position":"CEO", - должность
+         "email":"ken@shigematsu.co.jp", - email
+         "phone":"81-6-6152-9940",- телефон
+         "created_at":"2020-08-27 13:20:35", - дата создания
+         "deleted":null - удален если 1
+                        </code></pre>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+</div>

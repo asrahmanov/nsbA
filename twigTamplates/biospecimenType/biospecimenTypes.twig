@@ -1,0 +1,220 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Biospecimen Types</h4>
+                    </div>
+                    <div class="card-content ">
+                        <div class="card-body card-dashboard">
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal"
+                                    data-target="#tr_modal" id="new_bio">
+                                Добавить
+                            </button>
+                            <div class="modal fade text-left" id="tr_modal" tabindex="-1" role="dialog"
+                                 aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel1">Biospecimen Type</h4>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form id="biospecimen_form">
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="biospecimen_type">Biospecimen Type</label>
+                                                    <input type="text" id="biospecimen_type" class="form-control" name="biospecimen_type">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="biospecimen_type">Biospecimen Type (Russian)</label>
+                                                    <input type="text" id="biospecimen_type_russian" class="form-control" name="biospecimen_type_russian">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn grey btn-outline-secondary"
+                                                        data-dismiss="modal">Close
+                                                </button>
+                                                <button type="submit" class="btn btn-outline-primary">Save changes
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <table width="100%" id="diseases" class="table table-striped table-bordered file-export">
+                                <thead>
+                                <tr>
+                                    <th>Biospecimen Type</th>
+                                    <th>Russian name</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Storage Conditions</h4>
+                    </div>
+                    <div class="card-content ">
+                        <div class="card-body card-dashboard">
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal"
+                                    data-target="#tr_modal_conditions" id="new_cond">
+                                Добавить
+                            </button>
+                            <div class="modal fade text-left" id="tr_modal_conditions" tabindex="-1" role="dialog"
+                                 aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel1">Storage Conditions</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form id="storage_conditions_form">
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="storage_conditions">Storage Conditions</label>
+                                                    <input type="text" id="storage_conditions" class="form-control" name="storage_conditions">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn grey btn-outline-secondary"
+                                                        data-dismiss="modal">Close
+                                                </button>
+                                                <button type="submit" class="btn btn-outline-primary">Save changes
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <table width="100%" id="storage_conditions_table" class="table table-striped table-bordered file-export">
+                                <thead>
+                                <tr>
+                                    <th>Category name</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        let biospecimenId = 0, conditionId = 0;
+
+        $.post({
+            url: '/biospecimenType/getAll'
+        }).then(data => {
+            let Biotypes = JSON.parse(data)
+            Biotypes.result.forEach(biotype => {
+                $("#diseases tbody").append(`<tr id="row_${biotype.id}" class="dbrow">
+                            <td id="biotype_${biotype.id}">${biotype.biospecimen_type}</td>
+                            <td id="rbiotype_${biotype.id}">${biotype.biospecimen_type_russian}</td>
+                        </tr>`)
+            })
+            $("#diseases").dataTable({
+                drawCallback: () => {
+                    $(".dbrow").dblclick(e => {
+                        let id = $(e.currentTarget).attr('id').split('_')[1], biotype = $(`#biotype_${id}`).html(),
+                            biotype_russian = $(`#rbiotype_${id}`).html()
+                        $("#biospecimen_type").val(biotype)
+                        $("#biospecimen_type_russian").val(biotype_russian)
+                        $("#tr_modal").modal('show')
+                        biospecimenId = id;
+                    })
+                }
+            })
+        })
+
+        $.post({
+            url: '/storageConditions/getAll'
+        }).then(data => {
+            let StorageConditions = JSON.parse(data)
+            StorageConditions.result.forEach(cond => {
+                $("#storage_conditions_table tbody").append(`<tr id="row_${cond.id}" class="dbrow2">
+                            <td id="cond_${cond.id}">${cond.storage_conditions}</td>
+                        </tr>`)
+            })
+            $("#storage_conditions_table").dataTable({
+                drawCallback: () => {
+                    $(".dbrow2").dblclick(e => {
+                        let id = $(e.currentTarget).attr('id').split('_')[1],
+                            cond = $(`#cond_${id}`).html()
+                        $("#storage_conditions").val(cond)
+                        $("#tr_modal_conditions").modal('show')
+                    })
+                }
+            })
+        })
+
+
+        $("#biospecimen_form").submit(e => {
+            e.preventDefault()
+            let biospecimen_type = $("#biospecimen_type").val(),
+                biospecimen_type_russian = $("#biospecimen_type_russian").val(),
+                data = { biospecimen_type, biospecimen_type_russian }
+            if (biospecimenId !== 0) {
+                data.id = biospecimenId
+            }
+            $.post({
+                url: '/biospecimenType/save',
+                data: data
+            }).then(res => {
+                location.reload()
+            })
+        })
+
+        $("#new_bio").click(() => {
+            biospecimenId = 0
+            $("#biospecimen_type").val('')
+        })
+
+
+        $("#storage_conditions_form").submit(e => {
+            e.preventDefault()
+            let storage_conditions = $("#storage_conditions").val(),
+                data = {storage_conditions}
+            if (conditionId !== 0) {
+                data.id = conditionId
+            }
+            $.post({
+                url: '/storageConditions/save',
+                data: data
+            }).then(res => {
+                location.reload()
+            })
+        })
+
+        $("#new_cond").click(() => {
+            conditionId = 0
+            $("#storage_conditions").val('')
+        })
+
+
+
+
+    })
+
+</script>

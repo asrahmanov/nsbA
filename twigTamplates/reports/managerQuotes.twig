@@ -1,0 +1,141 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><h2>Статистика по менеджерам</h2></h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body card-dashboard">
+                                <div class="row">
+                                    <div class="col-sm-4 col-xs-12">
+                                        <label for="date_from">Дата с</label>
+                                        <input type="date" class="form-control" id="date_from">
+                                    </div>
+                                    <div class="col-sm-4 col-xs-12">
+                                        <label for="date_to">Дата по</label>
+                                        <input type="date" class="form-control" id="date_to">
+                                    </div>
+                                    <div class="col-sm-4 col-xs-12">
+                                        <label for="date_to">&nbsp;</label>
+                                        <button type="button" class="btn btn-block btn-info" id="load">Загрузить</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body card-dashboard">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-striped table-bordered" id="report">
+                                            <thead>
+                                            <tr>
+                                                <th>ФИО</th>
+                                                <th>Вал</th>
+                                                <th>Квотировано</th>
+                                                <th>Отказано</th>
+                                                <th>Не отработано</th>
+                                                <th>Ср. дней до квотирования</th>
+                                                <th>Ср. дней до отказа</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        function addZeroes(num) {
+            // Convert input string to a number and store as a variable.
+            var value = Number(num);
+            // Split the input string into two arrays containing integers/decimals
+            var res = num.split(".");
+            // If there is no decimal point or only one decimal place found.
+            if(res.length === 1 || res[1].length < 3) {
+            // Set the number to two decimal places
+                value = value.toFixed(2);
+            }
+            // Return updated or original number.
+            return value;
+        }
+
+        let DateFrom = $("#date_from"), DateTo = $("#date_to"), ReportTable = $("#report"),
+            ReportDataTable = ReportTable.DataTable({
+            ajax: {
+                url: '/reports/getReport/',
+                method: 'POST',
+                data: function (d) {
+                    d.date_from = DateFrom.val(),
+                    d.date_to = DateTo.val()
+                }
+            },
+            processing: true,
+            serverSide: false,
+            columnDefs: [
+                {
+                    targets: 0,
+                    data: 'fio'
+                },
+                {
+                    targets: 1,
+                    data: 'vsego'
+                },
+                {
+                    targets: 2,
+                    data: 'ok_per',
+                    render: function (data, type, row, full, meta) {
+                        return addZeroes(data.toString()) + '%';
+                    }
+                },
+                {
+                    targets: 3,
+                    data: 'otkaz_per',
+                    render: function (data, type, row, full, meta) {
+                        return addZeroes(data.toString()) + '%';
+                    }
+                },
+                {
+                    targets: 4,
+                    data: 'new_per',
+                    render: function (data, type, row, full, meta) {
+                        return addZeroes(data.toString()) + '%';
+                    }
+                },
+                {
+                    targets: 5,
+                    data: 'avg_quoted_days'
+                },
+                {
+                    targets: 6,
+                    data: 'avg_unquoted_days'
+                }
+            ],
+            language: {
+                processing: '<span style="width:100%;"><img src="../app-assets/img/loaders/rolling.gif" alt="loading" ></span>'
+            },
+            initComplete: function () {
+                let btnPressed = false
+                $("#load").on('click', () => {
+                    if (!btnPressed) {
+                        ReportDataTable.ajax.reload()
+                        btnPressed = true
+                        setTimeout(() => { btnPressed = false }, 1000)
+                    }
+                })
+            }
+        })
+    })
+</script>
+
+
+

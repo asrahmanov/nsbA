@@ -1,0 +1,82 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">ICD</h4>
+                        </div>
+                        <div class="card-content ">
+                            <div class="card-body card-dashboard ">
+
+
+                                <table class="table table-striped table-bordered file-export" id="datatable">
+                                    <thead>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Class</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Class</th>
+                                    </tr>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var datatable = $('#datatable').DataTable({
+            "ajax": "/MKB/getAll/",
+
+            "columnDefs": [
+                {
+                    "targets": 0,
+                    "data": 'id',
+
+                },
+                {
+                    "targets": 1,
+                    "data": 'code',
+                },
+                {
+                    "targets": 2,
+                    "data": 'name',
+                },
+                {
+                    "targets": 3,
+                    "data": 'class',
+                }
+
+            ],
+            language: {
+                sLoadingRecords: '<span style="width:100%;"><img src="../app-assets/img/loaders/rolling.gif" alt="loading" ></span>',
+
+            },
+
+        });
+
+    });
+</script>
+
+

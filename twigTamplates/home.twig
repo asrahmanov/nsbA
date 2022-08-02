@@ -1,0 +1,573 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper"><!--Statistics cards Starts-->
+        <!--Statistics cards Ends-->
+
+        <!--Line with Area Chart 1 Starts-->
+
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">FR table</h4>
+                        </div>
+                        <div class="card-content ">
+                            <div class="card-body card-dashboard ">
+
+
+                                {% if role == '2' %}
+
+                                {% else %}
+                                    <a href="../../orders/add" class="btn btn-success btn-sm">
+                                        Добавить заявку
+                                    </a>
+                                {% endif %}
+
+
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal"
+                                            data-target="#tr_modal">
+                                        Настройки
+                                    </button>
+
+                                    <div class="modal fade text-left" id="tr_modal" tabindex="-1" role="dialog"
+                                         aria-labelledby="myModalLabel1"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="myModalLabel1">TR Настройки</h4>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h5>Отметьте нужные</h5>
+
+                                                    <input type="checkbox" checked id="actions" class="toggle-vis"
+                                                           data-column="0"/><span class="ml-1">Actions</span><br>
+                                                    <input type="checkbox" checked id="fr_date" class="toggle-vis"
+                                                           data-column="1"/><span class="ml-1">Date</span><br>
+                                                    <input type="checkbox" checked id="linked_fr_id"
+                                                           class="toggle-vis" data-column="2"/><span
+                                                            class="ml-1">linked</span><br>
+                                                    <input type="checkbox" checked id="internal_id" class="toggle-vis"
+                                                           data-column="3"/><span class="ml-1">internal</span><br>
+                                                    <input type="checkbox" checked id="external_id" class="toggle-vis"
+                                                           data-column="4"/><span class="ml-1">external</span><br>
+                                                    <input type="checkbox" checked id="project_name"
+                                                           class="toggle-vis" data-column="5"/><span class="ml-1">project name</span><br>
+                                                    <input type="checkbox" checked id="project_details"
+                                                           class="toggle-vis" data-column="6"/><span class="ml-1">original text</span><br>
+                                                    <input type="checkbox" checked id="comments" class="toggle-vis"
+                                                           data-column="7"/><span class="ml-1">comments</span><br>
+                                                    <input type="checkbox" checked id="feas_russian"
+                                                           class="toggle-vis" data-column="8"/><span class="ml-1">russian text</span><br>
+                                                    <input type="checkbox" checked id="fr_status" class="toggle-vis"
+                                                           data-column="9"/><span class="ml-1">status</span><br>
+                                                    <input type="checkbox" checked id="fr_status_date"
+                                                           class="toggle-vis" data-column="10"/><span class="ml-1">status date</span><br>
+                                                    <input type="checkbox" checked id="currency" class="toggle-vis"
+                                                           data-column="11"/><span class="ml-1">currency</span><br>
+                                                    <input type="checkbox" checked id="clinical_inclusion"
+                                                           class="toggle-vis" data-column="12"/><span class="ml-1">specific feature</span><br>
+                                                    <input type="checkbox" checked id="answering_id"
+                                                           class="toggle-vis" data-column="13"/><span
+                                                            class="ml-1">user</span><br>
+                                                    <input type="checkbox" checked id="script_number"
+                                                           class="toggle-vis" data-column="15"/><span
+                                                            class="ml-1">script number</span><br>
+                                                    <input type="checkbox" checked id="priority"
+                                                           class="toggle-vis" data-column="16"/><span
+                                                            class="ml-1">priority</span><br>
+
+                                                    <input type="checkbox" checked id="deadline" class="toggle-vis"
+                                                           data-column="17"/><span class="ml-1">DeadLine</span><br>
+
+                                                    <input type="checkbox" checked id="value_mount" class="toggle-vis"
+                                                           data-column="18"/><span class="ml-1">Quote mount</span><br>
+
+
+                                                    <hr>
+
+
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    {#                                                    <button type="button" class="btn grey btn-outline-secondary"#}
+                                                    {#                                                            data-dismiss="modal">Close#}
+                                                    {#                                                    </button>#}
+                                                    {#                                                    <button type="button" class="btn btn-outline-primary">Save changes#}
+                                                    {#                                                    </button>#}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mb-4">
+                                    <div class="col-md-2 col-sm-12">
+                                        <label for="filter_script">Компания</label>
+                                        <select class="form-control" id="filter_script">
+                                            <option value="0">Company Name</option>
+                                            {% for item in script %}
+                                                <option value="{{ item.script }}">{{ item.script }}
+                                                    - {{ item.company_name }} </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+
+                                    <div class="col-md-2 col-sm-12">
+                                        <label for="filter_users">Статус</label>
+                                        <select class="form-control" id="filter_status">
+                                            <option value="0">Status</option>
+                                            {% for item in status %}
+                                                <option value="{{ item.fr_status_values }}">{{ item.fr_status_values }} </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+
+                                    <div class="col-md-2 col-sm-12">
+                                        <label for="filter_deadline">Крайний срок</label>
+                                        <input type="date" class="form-control" id="filter_deadline" >
+                                    </div>
+
+
+                                </div>
+
+
+                                <table class="table table-striped table-bordered file-export" id="datatable_fr">
+                                    <thead>
+                                    <th>Actions</th>
+                                    <th>Date</th>
+                                    <th>linked fr id</th>
+                                    <th>internal id</th>
+                                    <th>external id</th>
+                                    <th>project name</th>
+                                    <th>Original text</th> <!--  project details-->
+                                    <th>comments</th>
+                                    <th>Russian text</th>
+                                    <th>status</th>
+                                    <th>status date</th>
+                                    <th>Currency</th>
+                                    <th>Specific feature</th>
+                                    <th>User</th>
+                                    <th>User id</th>
+                                    <th>script number</th>
+                                    <th>priority</th>
+                                    <th>DeadLine</th>
+                                    <th>Quote mount</th>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Actions</th>
+                                        <th>Date</th>
+                                        <th>linked fr id</th>
+                                        <th>internal id</th>
+                                        <th>external id</th>
+                                        <th>project</th>
+                                        <th>Original text</th> <!--  project details-->
+                                        <th>comments</th>
+                                        <th>Russian text</th>
+                                        <th>status</th>
+                                        <th>status date</th>
+                                        <th>Currency</th>
+                                        <th>Specific feature</th>
+                                        <th>User</th>
+                                        <th>User id</th>
+                                        <th>script number</th>
+                                        <th>priority</th>
+                                        <th>DeadLine</th>
+                                        <th>Quote mount</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--Line with Area Chart 1 Ends-->
+
+
+    </div>
+</div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        socket.on('reloadFrTableUsers', (data) => {
+            console.log('user_id', user_id);
+            console.log('data.users_id', data.users_id);
+
+            if (data.users_id == user_id) {
+
+                datatable_fr.ajax.reload();
+
+            }
+
+        })
+
+
+        if (window.localStorage) {
+
+            // вытаскиваем filter_script из сессии
+            let filter_script_session = localStorage.getItem('filter_script');
+
+            if (filter_script_session) {
+                $('#filter_script').val(filter_script_session)
+            }
+
+
+            let filter_status_session = localStorage.getItem('filter_status');
+
+            if (filter_status_session) {
+                $('#filter_status').val(filter_status_session)
+            }
+
+            let filter_deadline_session = localStorage.getItem('filter_deadline');
+            if (filter_deadline_session) {
+                $('#filter_deadline').val(filter_deadline_session)
+            }
+
+
+        }
+
+
+        if ($.fn.DataTable.isDataTable('#tblRemittanceList')) {
+
+            $('#tblRemittanceList').DataTable().destroy();
+        }
+
+        let datatable_fr = $('#datatable_fr').DataTable({
+            "ajax": "/orders/getOrdersMy/",
+
+            "columnDefs": [
+                {
+                    "targets": 0,
+                    "data": 'proj_id',
+                    'render': function (data, type, full, meta) {
+                        return `<a target="_blank" href="../orders/info/?idFR=${data}" class='btn  btn-block btn-info pull-right'>Открыть</a>`;
+                    }
+                },
+                {
+                    "targets": 1,
+                    "data": 'fr_date',
+                },
+                {
+                    "targets": 2,
+                    "data": 'linked_fr_id',
+                },
+                {
+                    "targets": 3,
+                    "data": 'internal_id',
+                },
+                {
+                    "targets": 4,
+                    "data": 'external_id',
+                },
+                {
+                    "targets": 5,
+                    "data": 'project_name',
+                },
+                {
+                    "targets": 6,
+                    "data": 'project_details',
+                    'render': function (data, type, full, meta) {
+                        return ` ${data}`;
+                    }
+
+                },
+                {
+                    "targets": 7,
+                    "data": 'comments',
+                    'render': function (data, type, full, meta) {
+                        // let text;
+                        // if (data !== null) {
+                        //     text = data.replace(/<[^>]+>/g, '')
+                        //     return `comments<div class='hidden--block'>
+                        return `${data}`;
+                        // <i class="ft-copy copy" data-clipboard-text="${text}"></i>
+                        // </div>`;
+                        // } else {
+                        //     return ``;
+                        // }
+                    }
+                },
+                {
+
+                    "targets": 8,
+                    "data": 'feas_russian',
+                    'render': function (data, type, full, meta) {
+                        return `${data}`;
+                    }
+                },
+
+                {
+                    "targets": 9,
+                    "data": 'fr_status',
+                },
+
+                {
+                    "targets": 10,
+                    "data": 'fr_status_date',
+                },
+                {
+                    "targets": 11,
+                    "data": 'currency',
+                },
+
+                {
+                    "targets": 12,
+                    "data": 'clinical_inclusion',
+                },
+
+                {
+                    "targets": 13,
+                    "data": 'answering_id',
+                },
+
+                {
+                    "targets": 14,
+                    "data": 'users_id',
+                    'visible': false
+                },
+
+                {
+                    "targets": 15,
+                    "data": 'script_number'
+
+                },
+
+                {
+                    "targets": 16,
+                    "data": 'priority'
+
+                },
+
+                {
+                    "targets": 17,
+                    "data": 'deadline',
+                    'render': function (data, type, full, meta) {
+
+                        return `${data}`;
+
+                    }
+                }
+
+                ,
+
+                {
+                    "targets": 18,
+                    "data": 'value_mount',
+                    'render': function (data, type, full, meta) {
+
+                        return `${data}`;
+
+                    }
+                }
+
+
+            ],
+
+
+            language: {
+                sLoadingRecords: '<span style="width:100%;"><img src="../app-assets/img/loaders/rolling.gif" alt="loading" ></span>',
+
+            },
+
+            "initComplete": function (settings, json) {
+
+                var btns = document.querySelectorAll('i');
+                var clipboard = new ClipboardJS(btns);
+
+                clipboard.on('success', function (e) {
+                    toastr.info('Данные скопированы');
+                });
+
+                clipboard.on('error', function (e) {
+                    toastr.error('Ошибка копирования');
+                });
+
+
+                let loadheck = () => {
+
+                    $.ajax({
+                        url: '../users/getviews',
+                        method: 'POST',
+                        data: {
+                            table_name: 'fr_price'
+
+                        }
+                    })
+                        .done(function (array) {
+                            let obj = JSON.parse(array);
+                            obj.forEach(el => {
+                                if (!el.checkeds) {
+                                    document.getElementById(`${el.column_name}`).click();
+                                }
+                            })
+                        });
+
+                }
+
+
+                loadheck();
+
+
+            },
+            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                if (aData.priority == "Важно") {
+                    $('td', nRow).css('background-color', '#ffadad');
+                } else {
+                    $('td', nRow).css('background-color', '#fff');
+                }
+            }
+        });
+
+
+        $('.toggle-vis').on('click', function (e) {
+
+            let column_name = e.target.id;
+            let table_name = 'fr_price';
+            let checked = e.target.checked;
+
+            $.ajax({
+                url: '../users/Viewsave',
+                method: 'POST',
+                data: {
+                    column_name: column_name,
+                    table_name: table_name,
+                    checked: checked
+
+                }
+            })
+                .done(function (save) {
+                    //toastr.info('Сохранил');
+                });
+
+            let column = datatable_fr.column($(this).attr('data-column'));
+            column.visible(!column.visible());
+
+        });
+
+
+        // Функция фильтраци (условие для script)
+        let checkScript = (search, text) => {
+            if (search == 0) {
+                return true;
+            } else {
+                let tr = text.split('-')
+                if (tr[0] == search) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Функция фильтрации (Условия для Статуса )
+        let checkStatus = (search, text) => {
+            if (search == 0) {
+                return true;
+            } else {
+                if (search == text) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        var filteredData = datatable_fr
+            .columns([16])
+            .data()
+            .flatten()
+            .filter(function (value, index) {
+                return value == 1 ? true : false;
+            });
+
+
+        let checkDate = (search, text) => {
+            if (search == '') {
+                return true;
+            } else {
+                if (search == text) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+
+                let filter_script = $('#filter_script').val();
+                let filter_status = $('#filter_status').val();
+                let filter_deadline = $('#filter_deadline').val();
+
+                let checkScriptBoolean = false;
+                let checkStatusBoolean = false;
+
+                let checkDeadLineBoolean = false;
+
+                if (checkScript(filter_script, data[3])) {
+                    checkScriptBoolean = true;
+                }
+                if (checkStatus(filter_status, data[9])) {
+                    checkStatusBoolean = true;
+                }
+
+                if (checkDate(filter_deadline, data[17])) {
+                    checkDeadLineBoolean = true;
+                }
+
+
+                if (checkScriptBoolean === true && checkStatusBoolean === true && checkDeadLineBoolean == true) {
+                    return true;
+                }
+
+                return false;
+            }
+        );
+
+        // Фильтрация по компании
+        $('#filter_script').change(function (e) {
+            datatable_fr.draw();
+            let value = $('#filter_script').val();
+            localStorage.setItem('filter_script', value);
+        });
+
+        // filter_status
+        $('#filter_status').change(function () {
+            datatable_fr.draw();
+
+            let value = $('#filter_status').val();
+            localStorage.setItem('filter_status', value);
+
+        });
+
+        $('#filter_deadline').change(function () {
+            datatable_fr.draw();
+
+            let value = $('#filter_deadline').val();
+            localStorage.setItem('filter_deadline', value);
+        });
+
+
+    });
+
+
+</script>
+
+

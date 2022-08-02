@@ -1,0 +1,410 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper"><!--Statistics cards Starts-->
+        <!--Statistics cards Ends-->
+
+        <!--Line with Area Chart 1 Starts-->
+
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"></h4>
+                        </div>
+                        <div class="card-content ">
+                            <div class="card-body card-dashboard ">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+
+                                        <h2>CUSTOMERS
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                                - Редактирование
+                                            {% endif %}
+                                        </h2>
+
+                                        <div class="form-group">
+                                            <label for="_script">Script: </label>
+
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                                <input type="text" id="_script" class="form-control"
+                                                       value="{{ company.script }}">
+                                            {% else %}
+                                                <b>{{  company.script  }}</b>
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="_company_name">Сompany name: </label>
+
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                            <input type="text" id="_company_name" class="form-control"
+                                                   value="{{ company.company_name }}">
+                                            {% else %}
+
+                                                <b>{{  company.company_name  }}</b>
+                                            {% endif %}
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="_contacts">Contacts</label>
+
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                                <textarea id="_contacts" cols="30"
+                                                          rows="15">{{ company.contacts }}</textarea>
+                                            {% else %}
+                                                <div>{{  company.contacts | raw }}</div>
+                                            {% endif %}
+
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="_last_script_num">Last_script num</label>
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                            <input type="text" id="_last_script_num" class="form-control"
+                                                   value="{{ company.last_script_num }}">
+                                            {% else %}
+                                                <b>{{  company.last_script_num  }}</b>
+                                            {% endif %}
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="_currency">Currency</label>
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                                <select class="form-control" id="_currency">
+                                                    {% for item in currency %}
+                                                        <option value="{{ item.currency_id }}"
+                                                                {% if item.currency_id == company.currency %}
+                                                                    selected
+                                                                {% endif %}
+                                                        >{{ item.currency }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            {% else %}
+                                                {% for item in currency %}
+                                                    {% if item.currency_id == company.currency %}
+                                                        <b>{{  item.currency  }}</b>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="_script_type">Script type</label>
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                            <select class="form-control" id="_script_type">
+                                                {% for item in company_type %}
+                                                    <option value="{{ item.id }}"
+                                                            {% if item.id == company.script_type %}
+                                                                selected
+                                                            {% endif %}
+                                                    >{{ item.type_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            {% else %}
+                                                {% for item in company_type %}
+                                                    {% if item.id == company.script_type %}
+                                                        <b>{{  item.type_name  }}</b>
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                            {% endif %}
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="_script_type">Origin</label>
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                            <select class="form-control" id="_origin">
+                                                <option value="0" {% if company.origin == '' %}
+                                                selected
+                                                        {% endif %}>Не выбран
+                                                </option>
+                                                <option value="Foreign" {% if company.origin == 'Foreign' %}
+                                                selected
+                                                        {% endif %}>Foreign
+                                                </option>
+                                                <option value="Local" {% if company.origin == 'Local' %}
+                                                selected
+                                                        {% endif %}>Local
+                                                </option>
+                                            </select>
+
+                                            {% else %}
+                                                {% if company.origin == '' or company.origin == 0  %}<b>Не выбран</b>{% endif %}
+                                                {% if company.origin == 'Foreign' %}<b>Foreign</b>{% endif %}
+                                                {% if company.origin == 'Local' %}<b>Local</b>{% endif %}
+
+                                            {% endif %}
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="_script_type">Status</label>
+
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                            <select class="form-control" id="_status">
+                                                <option value="0" {% if company.status == '' %}
+                                                selected
+                                                        {% endif %}>Не выбран
+                                                </option>
+                                                <option value="Inactive" {% if company.status == 'Inactive' %}
+                                                selected
+                                                        {% endif %}>Inactive
+                                                </option>
+                                                <option value="Active" {% if company.status == 'Active' %}
+                                                selected
+                                                        {% endif %}>Active
+                                                </option>
+                                            </select>
+
+                                            {% else %}
+                                                {% if company.status == '' or company.origin == 0  %}<b>Не выбран</b>{% endif %}
+                                                {% if company.status == 'Inactive' %}<b>Inactive</b>{% endif %}
+                                                {% if company.status == 'Active' %}<b>Active</b>{% endif %}
+                                            {% endif %}
+
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="_script_type">Marketplace</label>
+
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                            <select class="form-control" id="_marketplace_id">
+                                                {% for item in marketplace %}
+                                                    <option value="{{ item.id }}"
+                                                            {% if item.id == company.marketplace_id %}
+                                                                selected
+                                                            {% endif %}
+                                                    >{{ item.short_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            {% else %}
+                                                {% for item in marketplace %}
+                                                    {% if item.id == company.marketplace_id %}
+                                                        <b>{{ item.short_name }}</b>
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                            {% endif %}
+
+                                        </div>
+
+                                        <div class="form-_priority">
+                                            <label for="fr_date">Priority </label>
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                            <input type="text" id="_priority" class="form-control"
+                                                   value="{{ company.priority }}">
+                                            {% else %}
+                                                <b>{{ company.priority }}</b>
+                                            {% endif %}
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="_payment_terms">Payment terms </label>
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                            <input type="text" id="_payment_terms" class="form-control"
+                                                   value="{{ company.payment_terms }}">
+                                            {% else %}
+                                                <b>{{ company.payment_terms }}</b>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="_payment_terms">Legal address</label>
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                            <input type="text" id="_legal_address" class="form-control"
+                                                   value="{{ company.legal_address }}">
+                                            {% else %}
+                                                <b>{{ company.legal_address }}</b>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="_payment_terms">Valid date up to (Legal)</label>
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                            <input type="date" id="_contract_off" class="form-control"
+                                                   value="{{ company.contract_off }}">
+                                            {% else %}
+                                                <b>{{ company.contract_off }}</b>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="is_contract">Contracts</label>
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                            <select class="form-control" id="is_contract">
+                                                <option value="0" {% if company.is_contract == 0 %} selected {% endif %}>Нет</option>
+                                                <option value="1" {% if company.is_contract == 1 %} selected {% endif %}>Да</option>
+                                            </select>
+
+                                            {% else %}
+                                                <b>
+                                                    {% if company.is_contract == 0 %} Нет {% endif %}
+                                                    {% if company.is_contract == 1 %} Да {% endif %}
+                                                </b>
+                                            {% endif %}
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="_payment_terms">Valid text up to (Legal)</label>
+                                            {% if role == '4' or role == '1' or role == '6' %}
+                                            <input type="text" id="_contract_comm" class="form-control"
+                                                   value="{{ company.contract_comm }}">
+                                            {% else %}
+                                                <b>{{ company.contract_comm }}</b>
+                                            {% endif %}
+                                        </div>
+
+
+                                    </div>
+                                    {% if role == '4' or role == '1' or role == '6' %}
+                                    <div class="col-md-6 col-sm-12">
+                                        <staff :script_id="{{ company.script_id }}"></staff>
+                                    </div>
+                                    {% endif %}
+                                </div>
+
+
+                                {% if role == '4' or role == '1' or role == '6' %}
+                                    <button class="btn btn-default btn-success b10" type="button"
+                                            id="form-button-save">
+                                        <i class="fa fa-check"></i>
+                                        Update changes
+                                    </button>
+                                {% endif %}
+
+                                {% if role == '4' or role == '1' or role == '6' %}
+                                    <button class="btn btn-default btn-danger b10" type="button"
+                                            id="form-button-deleted">
+                                        <i class="fa fa-remove"></i>
+                                       Delete
+                                    </button>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+</div>
+
+<script src="../../../js/dist/vue.js"></script>
+<script src="../../../js/components/Company/staff.js"></script>
+<script src="../../../js/main.js"></script>
+
+<script src="https://cdn.tiny.cloud/1/71j1qczmxow9ec79z0b3tz3q6rzzsq933b2rxwuc2lgjyxlu/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
+<script>tinymce.init({selector: 'textarea'});</script>
+
+<script>
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        let role = `{{ role }}`;
+
+        if (role == '2') {
+            let arrayInput = document.querySelectorAll('.form-control');
+            [...arrayInput].forEach((el) => {
+                el.disabled = 'true';
+
+            })
+        }
+
+    })
+
+
+
+    document.getElementById('form-button-deleted').addEventListener('click', () => {
+        if (window.confirm("Вы уверены что хоитете удалить компанию ?")) {
+
+            let script_id = `{{ company.script_id }}`;
+
+            $.ajax({
+                url: '/company/deleted/',
+                method: 'POST',
+                data: {
+                    script_id: script_id,
+                }
+            })
+                .done(function (text) {
+                    console.log(text);
+                    toastr.success('Компания удалена');
+                    location.href = '../../company'
+                });
+        }
+    });
+
+
+    document.getElementById('form-button-save').addEventListener('click', () => {
+        let script_id = `{{ company.script_id }}`;
+        let script = document.getElementById('_script').value;
+        let company_name = document.getElementById('_company_name').value;
+        // let contacts = document.getElementById('_contacts').value;
+        let contacts = tinymce.get('_contacts').getContent();
+        let last_script_num = document.getElementById('_last_script_num').value;
+        let currency = document.getElementById('_currency').value;
+        let script_type = document.getElementById('_script_type').value;
+        let priority = document.getElementById('_priority').value;
+        let payment_terms = document.getElementById('_payment_terms').value;
+        let legal_address = document.getElementById('_legal_address').value;
+        let contract_comm = document.getElementById('_contract_comm').value;
+        let contract_off = document.getElementById('_contract_off').value;
+        let origin = document.getElementById('_origin').value;
+        let status = document.getElementById('_status').value;
+        let marketplace_id = document.getElementById('_marketplace_id').value;
+        let is_contract = document.getElementById('is_contract').value;
+
+
+        $.ajax({
+            url: '/company/save/',
+            method: 'POST',
+            data: {
+                script_id: script_id,
+                script: script,
+                company_name: company_name,
+                contacts: contacts,
+                last_script_num: last_script_num,
+                currency: currency,
+                script_type: script_type,
+                priority: priority,
+                payment_terms: payment_terms,
+                legal_address: legal_address,
+                origin: origin,
+                status: status,
+                marketplace_id: marketplace_id,
+                contract_comm: contract_comm,
+                contract_off: contract_off,
+                is_contract: is_contract
+
+            }
+        })
+            .done(function (text) {
+                console.log(text);
+                toastr.success('Данные сохранены');
+            });
+
+    });
+</script>
+
+
+
+
+

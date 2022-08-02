@@ -1,0 +1,904 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="accordion-header card-header" id="heading15">
+                        <h2 class="mb-0">
+                            <a class="btn btn-link mb-0 pb-3" data-toggle="collapse"
+                               data-target="#collapse15" aria-controls="collapse15">
+                                <h4 class="card-title"><h2>Reminder</h2></h4>
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapse15" aria-labelledby="heading15">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="company_name">Fr script id:</label>
+                                <input id="company_name" value="{{ company_name }}" class="form-control" disabled>
+                            </div>
+                            <div class="col-6">
+                                <label for="quote_deadline">Quote deadline:</label>
+                                <input id="quote_deadline" value="{{ quote_deadline }}" class="form-control" disabled>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <label for="project_name"><b>Project name</b></label>
+                                    <input id="project_name" value="{{ fr.project_name }}" class="form-control"
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="external_id"><b>External id:</b></label>
+                                    <input id="external_id" class="form-control" value="{{ fr.external_id }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="internal_id"><b>Internal id:</b></label>
+                                    <input id="internal_id" class="form-control" value="{{ fr.internal_id }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="project_details"><b>Request(Original text)</b></label>
+                                    <div class="minBlock">{{ fr.project_details | raw }}</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="feas_russian"><b>Request(Russian text)</b></label>
+                                    <div class="minBlock">{{ fr.feas_russian | raw }}</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="unformal_quote">Historical Quotes</label>
+                                    <div class="minBlock">{{ fr.unformal_quote | raw }}</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="history_po">Historical PO's</label>
+                                    <div class="minBlock">{{ fr.history_po | raw }}</div>
+                                </div>
+                            </div>
+
+                            {% if (role_id != 3) %}
+                                <div class="col-12">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            Маржинальность<br>
+                                            {{ fr.margin | raw }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="form-group">
+                                <label for="basicSelect">Request related documents</label>
+                                <div id="file_list">
+                                    {% for item in files %}
+                                        {% if item.info == 'lto' %}
+                                            <a href="../../{{ item.alias }}{{ item.name }}"
+                                               target="_blank">{{ item.name }}</a><br>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="basicSelect">Файлы PO</label>
+                                <div id="file_list">
+                                    {% for item in files %}
+                                        {% if item.info == 'po' %}
+                                            <a href="../../{{ item.alias }}{{ item.name }}"
+                                               target="_blank">{{ item.name }}</a><br>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="basicSelect">Файлы квот</label>
+                                <div id="file_list">
+                                    {% for item in files %}
+                                        {% if item.info == 'quote' %}
+                                            <a href="../../{{ item.alias }}{{ item.name }}"
+                                               target="_blank">{{ item.name }}</a><br>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion" id="accordionExample3">
+
+            <div class="collapse-icon accordion-icon-rotate ">
+                <div class="card">
+                    <div class=" accordion-header card-header" id="heading10">
+                        <h2 class="mb-0">
+                            <a class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" data-toggle="collapse"
+                               data-target="#collapse09" aria-expanded="false" aria-controls="collapse09">
+                                <h3>Квоты менеджеров</h3>
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div id="collapse09" class="card collapse" aria-labelledby="heading10"
+                         data-parent="#accordionExample3" style="">
+                        <div class="card-body pt-0">
+                            <table class="table table-striped table-bordered file-export dataTable">
+                                <thead>
+                                <tr>
+                                    <th>Сайт</th>
+                                    <th>Кол-во в месяц</th>
+                                    <th>Срок в днях</th>
+                                    <th>Оплата сайту</th>
+                                    <th>Оплаты доктору</th>
+                                    <th>Комментарий</th>
+                                    <th>Болезнь</th>
+                                    <th>Образец</th>
+                                    <th>Менеджер</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for quote in quotes %}
+                                    <tr>
+                                        <td>{{ quote.site_name }}</td>
+                                        <td>{{ quote.value_mount }}</td>
+                                        <td>{{ quote.days }}</td>
+                                        <td>{{ quote.price }}</td>
+                                        <td>
+                                            <table>
+                                                {% for doc_payment in quote.doctor_payments %}
+                                                    <tr>
+                                                        <td>{{ doc_payment.doc_name }}</td>
+                                                        <td>{{ doc_payment.doc_payment }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </td>
+                                        <td>{{ quote.comment }}</td>
+                                        <td>{{ quote.disease }}</td>
+                                        <td>
+                                            <table>
+                                                {% for bio_type in quote.samples_table %}
+                                                    <tr>
+                                                        <td>{{ bio_type.biospecimen_type }}
+                                                            <b>{{ bio_type.biospecimen_type_russian }}</b> {{ bio_type.mod }}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </td>
+                                        <td>{{ quote.lasttname }} {{ quote.firstname }} {{ quote.patronymic }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="accordion-header card-header" id="heading20">
+                        <h2 class="mb-0">
+                            <a class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" data-toggle="collapse"
+                               data-target="#collapse10" aria-expanded="false" aria-controls="collapse10">
+                                <h3>Инвентори </h3>
+                            </a>
+                        </h2>
+                        <span>{{ fr.status_project_text == 'Отсутствует' ? 'Статус для отдела не выставлен' : fr.status_project_text }}</span>
+                        <br>
+                        <br>
+                    </div>
+                    <div id="collapse10" class="collapse" aria-labelledby="heading20"
+                         data-parent="#accordionExample3" style="">
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    {% if role == '6'  or department_id == '3' %}
+                                        <div class="col-md-12 col-sm-12">
+                                            <label for="inventory_sample">Есть ли образец</label>
+                                            <select class="form-control" id="inventory_sample" class="form-control">
+                                                <option value="0"
+                                                        {% if inventory.sample == 0 %}
+                                                            selected
+                                                        {% endif %}
+                                                >Есть ли образец
+                                                </option>
+                                                <option value="1"
+                                                        {% if inventory.sample == 1 %}
+                                                            selected
+                                                        {% endif %}
+                                                >Да
+                                                </option>
+                                                <option value="2"
+                                                        {% if inventory.sample == 2 %}
+                                                            selected
+                                                        {% endif %}
+                                                >Нет
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 mt-2">
+                                            <label for="inventory_alias">Ссылка</label>
+                                            <input type="text" value="{{ inventory.alias }}"
+                                                   id="inventory_alias" class="form-control">
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 mt-2">
+                                            <label for="inventory_comments">Комментарий</label>
+                                            <textarea name="inventory_comments" id="inventory_comments" cols="30"
+                                                      rows="10">{{ inventory.comments }}</textarea>
+                                            <input type="hidden" id="inventory_id" value="{{ inventory.id }}">
+                                        </div>
+                                        <div class="col-md-12 col-sm-12">
+                                            {{ inventory.lasttname }}
+                                            {{ inventory.firstname }}
+                                            {{ inventory.created_at }}
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 mt-4">
+                                            <button class="btn btn-dark" id="inventory_save">Сохранить</button>
+                                        </div>
+                                    {% else %}
+                                        <div class="col-md-12 col-sm-12">
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <td>Если ли инвентори</td>
+                                                    <td><b> {% if inventory.sample == 2 %} Нет {% endif %}
+                                                            {% if inventory.sample == 1 %} Да {% endif %}
+                                                            {% if inventory.sample == 0 %} Инветори не отработан {% endif %}</b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Ссылка</td>
+                                                    <td><b>{{ inventory.alias }}</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Комментарий</td>
+                                                    <td>{{ inventory.comments | raw }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>  {{ inventory.lasttname }}   {{ inventory.firstname }}</td>
+                                                    <td>  {{ inventory.created_at }} </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class=" accordion-header card-header" id="heading30">
+                        <h2 class="mb-0">
+                            <a class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" data-toggle="collapse"
+                               data-target="#collapse30" aria-expanded="false" aria-controls="collapse30">
+                                <h3>ЛТО</h3>
+                            </a>
+                        </h2>
+                        <span>{{ fr.status_lpo_text == 'Отсутствует' ? 'Статус для отдела не выставлен' : fr.status_lpo_text }}</span>
+                        <br>
+                        <br>
+                    </div>
+                    <div id="collapse30" class="collapse" aria-labelledby="heading30"
+                         data-parent="#accordionExample3" style="">
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    {% if role == '6'  or department_id == '4' %}
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <label for="laboratory_sample">Требуется процессинг/исследования по
+                                                данному
+                                                образцу выполнимы ДА/НЕТ</label>
+                                            <select class="form-control" id="laboratory_sample"
+                                                    class="form-control">
+                                                <option value="0"
+                                                        {% if laboratory.sample == 0 %}
+                                                            selected
+                                                        {% endif %}
+                                                >Требуется процессинг/исследования
+                                                </option>
+                                                <option value="1"
+                                                        {% if laboratory.sample == 1 %}
+                                                            selected
+                                                        {% endif %}
+                                                >Да
+                                                </option>
+                                                <option value="2"
+                                                        {% if laboratory.sample == 2 %}
+                                                            selected
+                                                        {% endif %}
+                                                >Нет
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12 mt-2">
+                                            <label for="material_intake">Потребуют дополнительный забора образца
+                                                ДА/НЕТ</label>
+                                            <select class="form-control" id="material_intake" class="form-control">
+                                                <option value="0"
+                                                        {% if laboratory.material_intake == 0 %}
+                                                            selected
+                                                        {% endif %}
+                                                >Потребуют дополнительный забора образца
+                                                </option>
+                                                <option value="1"
+                                                        {% if laboratory.material_intake == 1 %}
+                                                            selected
+                                                        {% endif %}
+                                                >Да
+                                                </option>
+                                                <option value="2"
+                                                        {% if laboratory.material_intake == 2 %}
+                                                            selected
+                                                        {% endif %}
+                                                >Нет
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12 mt-2">
+                                            <label for="material_intake_text">Какого</label>
+                                            <input type="text" value="{{ laboratory.material_intake_text }}"
+                                                   id="material_intake_text" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 col-sm-12 mt-2">
+                                            <label for="material_intake_num">Сколько</label>
+                                            <input type="number" value="{{ laboratory.material_intake_num }}"
+                                                   id="material_intake_num" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12 mt-2">
+                                            <label for="expendable_materials">Потребуют дополнительных расходных
+                                                материалов ДА/НЕТ</label>
+                                            <select class="form-control" id="expendable_materials"
+                                                    class="form-control">
+                                                <option value="0"
+                                                        {% if laboratory.expendable_materials == 0 %}
+                                                            selected
+                                                        {% endif %}
+                                                >Потребуют дополнительных расходных материалов
+                                                </option>
+                                                <option value="1"
+                                                        {% if laboratory.expendable_materials == 1 %}
+                                                            selected
+                                                        {% endif %}
+                                                >Да
+                                                </option>
+                                                <option value="2"
+                                                        {% if laboratory.expendable_materials == 2 %}
+                                                            selected
+                                                        {% endif %}
+                                                >Нет
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12 mt-2">
+                                            <label for="expendable_materials_text">Каких</label>
+                                            <input type="text" value="{{ laboratory.expendable_materials_text }}"
+                                                   id="expendable_materials_text" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 col-sm-12 mt-2">
+                                            <label for="expendable_materials_num">Стоимость полного
+                                                комплекта</label>
+                                            <input type="number" value="{{ laboratory.expendable_materials_num }}"
+                                                   id="expendable_materials_num" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12 mt-2">
+                                            <label for="financial_expenses">Потребуются дополнительные финансовые
+                                                расходы</label>
+                                            <select class="form-control" id="financial_expenses"
+                                                    class="form-control">
+                                                <option value="0"
+                                                        {% if laboratory.financial_expenses == 0 %}
+                                                            selected
+                                                        {% endif %}
+                                                >Потребуются дополнительные финансовые расходы
+                                                </option>
+                                                <option value="1"
+                                                        {% if laboratory.financial_expenses == 1 %}
+                                                            selected
+                                                        {% endif %}
+                                                >Да
+                                                </option>
+                                                <option value="2"
+                                                        {% if laboratory.financial_expenses == 2 %}
+                                                            selected
+                                                        {% endif %}
+                                                >Нет
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12 mt-2">
+                                            <label for="financial_expenses_text">На что ?</label>
+                                            <input type="text" value="{{ laboratory.financial_expenses_text }}"
+                                                   id="financial_expenses_text" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 col-sm-12 mt-2">
+                                            <label for="financial_expenses_num">Сумма</label>
+                                            <input type="number" value="{{ laboratory.financial_expenses_num }}"
+                                                   id="financial_expenses_num" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12 mt-2">
+                                            <label for="lavaratory_comments">Комментарий</label>
+                                            <textarea name="laboratory_comments" id="laboratory_comments" cols="30"
+                                                      rows="10">{{ laboratory.comments }}</textarea>
+                                            <input type="hidden" id="laboratory_id" value="{{ laboratory.id }}">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            {{ laboratory.lasttname }}
+                                            {{ laboratory.firstname }}:
+                                            {{ laboratory.created_at }}
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 mt-4">
+                                            <button class="btn btn-dark" id="lavaratory_save">Сохранить</button>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <td colspan="4">Требуется процессинг/исследования по данному
+                                                        образцу выполнимы:
+                                                    </td>
+                                                    <td colspan="2">
+                                                        <b>{% if laboratory.sample == 2 %} Нет {% endif %}
+                                                            {% if laboratory.sample == 1 %} Да {% endif %}
+                                                            {% if laboratory.sample == 0 %} ЛТО не отработан {% endif %}</b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Потребуют дополнительный забора образца:</td>
+                                                    <td>
+                                                        <b>  {% if laboratory.material_intake == 2 %} Нет {% endif %}
+                                                            {% if laboratory.material_intake == 1 %} Да {% endif %}
+                                                            {% if laboratory.material_intake == 0 %} Не выбрано {% endif %}</b>
+                                                    </td>
+                                                    <td>Какого:</td>
+                                                    <td><b>{{ laboratory.material_intake_text }}</b></td>
+                                                    <td>Сколько</td>
+                                                    <td><b>{{ laboratory.material_intake_num }} </b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Потребуют дополнительных расходных материалов</td>
+                                                    <td>
+                                                        <b>  {% if laboratory.expendable_materials == 2 %} Нет {% endif %}
+                                                            {% if laboratory.expendable_materials == 1 %} Да {% endif %}
+                                                            {% if laboratory.expendable_materials == 0 %} Не выбрано {% endif %}</b>
+                                                    </td>
+                                                    <td>Каких:</td>
+                                                    <td><b>{{ laboratory.expendable_materials_text }}</b></td>
+                                                    <td>Стоиомсть полного комплекта</td>
+                                                    <td><b>{{ laboratory.expendable_materials_num }} </b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Потребуются дополнительные финансовые расходы</td>
+                                                    <td>
+                                                        <b>  {% if laboratory.financial_expenses == 2 %} Нет {% endif %}
+                                                            {% if laboratory.financial_expenses == 1 %} Да {% endif %}
+                                                            {% if laboratory.financial_expenses == 0 %} Не выбрано {% endif %}</b>
+                                                    </td>
+                                                    <td>На что:</td>
+                                                    <td><b>{{ laboratory.financial_expenses_text }}</b></td>
+                                                    <td>Сумма</td>
+                                                    <td><b>{{ laboratory.financial_expenses_num }} </b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Комментарий</td>
+                                                    <td colspan="5">{{ laboratory.comments | raw }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3">{{ laboratory.lasttname }} {{ laboratory.firstname }}
+                                                        :
+                                                    </td>
+                                                    <td colspan="3">{{ laboratory.created_at }}:</td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        {% if user_id %}
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="historical_data"><h2><b>Reminder comments</b></h2></label>
+                                    <div class="minBlock"
+                                            {% if fr.historical_data != '' %}
+                                                style="font-weight: bold; border: 1px solid black;"
+                                            {% endif %}
+                                    >{{ fr.historical_data | raw }}</div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card">
+                    {% if (fr.quote_type == 'standart') %}
+                        <div class=" accordion-header card-header" id="heading40">
+                            <h2 class="mb-0">
+                                <a class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" data-toggle="collapse"
+                                   data-target="#collapse40" aria-expanded="false" aria-controls="collapse40">
+                                    <h3>Проект квоты</h3>
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse40" class="collapse" aria-labelledby="heading40"
+                             data-parent="#accordionExample3" style="">
+                            <div class="card-body pt-0">
+                                <offer
+                                        :proj_id="{{ fr.proj_id }}"
+                                        :script_id="{{ script_id }}"
+                                        :currency="'{{ currency }}'"
+                                        :order_diseases="{{ order_disease_options }}"
+                                        :order_samples="{{ order_diseases_biospecimen }}"
+                                        :offer="{{ offer }}"
+                                        :offer_items="{{ offer_items }}"
+                                ></offer>
+                            </div>
+                        </div>
+                    {% elseif (fr.quote_type == 'russian') %}
+                        <div class="accordion-header card-header" id="heading40">
+                            <h2 class="mb-0">
+                                <a class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" data-toggle="collapse"
+                                   data-target="#collapse40" aria-expanded="false" aria-controls="collapse40">
+                                    <h4 class="card-title"><h2>Проект квоты на русском языке</h2></h4>
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse40" class="collapse" aria-labelledby="heading40"
+                             data-parent="#accordionExample3"
+                             style="">
+                            <div class="card-body pt-0">
+                                <offer_ru
+                                        :proj_id="{{ fr.proj_id }}"
+                                        :script_id="{{ script_id }}"
+                                        :currency="'{{ currency }}'"
+                                        :order_diseases="{{ order_disease_options }}"
+                                        :order_samples="{{ order_diseases_biospecimen }}"
+                                        :offer_ru="{{ offer_ru }}"
+                                        :offer_ru_items="{{ offer_ru_items }}"
+                                ></offer_ru>
+                            </div>
+                        </div>
+                    {% elseif (fr.quote_type == 'russian_mod') %}
+                        <div class="accordion-header card-header" id="heading40">
+                            <h2 class="mb-0">
+                                <a class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" data-toggle="collapse"
+                                   data-target="#collapse40" aria-expanded="false" aria-controls="collapse40">
+                                    <h4 class="card-title"><h2>Проект квоты на русском языке (мод)</h2></h4>
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse40" class="collapse" aria-labelledby="heading40"
+                             data-parent="#accordionExample3"
+                             style="">
+                            <div class="card-body pt-0">
+                                <offer_ru_mod
+                                        :proj_id="{{ fr.proj_id }}"
+                                        :script_id="{{ script_id }}"
+                                        :currency="'{{ currency }}'"
+                                        :order_diseases="{{ order_disease_options }}"
+                                        :order_samples="{{ order_diseases_biospecimen }}"
+                                        :offer_ru="{{ offer_ru }}"
+                                        :offer_ru_items="{{ offer_ru_items }}"
+                                ></offer_ru_mod>
+                            </div>
+                        </div>
+                    {% elseif (fr.quote_type == 'ape') %}
+                        <div class="accordion-header card-header" id="heading40">
+                            <h2 class="mb-0">
+                                <a class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" data-toggle="collapse"
+                                   data-target="#collapse40" aria-expanded="false" aria-controls="collapse40">
+                                    <h4 class="card-title"><h2>ШАБЛОН ПРИМАТЫ</h2></h4>
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse40" class="collapse" aria-labelledby="heading40"
+                             data-parent="#accordionExample3"
+                             style="">
+                            <div class="card-body pt-0">
+                                <ape_offer
+                                        :proj_id="{{ fr.proj_id }}"
+                                        :script_id="{{ script_id }}"
+                                        :currency="'{{ currency }}'"
+                                ></ape_offer>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-body">
+                <div class="col-12" id="chat_history"></div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="new_chat_message">Сообщение</label>
+                        <textarea id="new_chat_message" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="col-12">
+                    От: {{ author }}<br>
+                    Кому: {{ target }}
+                </div>
+                <div class="col-12">
+                    <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">
+                        Отмена
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" id="send_message">
+                        Отправить
+                    </button>
+                    {% if ((user_id == 4 or user_id == 5 or user_id == 56) and ticket.done != 1) %}
+
+                        {% if (not(approved_by_me)) %}
+                            <button type="button" class="btn btn-success" id="approve_ticket">
+                                Согласовать
+                            </button>
+                        {% else %}
+                            <button type="button" class="btn btn-warning" id="disapprove_ticket">
+                                Отменить согласование
+                            </button>
+                        {% endif %}
+                    {% endif %}
+                    {% if (user_id == ticket.author_id and ticket.done != 1) %}
+                        <div class="display-inline-block">
+                            <select class="form-control" id="close_score_{{ ticket.id }}">
+                                <option value="10">Все хорошо, задача закрывается</option>
+                                <option value="0">Задача не выполнена</option>
+                                <option value="5">Задача выполнена с опозданием</option>
+                            </select>
+                            <br>
+                            <button type="button" class="btn btn-danger close_manager_ticket" id="close_{{ ticket.id }}">
+                                Закрыть</button>
+                            <button type="button" class="btn btn-secondary open_manager_ticket invisible" id="open_{{ ticket.id }}">
+                                Открыть</button>
+                        </div>
+                    {% elseif (user_id == ticket.author_id and ticket.done == 1) %}
+                        <div class="display-inline-block">
+                            <select class="form-control invisible" id="close_score_{{ ticket.id }}">
+                                <option value="10">Все хорошо, задача закрывается</option>
+                                <option value="0">Задача не выполнена</option>
+                                <option value="5">Задача выполнена с опозданием</option>
+                            </select>
+                            <br>
+                            ${  mantick.closed_status === 'ok' ? 'Все хорошо, задача закрывается<br><br>' :
+                            (mantick.closed_status === 'late' ? 'Задача выполнена с опозданием<br><br>' :
+                            (mantick.closed_status === 'fail' ? 'Задача не выполнена<br><br>' : '')) }
+                            <button type="button" class="btn btn-danger close_manager_ticket invisible" id="close_{{ ticket.id }}">
+                                Закрыть</button>
+                            <button type="button" class="btn btn-secondary open_manager_ticket" id="open_{{ ticket.id }}">
+                                Открыть</button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-body">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="new_chat_message">Согласования</label>
+                    </div>
+                </div>
+                <div class="col-12">
+
+                    <ul class="list-group">
+
+                        {% for user_id, approval in approved %}
+                            {% if approval == 1 %}
+                                <li class="list-group-item list-group-item-action list-group-item-success">Согласовано:
+                                    {% if user_id == 4 %}
+                                        Виталий    Пруцкий
+                                    {% elseif user_id == 5 %}
+                                        Олег Гранстрем
+                                    {% elseif user_id == 56 %}
+                                        Anisimov Sergey
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                    </ul>
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade text-left" id="rating_modal" role="dialog" aria-hidden="true">
+    <div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="min-width:800px;">
+                <div class="modal-header">
+                    <h4>Оценка</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-2">
+                            <img src="/app-assets/img/ratings/1.png" style="max-width: 100%;" class="rating"
+                                 id="rate_1">
+                            <p style="text-align: center;">1</p>
+                        </div>
+                        <div class="col-2">
+                            <img src="/app-assets/img/ratings/2.png" style="max-width: 100%;" class="rating"
+                                 id="rate_2">
+                            <p style="text-align: center;">2</p>
+                        </div>
+                        <div class="col-2">
+                            <img src="/app-assets/img/ratings/3.png" style="max-width: 100%;" class="rating"
+                                 id="rate_3">
+                            <p style="text-align: center;">3</p>
+                        </div>
+                        <div class="col-2">
+                            <img src="/app-assets/img/ratings/4.png" style="max-width: 100%;" class="rating"
+                                 id="rate_4">
+                            <p style="text-align: center;">4</p>
+                        </div>
+                        <div class="col-2">
+                            <img src="/app-assets/img/ratings/5.png" style="max-width: 100%;" class="rating"
+                                 id="rate_5">
+                            <p style="text-align: center;">5</p>
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <textarea id="rating_comment" cols="30" rows="10"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.tiny.cloud/1/71j1qczmxow9ec79z0b3tz3q6rzzsq933b2rxwuc2lgjyxlu/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
+<script>tinymce.init({
+        selector: 'textarea',
+        height: "480"
+    });</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let Chat = $("#chat_history"), ScreenTickets = {}, UserNamesById = {}, SendMessageButton = $("#send_message"),
+            user_id = parseInt(`{{ user_id }}`), ticket_viewed_id = parseInt(`{{ ticket.id }}`),
+            CloseTicketButton = $(".close_manager_ticket"), OpenTicketButton = $("#open_manager_ticket"),
+            ApproveTicketButton = $("#approve_ticket"), DisapproveTicketButton = $("#disapprove_ticket"),
+            RatingModal = $("#rating_modal")
+
+        $.get({url: '/users/getEverybody'}).done((resU) => {
+
+            let Users = JSON.parse(resU)
+            Users.data.forEach(user => {
+                let fullname = `${user.lasttname} ${user.firstname} ${user.patronymic || ''}`
+                UserNamesById[user.id] = fullname
+            })
+
+            $.get({url: '/newTickets/getAll/'}).done(res => {
+                let MyTickets = JSON.parse(res)
+                MyTickets.result.forEach(ticket => {
+                    ScreenTickets[ticket.id] = ticket
+                })
+                let ticket = ScreenTickets[ticket_viewed_id], chat = ticket.chat
+                Chat.html(ticket.message)
+                chat.forEach((msg) => {
+                    Chat.append(`
+                            <div class="${parseInt(msg.author_id) === user_id ? 'ticket_my' : 'ticket_in'}">
+                                ${msg.message}
+                            </div>
+                            <div class="${parseInt(msg.author_id) === user_id ? 'ticket_author_my' : 'ticket_author_in'}">
+                                ${UserNamesById[msg.author_id]}
+                            </div>
+                            <div class="${parseInt(msg.author_id) === user_id ? 'ticket_date_my' : 'ticket_date_in'}">
+                                ${msg.created_at.split(' ')[0].split('-').reverse().join('/') + ' ' +
+                    msg.created_at.split(' ')[1].split(':')[0] + ':' +
+                    msg.created_at.split(' ')[1].split(':')[1]}
+                            </div>
+                            `)
+                    if (parseInt(msg.author_id) !== user_id) {
+                        $.post({url: '/newTicketChats/save/', data: {id: msg.id, viewed: 1}})
+                    }
+                })
+                SendMessageButton.off('click').click(() => {
+                    let NewMsg = tinymce.get('new_chat_message').getContent(),
+                        data = {ticket_id: ticket.id, message: NewMsg}
+                    $.post({url: '/newTicketChats/save/', data}).done((res) => {
+                        location.reload()
+                    })
+                })
+                CloseTicketButton.off('click').click(e => {
+                    let tId = $(e.currentTarget).attr('id').split('_')[1], score = $(`#close_score_${tId}`).val(), data = {id: tId, score: score, done: 1}
+                    $.post({url: '/newTickets/save/', data}).done((res) => {
+                        let Result = JSON.parse(res), newScore = Result.score
+                        $(`#score_${tId}`).html(newScore)
+                        $(`#close_${tId}, #open_${tId}, #close_score_${tId}`).toggleClass('invisible')
+                    })
+                })
+                OpenTicketButton.off('click').click(e => {
+                    let  tId = $(e.currentTarget).attr('id').split('_')[1], data = {id: tId, done: 0}
+                    $(`#score_${tId}`).html('')
+                    $.post({url: '/newTickets/save/', data}).done(() => {
+                        $(`#close_${tId}, #open_${tId}, #close_score_${tId}`).toggleClass('invisible')
+                    })
+                })
+                ApproveTicketButton.off('click').click(() => {
+                    RatingModal.modal('show')
+                })
+                DisapproveTicketButton.off('click').click(() => {
+                    let data = {ticket_id: ticket.id, user_id: user_id, approvement: 0}
+                    $.post({url: '/newTicketApprovals/save/', data}).done(() => {
+                        location.reload()
+                    })
+                })
+                $(".rating").click(e => {
+                    let data = {ticket_id: ticket.id, user_id: user_id, approvement: 1},
+                        rating = $(e.currentTarget).attr('id').split('_')[1],
+                        rating_data = {
+                            ticket_id: ticket.id,
+                            user_id: user_id,
+                            rating: rating,
+                            comment: tinymce.get('rating_comment').getContent()
+                        }
+                    $.post({url: '/newTicketApprovals/save/', data}).done(() => {
+                        $.post({url: '/newTicketRating/save/', data: rating_data}).done((response) => {
+                            location.reload()
+                        })
+                    })
+                })
+            })
+
+        })
+
+    })
+</script>
+<script src="../../../js/dist/vue.js"></script>
+<script src="../../../js/components/Orders/offer.js?_=123"></script>
+<script src="../../../js/components/Orders/offer_ru.js?v=2.0.1"></script>
+<script src="../../../js/components/Orders/offer_ru_mod.js?v=1.93"></script>
+<script src="../../../js/components/Orders/ape_offer.js?v=1.04"></script>
+<script src="../../../js/main.js"></script>
+

@@ -1,0 +1,395 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper"><!--Statistics cards Starts-->
+        <!--Statistics cards Ends-->
+
+        <!--Line with Area Chart 1 Starts-->
+
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><h2>Информация по пользователю</h2></h4>
+                        </div>
+                        <div class="card-content ">
+                            <div class="card-body card-dashboard ">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        {#<h2>Информация</h2>#}
+
+                                        <div class="form-group">
+                                            <label for="lasttname">Lasttname</label>
+                                            <input type="text" id="lasttname" class="form-control"
+                                                   value="{{ users.lasttname }}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="firstname">Firstname</label>
+                                            <input type="text" id="firstname" class="form-control"
+                                                   value="{{ users.firstname }}">
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            <label for="patronymic">Patronymic</label>
+                                            <input type="text" id="patronymic" class="form-control"
+                                                   value="{{ users.patronymic }}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="logins">Login</label>
+                                            <input type="text" id="logins" class="form-control" disabled
+                                                   value="{{ users.login }}">
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="email">email</label>
+                                                    <input type="text" id="email" class="form-control"
+                                                           value="{{ users.email }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <label for="reset_password">Сбросить пароль</label>
+                                                <button class="btn btn-danger btn-success b10 w-100" type="button"
+                                                        id="reset_password">
+                                                    RESET PASSWORD
+                                                </button>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="role_id">Role</label>
+                                            <select class="form-control" id="role_id">
+                                                <option value="0">Выберите роль</option>
+                                                {% for item in roles %}
+                                                    <option value="{{ item.id }}"
+                                                            {% if users.role_id == item.id %}
+                                                                selected
+                                                            {% endif %}
+                                                    >{{ item.name }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="role_id">Department</label>
+                                            <select class="form-control" id="department_id">
+
+                                                {% for item in departments %}
+                                                    <option value="{{ item.id }}"
+                                                    {% if users.department_id == item.id %}
+                                                    selected
+                                                    {% endif %}
+                                                    >{{ item.department_name }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+
+
+
+                                        {% if role == '2' %}
+
+                                        {% else %}
+                                            <button class="btn btn-default btn-success b10" type="button"
+                                                    id="form-button-save">
+                                                <i class="fa fa-check"></i>
+                                                Update changes
+                                            </button>
+                                        {% endif %}
+
+                                        {% if (role == '6' or user_id == '1' or user_id == '6') %}
+                                            <button class="btn btn-default btn-success b10" type="button"
+                                                    id="loginAuth">
+                                                <i class="fa fa-check"></i>
+                                                AUTOLOGIN
+                                            </button>
+                                        {% endif %}
+
+                                        {% if (role == '6' or user_id == '1' or user_id == '6') %}
+                                            <button class="btn btn-default
+                                                    {% if users.deleted != 1 %}
+                                                        btn-danger
+                                                    {% else %}
+                                                        btn-success
+                                                    {% endif %} b10" type="button" id="fire">
+                                                {% if users.deleted != '1' %}
+                                                    <i class="fa fa-times"></i>FIRE WORKER
+                                                {% else %}
+                                                    <i class="fa fa-check"></i>RESTORE WORKER
+                                                {% endif %}
+                                            </button>
+                                        {% endif %}
+
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12">
+                                        {% if users.role_id == '3' %}
+                                        <div class="row">
+                                            <div class="col-md-8 col-sm-8">
+
+                                                <div class="form-group">
+                                                    <label for="site">Sites</label>
+                                                    <select class="form-control" id="site_id">
+                                                        {% for item in sites %}
+                                                            <option value="{{ item.site_id }}">{{ item.site_name }} </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    </div>
+                                            </div>
+
+                                            <div class="col-md-4 col-sm-4">
+                                                <label for="add-sites">Добавить</label>
+                                                <button class="btn btn-default btn-success w-100" id="add-sites">ADD
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                        <div id="table_sites"></div>
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+
+    </div>
+</div>
+
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        let FireBtn = $("#fire")
+
+        // Загрузка сайтов пользователя
+        let role_users = `{{ users.role_id }}`;
+         if (role_users == 3 ) {
+             loadUsersSites();
+
+             document.getElementById('add-sites').addEventListener('click', () => {
+                 addSites();
+             });
+
+         }
+
+        if(document.getElementById('form-button-save')){
+            document.getElementById('form-button-save').addEventListener('click', () => {
+                saveOrder();
+            });
+        }
+
+        if(document.getElementById('loginAuth')) {
+            document.getElementById('loginAuth').addEventListener('click', () => {
+                send();
+            });
+        }
+
+
+        document.getElementById('reset_password').addEventListener('click', () => {
+            resetPassword();
+        });
+
+        let role = `{{ role }}`;
+
+        if (role == '2') {
+            let arrayInput = document.querySelectorAll('.form-control');
+            [...arrayInput].forEach((el) => {
+                el.disabled = 'true';
+
+            })
+        }
+
+        FireBtn.click((e) => {
+            let id = `{{ users.id }}`, deleted = $(e.currentTarget).hasClass('btn-danger') ? 1 : 0,
+                data = { id, deleted }
+            $.post({ url: '/users/save/', data }).done(() => {
+                location.reload()
+            })
+        })
+    })
+
+
+    let saveOrder = () => {
+        let id = `{{ users.id }}`;
+        let role_id = document.getElementById('role_id').value;
+        let email = document.getElementById('email').value;
+        let login = document.getElementById('logins').value;
+        let patronymic = document.getElementById('patronymic').value;
+        let lasttname = document.getElementById('lasttname').value;
+        let firstname = document.getElementById('firstname').value;
+        let department_id = document.getElementById('department_id').value;
+
+        if (role_id == 0) {
+            toastr.error('Выберите роль пользоватлея');
+        } else if (login.length < 3) {
+            toastr.error('Login не может быть менее 3 знаков');
+        } else {
+            $.post({
+                url: '/users/save/',
+                data: {
+                    id: id,
+                    role_id: role_id,
+                    email: email,
+                    login: login,
+                    patronymic: patronymic,
+                    lasttname: lasttname,
+                    department_id: department_id,
+                    firstname: firstname
+                }
+            }).done(function (text) {
+                toastr.success('Данные сохранены');
+            });
+        }
+    };
+
+
+    let addSites = () => {
+        let user_id = `{{ users.id }}`;
+        let site_id = document.getElementById('site_id').value;
+
+        $.ajax({
+            url: '/ManagerSites/save/',
+            method: 'POST',
+            data: {
+                user_id: user_id,
+                site_id: site_id
+            }
+        })
+            .done(function (res) {
+                if (res > 0) {
+                    toastr.success('Успешно', 'Сайт добавлен');
+                    loadUsersSites();
+                } else {
+                    toastr.info('Ошибка', 'Такой сайт уже есть');
+                }
+            });
+    }
+
+
+    let resetPassword = () => {
+        let id = `{{ users.id }}`;
+
+        $.ajax({
+            url: '/users/reset/',
+            method: 'POST',
+            data: {
+                id: id
+            }
+        })
+            .done(function (res) {
+                let data = JSON.parse(res);
+                if (data.result) {
+                    toastr.success('Успешно', 'Новый пароль отправлен на почту');
+                }
+            });
+
+    }
+
+    let eventBtnDell =  () => {
+        let btn = document.querySelectorAll('.btn-dell-site');
+        let btns = [...btn];
+        btns.forEach (el => {
+            el.addEventListener('click', (e) => {
+
+                $.ajax({
+                    url: '/ManagerSites/dell/',
+                    method: 'POST',
+                    data: {
+                        id: el.dataset.id
+                    }
+                })
+                    .done(function (res) {
+                        console.log(res);
+                        loadUsersSites();
+                    })
+            })
+
+        })
+    }
+
+
+    let loadUsersSites = () => {
+        let user_id = `{{ users.id }}`;
+        let site_id = document.getElementById('site_id').value;
+
+        $.ajax({
+            url: '/ManagerSites/getSiteManagerbyUser/',
+            method: 'POST',
+            data: {
+                user_id: user_id,
+                site_id: site_id
+            }
+        })
+            .done(function (res) {
+                let data = JSON.parse(res);
+
+                let table_sites = document.getElementById('table_sites');
+                let infoTable = '';
+                data.result.forEach(el => {
+                    infoTable += `
+                    <tr>
+                        <td>${el.site_name}</td>
+                        <td>
+                         <button class="btn btn-danger btn-success btn-sm btn-dell-site" type="button" data-id='${el.id}'>
+                          <i class="ft-delete btn-dell"  ></i>
+                         </button>
+                        </td>
+                    </tr>
+                    `;
+                })
+
+                table_sites.innerHTML = `<table class="table">
+                <tr>
+                <td>Название</td>
+                <td>Действие</td>
+                <tr>
+                 ${infoTable}
+                </table>`;
+
+                eventBtnDell();
+
+            });
+
+    }
+
+
+    let send = () => {
+
+        let user_id = `{{ users.id }}`;
+
+
+        $.ajax({
+            url: '../../auth/entranceAdmin',
+            method: 'POST',
+            data: {
+                user_id: user_id
+            }
+        })
+            .done(function (result) {
+                result = JSON.parse(result)
+                if (result.response) {
+                    location.href = '/';
+                } else {
+                    toastr.error('Неверный логин или пароль');
+                }
+
+
+            });
+
+    }
+
+
+</script>
+

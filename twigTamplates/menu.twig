@@ -1,0 +1,57 @@
+<!-- main menu-->
+<!--.main-menu(class="#{menuColor} #{menuOpenType}", class=(menuShadow == true ? 'menu-shadow' : ''))-->
+<div data-active-color="white" data-background-color="{{ color }}" data-image="{{ img_bg }}" class="app-sidebar">
+    <!-- main menu header-->
+    <!-- Sidebar Header starts-->
+
+    <div class="sidebar-header">
+        <div class="logo clearfix"><a href="/" class="logo-text float-left">
+                <div class="logo-img"></div><span class="text align-middle">I-BIOS</span></a><a id="sidebarToggle" href="javascript:;" class="nav-toggle d-none d-sm-none d-md-none d-lg-block"><i data-toggle="expanded" class="toggle-icon ft-toggle-right"></i></a><a id="sidebarClose" href="javascript:;" class="nav-close d-block d-md-block d-lg-none d-xl-none"><i class="ft-x"></i></a></div>
+    </div>
+
+    <div class="sidebar-content">
+        <div class="nav-container">
+            <ul id="main-menu-navigation" data-menu="menu-navigation" data-scroll-to-active="true" class="navigation navigation-main">
+                {% for itemMenu in userMenu %}
+                    {% if itemMenu.children == [] %}
+                    <li class="nav-item"><a href="/{{ itemMenu.alias }}"><i class="{{ itemMenu.icon }}"></i><span data-i18n="" class="menu-title">{{ itemMenu.name }}
+{#                            {% if (itemMenu.alias == 'newTickets/index' and iHaveNewTickets) or (itemMenu.alias == 'newTickets/reminders' and iHaveNewReminders) %}#}
+{#                                {{ iHaveNewReminders }}#}
+{#                            {% endif %}#}
+                        </span></a>
+                    </li>
+                    {% else %}
+                    <li class="has-sub nav-item">
+                        <a href="#"><i class="ft-edit"></i><span data-i18n="" class="menu-title">{{ itemMenu.name }}</span></a>
+                        <ul class="menu-content">
+                            {% for level2item in itemMenu.children %}
+                                <li class="nav-item"><a href="/{{ level2item.alias }}">
+                                    <i class="{{ level2item.icon }}"></i><span data-i18n="" class="menu-title">{{ level2item.name }}</span></a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="sidebar-background"></div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

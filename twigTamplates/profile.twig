@@ -1,0 +1,289 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper"><!--Statistics cards Starts-->
+        <!--Statistics cards Ends-->
+        <!--Line with Area Chart 1 Starts-->
+
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"></h4>
+                        </div>
+                        <div class="card-content ">
+                            <div class="card-body card-dashboard ">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <h2>Информация</h2>
+                                        <div class="form-group">
+                                            <label for="lasttname">Lasttname</label>
+                                            <input type="text" id="lasttname" class="form-control"
+                                                   value="{{ users.lasttname }}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="firstname">Firstname</label>
+                                            <input type="text" id="firstname" class="form-control"
+                                                   value="{{ users.firstname }}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="patronymic">Patronymic</label>
+                                            <input type="text" id="patronymic" class="form-control"
+                                                   value="{{ users.patronymic }}">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="logins">Login</label>
+                                            <input type="text" id="logins" class="form-control" disabled
+                                                   value="{{ users.login }}">
+                                        </div>
+
+
+
+                                        <div class="form-group">
+                                            <label for="email">email</label>
+                                            <input type="text" id="email" class="form-control"
+                                                   value="{{ users.email }}">
+                                        </div>
+
+
+                                            <button class="btn btn-default btn-success b10" type="button"
+                                                    id="form-button-save">
+                                                <i class="fa fa-check"></i>
+                                                Update changes
+                                            </button>
+
+
+
+
+
+
+                                        <hr>
+                                        <h2>Изменить пароль</h2>
+                                        <div class="form-group">
+                                            <label for="password">Password Old</label>
+                                            <input type="password" id="password_old" class="form-control"
+                                                   value="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="password">Password new</label>
+                                            <input type="password" id="password_new" class="form-control"
+                                                   value="">
+                                        </div>
+
+
+
+                                        <button class="btn btn-default btn-success b10" type="button"
+                                                id="password_change">
+                                            <i class="fa fa-check"></i>
+                                            Change Password
+                                        </button>
+                                    </div>
+
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <h2>Настройки</h2>
+
+                                        <hr>
+                                        <h6 class="text-left text-bold-500 mb-3 sb-bg-img">Цвет</h6>
+                                        <div class="cz-bg-color sb-color-options">
+                                            <div class="row p-1">
+                                                <div class="col"><span style="width:20px; height:20px;" data-bg-color="pomegranate"
+                                                                       class="gradient-pomegranate d-block rounded-circle"></span></div>
+                                                <div class="col"><span style="width:20px; height:20px;" data-bg-color="king-yna"
+                                                                       class="gradient-king-yna d-block rounded-circle"></span></div>
+                                                <div class="col"><span style="width:20px; height:20px;" data-bg-color="ibiza-sunset"
+                                                                       class="gradient-ibiza-sunset d-block rounded-circle"></span></div>
+                                                <div class="col"><span style="width:20px; height:20px;" data-bg-color="flickr"
+                                                                       class="gradient-flickr d-block rounded-circle"></span></div>
+                                                <div class="col"><span style="width:20px; height:20px;" data-bg-color="purple-bliss"
+                                                                       class="gradient-purple-bliss d-block rounded-circle"></span></div>
+                                                <div class="col"><span style="width:20px; height:20px;" data-bg-color="man-of-steel"
+                                                                       class="gradient-man-of-steel d-block rounded-circle"></span></div>
+                                                <div class="col"><span style="width:20px; height:20px;" data-bg-color="purple-love"
+                                                                       class="gradient-purple-love d-block rounded-circle"></span></div>
+                                            </div>
+                                            <div class="row p-1">
+                                                <div class="col"><span style="width:20px; height:20px;" data-bg-color="black"
+                                                                       class="bg-black d-block rounded-circle"></span></div>
+                                                <div class="col"><span style="width:20px; height:20px;" data-bg-color="white"
+                                                                       class="bg-grey d-block rounded-circle"></span></div>
+                                                <div class="col"><span style="width:20px; height:20px;" data-bg-color="primary"
+                                                                       class="bg-primary d-block rounded-circle"></span></div>
+                                                <div class="col"><span style="width:20px; height:20px;" data-bg-color="success"
+                                                                       class="bg-success d-block rounded-circle"></span></div>
+                                                <div class="col"><span style="width:20px; height:20px;" data-bg-color="warning"
+                                                                       class="bg-warning d-block rounded-circle"></span></div>
+                                                <div class="col"><span style="width:20px; height:20px;" data-bg-color="info"
+                                                                       class="bg-info d-block rounded-circle"></span></div>
+                                                <div class="col"><span style="width:20px; height:20px;" data-bg-color="danger"
+                                                                       class="bg-danger d-block rounded-circle"></span></div>
+                                            </div>
+                                        </div>
+
+                                        <hr>
+                                        <h6 class="text-left text-bold-500 mb-3  sb-bg-img">Фоновая картинка</h6>
+                                        <div class="cz-bg-image row sb-bg-img">
+                                            <div class="col-sm-3 mb-3"><img src="../../app-assets/img/sidebar-bg/01.jpg" width="90" class="rounded sb-bg-01">
+                                            </div>
+                                            <div class="col-sm-3 mb-3"><img src="../../app-assets/img/sidebar-bg/02.jpg" width="90" class="rounded sb-bg-02">
+                                            </div>
+                                            <div class="col-sm-3 mb-3"><img src="../../app-assets/img/sidebar-bg/03.jpg" width="90" class="rounded sb-bg-03">
+                                            </div>
+                                            <div class="col-sm-3 mb-3"><img src="../../app-assets/img/sidebar-bg/04.jpg" width="90" class="rounded sb-bg-04">
+                                            </div>
+                                            <div class="col-sm-3 mb-3"><img src="../../app-assets/img/sidebar-bg/05.jpg" width="90" class="rounded sb-bg-05">
+                                            </div>
+                                            <div class="col-sm-3 mb-3"><img src="../../app-assets/img/sidebar-bg/06.jpg" width="90" class="rounded sb-bg-06">
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+</div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('form-button-save').addEventListener('click', () => {
+            saveOrder();
+        });
+
+
+        document.getElementById('password_change').addEventListener('click', () => {
+            changePassword();
+        });
+
+    })
+
+
+
+    let button = document.querySelectorAll('.rounded-circle');
+    button.forEach((elem) => {
+        elem.addEventListener('click', () => {
+            let color = elem.getAttribute('data-bg-color');
+            (
+                async () => {
+
+                    const response = await fetch('/auth/updateColor/', {
+                        method: 'POST',
+                        headers: new Headers({
+                            'Content-Type': 'application/json'
+                        }),
+                        body: JSON.stringify({
+                            color: color,
+                        })
+                    });
+                    const answer = await response;
+                    toastr.info('Цвет изменен');
+                }
+            )();
+        })
+    });
+
+
+
+    let buttonImg = document.querySelectorAll('.rounded');
+    buttonImg.forEach((elem) => {
+        elem.addEventListener('click', () => {
+            let img_bg = elem.getAttribute('src');
+            (
+                async () => {
+
+                    const response = await fetch('/auth/updateBg/', {
+                        method: 'POST',
+                        headers: new Headers({
+                            'Content-Type': 'application/json'
+                        }),
+                        body: JSON.stringify({
+                            img_bg: img_bg,
+                        })
+                    });
+                    const answer = await response;
+                    toastr.info('Фон изменен');
+                }
+            )();
+        })
+    });
+
+
+    let saveOrder = () => {
+
+        let email = document.getElementById('email').value;
+        let login = document.getElementById('logins').value;
+        let patronymic = document.getElementById('patronymic').value;
+        let lasttname = document.getElementById('lasttname').value;
+        let firstname = document.getElementById('firstname').value;
+        let id = `{{ users.id }}`;
+        $.ajax({
+            url: '/users/save/',
+            method: 'POST',
+            data: {
+                id:id,
+                email: email,
+                login: login,
+                patronymic: patronymic,
+                lasttname: lasttname,
+                firstname: firstname,
+            }
+        })
+            .done(function (id) {
+                toastr.success('Данные сохранены');
+            });
+
+    };
+
+    let changePassword = () => {
+
+        let password_old = document.getElementById('password_old').value;
+        let password_new = document.getElementById('password_new').value;
+
+        if(password_new.length < 4){
+            toastr.error('Пароль не может быть менее 4 символов');
+        } else {
+
+            $.ajax({
+                url: '/users/changePassword/',
+                method: 'POST',
+                data: {
+                    password_old: password_old,
+                    password_new: password_new,
+                }
+            })
+                .done(function (res) {
+                    res  = JSON.parse(res);
+                    if (res.result) {
+                        toastr.success('Пароль изменен');
+                    } else {
+                        toastr.error('Старый пароль не верен');
+                    }
+                });
+        }
+
+    };
+
+
+
+</script>
+

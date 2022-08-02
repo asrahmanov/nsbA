@@ -1,0 +1,113 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="">
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2 class="card-title pull-left"><i class="fa fa-life-ring" aria-hidden="true"> </i>
+                                            Отчет по задачам менеджеров</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-12">
+                                <label for="">Дата с</label>
+                                <input type="date" class="form-control" id="dateFrom">
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <label for="">Дата по</label>
+                                <input type="date" class="form-control" id="dateTo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table table-striped table-bordered file-export" id="datatable">
+                                    <thead>
+                                    <th>ФИО менеджера</th>
+                                    <th>Всего задач</th>
+                                    <th>Кол-во задач без ответа</th>
+                                    <th>% задач без ответа</th>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        let dateInputFrom = $("#dateFrom"), dateInputTo = $("#dateTo"), report = $("#datatable tbody"),
+            managerScores = {}
+
+        let loadReport = () => {
+            let dateFrom = dateInputFrom.val(), dateTo = dateInputTo.val()
+            $.get({ url: '/users/getEverybody' }).done((res) => {
+                let Users = JSON.parse(res)
+                Users.data
+                    .filter(u => u.role_id === 'Менеджер')
+                    .filter(u => u.deleted !== '1')
+                    .forEach(user => {
+                        let fullname = `${user.lasttname} ${user.firstname} ${user.patronymic || ''}`
+                        managerScores[user.id] = {fullname, total: 0, unanswered: 0}
+                        console.log(fullname, user.deleted)
+                    })
+                $.get({url: '/newTickets/getAll/', cache: false}).done(res => {
+                    let response = JSON.parse(res), rawTickets = response.result, reportRows = []
+                    rawTickets
+                        .filter(t => t.reason === 'manager')
+                        .filter(t => (t.created_at.split(' ')[0] >= dateFrom || !dateFrom))
+                        .filter(t => (t.created_at.split(' ')[0] <= dateTo || !dateTo))
+                        .filter(t => !t.done)
+                        .forEach(t => {
+                            let userId = parseInt(t.target_id)
+                            if (managerScores.hasOwnProperty(userId)) {
+                                managerScores[userId].total += 1
+                                if (t.chat.length === 0)
+                                    managerScores[userId].unanswered += 1
+                            }
+                        })
+                    report.empty()
+                    for (let i in managerScores) {
+                        let unefficiency = 0
+                        if (managerScores[i].total !== 0)
+                            unefficiency = parseInt(managerScores[i].unanswered / managerScores[i].total * 100)
+                        managerScores[i].unefficiency = unefficiency
+                        reportRows.push(managerScores[i])
+                    }
+                    reportRows = reportRows.sort((a, b) => {
+                        return b.unefficiency - a.unefficiency
+                    })
+                    reportRows.forEach(score => {
+                        report.append(`<tr>
+                            <td>${score.fullname}</td>
+                            <td>${score.total}</td>
+                            <td>${score.unanswered}</td>
+                            <td>${score.unefficiency}</td>
+                        </tr>`)
+                    })
+                })
+            })
+        }
+
+        dateInputFrom.change(loadReport)
+        dateInputTo.change(loadReport)
+
+        loadReport()
+
+    })
+
+</script>

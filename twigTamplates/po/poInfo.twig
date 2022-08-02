@@ -1,0 +1,3303 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><h2>Информация по Проекту</h2></h4>
+                        </div>
+                        <div class="card-content ">
+                            <div class="card-body card-dashboard ">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <h2>PO TABLE - {{ fr.proj_id }}</h2>
+
+
+                                        <div class="form-group">
+                                            <label for="fr_date"><b>Project internal number </b></label>
+                                            {% if role == '2' or role=='3' or role == '7'  or role == '8' or role == '9' %}
+                                                {{ fr.po_number | raw }}
+                                            {% else %}
+
+                                                <input type="text" id="po_number" class="form-control"
+                                                       value="{{ fr.po_number }}">
+                                            {% endif %}
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="fr_date"><b>PO date: </b></label>
+                                            {% if role == '2' or role=='3' or role == '7'  or role == '8'  or role == '9' %}
+                                                {{ fr.fr_date | raw }}
+                                            {% else %}
+
+                                                <input type="date" id="fr_date" class="form-control"
+                                                       value="{{ fr.fr_date }}">
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="linked_fr_id"><b>Linked FR id: </b></label>
+                                            {% if role == '2' or role=='3' or role == '7'  or role == '8' or role == '9' %}
+                                                {{ fr.linked_fr_id | raw }}
+                                            {% else %}
+                                                <input type="text" id="linked_fr_id" class="form-control"
+                                                       value="{{ fr.linked_fr_id }}">
+                                            {% endif %}
+                                        </div>
+
+                                        {% if role != '8' and  role != '9' %}
+                                            <div class="form-group">
+                                                <label for="script_id"><b>Fr script id: </b></label>
+                                                {% if role == '2' %}
+                                                    {{ fr.script_id | raw }}
+                                                    {% for item in company %}
+                                                        {% if ( item.script_id == fr.fr_script_id) %}
+                                                            {% if (role =='3' or role == '7' or role == '8') %}
+
+                                                            {% else %}
+                                                                {{ item.script }} - {{ item.company_name }} {{ item.last_script_num }}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% else %}
+                                                    {% if(role =='3' or role == '7') %}
+
+                                                    {% else %}
+                                                        <select class="form-control" id="fr_script_id" disabled>
+                                                            <option value="0">Выберите компанию</option>
+                                                            {% if(role =='3' and role == '7') %}
+
+                                                            {% else %}
+                                                                {% for item in company %}
+                                                                    <option value="{{ item.script_id }}">{{ item.script }}
+                                                                        - {{ item.company_name }} {{ item.last_script_num }}</option>
+                                                                {% endfor %}
+                                                            {% endif %}
+
+
+                                                        </select>
+                                                    {% endif %}
+
+
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="fr_attention_to"><b>Attention to: </b></label>
+                                                {% if(role !='3' and role != '7') %}
+                                                    <select class="form-control" id="fr_attention_to">
+                                                        <option value="0">Веберите менеджера</option>
+                                                    </select>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                        <div class="form-group">
+                                            <label for="external_id"><b>External id: </b></label>
+
+                                            {% if role == '2'  or role == '8' or role == '9' %}
+                                                {% if(role !='3' and role != '7' and role != '9') %}
+
+                                                {% else %}
+                                                    {{ fr.external_id | raw }}
+                                                {% endif %}
+                                            {% else %}
+
+                                                <input type="text" id="external_id" class="form-control"
+                                                       value="{{ fr.external_id }}">
+
+
+                                            {% endif %}
+                                        </div>
+
+                                        {% if role != '8' %}
+                                            <div class="form-group">
+                                                <label for="script_number"><b>Script number</b></label>
+                                                {% if role == '2' or role =='3' or role == '8' or role == '9' %}
+                                                    {% if(role =='3' and role == '7') %}
+
+                                                    {% else %}
+                                                        {{ fr.script_number | raw }}
+                                                    {% endif %}
+
+                                                {% else %}
+                                                    <input type="text" id="script_number" class="form-control"
+                                                           value="{{ fr.script_number }}" disabled>
+
+                                                {% endif %}
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="internal_id"><b>Internal id: </b></label>
+                                                {% if role == '2' or role =='3' or role == '7'  or role == '8' or role == '9' %}
+
+                                                    {% if(role =='3') %}
+
+                                                    {% else %}
+                                                        {{ fr.internal_id | raw }}
+                                                    {% endif %}
+
+                                                {% else %}
+                                                    <input type="text" id="internal_id" class="form-control" disabled
+                                                           value="{{ fr.internal_id }}">
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+
+
+                                        <div class="form-group">
+                                            <label for="project_name"><b>Project name</b></label>
+                                            {% if role == '2' or role=='3' or role == '7'  or role == '8' or role == '9' %}
+                                                {{ fr.project_name | raw }}
+                                            {% else %}
+                                                <input type="text" id="project_name" class="form-control"
+                                                       value="{{ fr.project_name }}">
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="comments"><b>Comments</b></label>
+
+                                            {% if role == '2'  or role == '8' or role == '9' %}
+                                                <div class="minBlock">{{ fr.comments | raw }}</div>
+
+                                            {% else %}
+                                                <textarea id="comments" cols="30"
+                                                          rows="15">{{ fr.comments }}</textarea>
+                                            {% endif %}
+
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="feas_russian"><b>Request(Russian text)</b></label>
+
+                                            {% if role == '2' or role=='3' or role == '7'  or role == '8' or role == '9' %}
+                                                <div class="minBlock">{{ fr.feas_russian | raw }}</div>
+                                            {% else %}
+                                                <textarea id="feas_russian" cols="30"
+                                                          rows="15">{{ fr.feas_russian }}</textarea>
+
+                                            {% endif %}
+                                        </div>
+
+                                        {% if role != '3' and role != '8' %}
+                                            <div class="form-group" style="display: none;">
+                                                <label for="basicSelect">Fr status</label>
+                                                <select class="form-control" id="fr_status_id" disabled>
+                                                    <option value="0">Выберите статус</option>
+                                                    {% for item in status %}
+                                                        <option value="{{ item.fr_status_id }}">{{ item.fr_status_values }} </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        {% endif %}
+
+
+                                        <div class="form-group" style="display: none;">
+                                            <label for="fr_date"><b>FR status_date</b></label>
+                                            {% if role == '2' or role=='3' or role == '7'  or role == '8' %}
+                                                {{ fr.fr_status_date | raw }}
+                                            {% else %}
+                                                <input type="date" id="fr_status_date" class="form-control"
+                                                       value="{{ fr.fr_status_date }}" name="fr_status_date"
+                                                       data-toggle="tooltip"
+                                                       data-trigger="hover" data-placement="top"
+                                                       data-title="Date Opened" disabled>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="form-group d-none">
+                                            <label for="project_details"><b></br>Request(Original text)</b></label>
+                                            {% if role == '2' or role == '3' or role == '7' or role == '8' %}
+                                                <div class="minBlock">{{ fr.project_details | raw }}</div>
+                                            {% else %}
+                                                <textarea name="project_details" id="project_details" cols="30"
+                                                          rows="15">{{ fr.project_details }}</textarea>
+                                            {% endif %}
+                                        </div>
+
+                                        {% if role != '3' and role != '7'  and role != '8' %}
+                                            <div class="form-group" style="display: none">
+                                                <label for="currency">currency</label>
+                                                <input type="text" id="currency" class="form-control"
+                                                       value="{{ fr.currency }}">
+                                            </div>
+                                        {% endif %}
+
+                                        {% if role != '8' %}
+                                            <div class="form-group">
+                                                <label for="clinical_inclusion">Specific feature</label>
+                                                {% if role == '2' or role == '8' or role == '9' %}
+
+                                                    <div class="minBlock">{{ fr.clinical_inclusion | raw }}</div>
+                                                {% elseif role == '3' or role == '7' %}
+
+                                                {% else %}
+                                                    <textarea name="clinical_inclusion" id="clinical_inclusion"
+                                                              cols="30"
+                                                              rows="15">{{ fr.clinical_inclusion }}</textarea>
+
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+
+                                    <div class="col-md-6 col-sm-12">
+
+                                        {% if role != '3' and role != '7'  and role != '8' and role != '9' %}
+                                            <div class="form-group" style="display: none;">
+                                                <label for="quote_date">Quote date</label>
+                                                <input type="date" id="quote_date" class="form-control"
+                                                       value="{{ fr.quote_date }}" name="quote_date"
+                                                       data-toggle="tooltip"
+                                                       data-trigger="hover" data-placement="top"
+                                                       data-title="Date Opened">
+                                            </div>
+                                        {% endif %}
+
+                                        {% if role != '8' %}
+                                            <div class="form-group" style="display:none;">
+                                                <label for="unformal_quote">Historical Quotes</label>
+                                                {% if role == '2' %}
+                                                    <div class="minBlock">{{ fr.unformal_quote | raw }}</div>
+                                                {% elseif role != '3' and role != '7' and role != '8' %}
+                                                    <textarea id="unformal_quote" cols="30"
+                                                              rows="15">{{ fr.unformal_quote }}</textarea>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group" style="display:none;">
+                                                <label for="history_po">Historical PO's</label>
+                                                {% if role == '2' %}
+                                                    <div class="minBlock">{{ fr.history_po | raw }}</div>
+                                                {% elseif role != '3' and role != '7' and role != '8' %}
+                                                    <textarea id="history_po" cols="30"
+                                                              rows="15">{{ fr.history_po }}</textarea>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                        {% if user_id != '32' and (role == '1' or role == '2' or role == '6') %}
+                                            <div class="form-group" style="display: none;">
+                                                <label for="historical_data">Reminder comments</label>
+                                                {% if role == '2' or role == '7' or role == '8' %}
+                                                    <div class="minBlock">{{ fr.historical_data | raw }}</div>
+                                                {% elseif role != '3' %}
+                                                    <textarea id="historical_data" cols="30"
+                                                              rows="15" {% if user_id != '32' %} disabled {% endif %}>
+                                                        {{ fr.historical_data }}</textarea>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+
+                                        {% if role != '3' and role != '7'  and role != '8' %}
+                                            <div class="form-group" style="display: none">
+                                                <label for="quotes_from_managers">Quotes from managers</label>
+
+                                                {% if role == '2' %}
+                                                    <div>{{ fr.quotes_from_managers | raw }}</div>
+                                                {% else %}
+                                                    <textarea name="quotes_from_managers" id="quotes_from_managers"
+                                                              cols="30"
+                                                              rows="15">{{ fr.quotes_from_managers }}</textarea>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+
+                                        <div class="form-group" style="display: none;">
+                                            <label for="basicSelect"><b>Responsible User: </b></label>
+                                            {% if role == '2' or role=='3' or role == '7'  or role == '8' %}
+                                                {% for item in users %}
+                                                    {% if item.id == fr.answering_id %}
+                                                        {{ item.firstname }} {{ item.lasttname }} {{ item.patronymic }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+
+                                                <select class="form-control" id="answering_id">
+                                                    <option value="0">Не закреплен</option>
+                                                    {% for item in users %}
+                                                        <option value="{{ item.id }}">{{ item.firstname }} {{ item.lasttname }} {{ item.patronymic }} </option>
+                                                    {% endfor %}
+                                                </select>
+
+                                            {% endif %}
+                                        </div>
+
+                                        {% if role == '1' or role=='6' or role=='2' %}
+                                            <div class="form-group">
+                                                <label for="file-form">Прикрепить файлы</label>
+                                                <form id="file-form" method="post">
+                                                    <input id="file-input" type="file" multiple>
+                                                    <label for="file_info"></label>
+                                                    <select id="file_info" class="form-control">
+                                                        <option value="none">Общий</option>
+                                                        <option value="lto">ЛТО</option>
+                                                        <option value="po">PO</option>
+                                                        <option value="quote">Квоты</option>
+                                                        <option value="manager">Файлы для менеджеров</option>
+                                                        <option value="send" selected>Файлы для отправки</option>
+                                                    </select>
+                                                    <br>
+                                                    <button id="file-submit" type="button" class="btn btn-success">
+                                                        Загрузить файлы
+                                                    </button>
+                                                    <br/>
+                                                    <div id="file-container"></div>
+                                                </form>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="basicSelect">Файлы</label>
+                                                <div id="file_list">
+                                                    {% for item in files %}
+                                                        {% if item.info == 'none' %}
+                                                            <a href="../../{{ item.alias }}{{ item.name }}"
+                                                               target="_blank"
+                                                               id="file_{{ item.id }}">{{ item.name }}</a>
+                                                            {% if role=='6' or role=='1' %}
+                                                                <i class="ft-delete deleteFile" id="btn_{{ item.id }}"
+                                                                   style="color: red; font-size: 18px; margin-left: 10px; cursor: pointer;"
+                                                                   data-id="{{ item.id }}"></i>
+                                                            {% endif %}
+                                                            <br>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% elseif role=='2' %}
+                                            <div class="form-group">
+                                                <label for="basicSelect">Файлы</label>
+                                                <div id="file_list">
+                                                    {% for item in files %}
+                                                        {% if item.info == 'none' %}
+                                                            <a href="../../{{ item.alias }}{{ item.name }}"
+                                                               target="_blank">{{ item.name }}</a><br>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        {% if role == '1' or role=='6' %}
+                                            <div class="form-group">
+                                                <label for="basicSelect">Request related documents</label>
+                                                <div id="file_list">
+                                                    {% for item in files %}
+                                                        {% if item.info == 'lto' %}
+                                                            <a href="../../{{ item.alias }}{{ item.name }}"
+                                                               target="_blank"
+                                                               id="file_{{ item.id }}">{{ item.name }}</a>
+                                                            {% if role=='6' or role=='1' %}
+                                                                <i class="ft-delete deleteFile" id="btn_{{ item.id }}"
+                                                                   style="color: red; font-size: 18px; margin-left: 10px; cursor: pointer;"
+                                                                   data-id="{{ item.id }}"></i>
+                                                            {% endif %}
+                                                            <br>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% elseif role == '2' or department_id == '4' %}
+                                            <div class="form-group">
+                                                <label for="basicSelect">Request related documents</label>
+                                                <div id="file_list">
+                                                    {% for item in files %}
+                                                        {% if item.info == 'lto' %}
+                                                            <a href="../../{{ item.alias }}{{ item.name }}"
+                                                               target="_blank"
+                                                               id="file_{{ item.id }}">{{ item.name }}</a>
+                                                            {% if role=='6' or role=='1' %}
+                                                                <i class="ft-delete deleteFile" id="btn_{{ item.id }}"
+                                                                   style="color: red; font-size: 18px; margin-left: 10px; cursor: pointer;"
+                                                                   data-id="{{ item.id }}"></i>
+                                                                <br>
+                                                            {% endif %}
+                                                            <br>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        {% if role =='1' or role == '2' or role == '6' %}
+                                            <div class="form-group">
+                                                <label for="nothing">Файлы PO</label>
+                                                <div id="file_list">
+                                                    {% for item in files %}
+                                                        {% if item.info == 'po' %}
+                                                            <a href="../../{{ item.alias }}{{ item.name }}"
+                                                               target="_blank"
+                                                               id="file_{{ item.id }}">{{ item.name }}</a>
+                                                            {% if role=='6' or role=='1' %}
+                                                                <i class="ft-delete deleteFile" id="btn_{{ item.id }}"
+                                                                   style="color: red; font-size: 18px; margin-left: 10px; cursor: pointer;"
+                                                                   data-id="{{ item.id }}"></i>
+                                                            {% endif %}
+                                                            <br>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="nothing">Файлы квот</label>
+                                                <div id="file_list">
+                                                    {% for item in files %}
+                                                        {% if item.info == 'quote' %}
+                                                            <a href="../../{{ item.alias }}{{ item.name }}"
+                                                               target="_blank"
+                                                               id="file_{{ item.id }}">{{ item.name }}</a>
+                                                            {% if role=='6' or role=='1' %}
+                                                                <i class="ft-delete deleteFile" id="btn_{{ item.id }}"
+                                                                   style="color: red; font-size: 18px; margin-left: 10px; cursor: pointer;"
+                                                                   data-id="{{ item.id }}"></i>
+                                                            {% endif %}
+                                                            <br>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        {% if role == '1' or role == '3' or role == '6' or role == '8' %}
+                                            <div class="form-group">
+                                                <label for="basicSelect">Файлы для менеджеров</label>
+                                                <div id="file_list">
+                                                    {% for item in files %}
+                                                        {% if item.info == 'manager' %}
+                                                            <a href="../../{{ item.alias }}{{ item.name }}"
+                                                               target="_blank"
+                                                               id="file_{{ item.id }}">{{ item.name }}</a>
+                                                            {% if role=='6' or role=='1' %}
+                                                                <i class="ft-delete deleteFile" id="btn_{{ item.id }}"
+                                                                   style="color: red; font-size: 18px; margin-left: 10px; cursor: pointer;"
+                                                                   data-id="{{ item.id }}"></i>
+                                                            {% endif %}
+                                                            <br>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        {% if role == '1' or role == '3' or role == '6' or role == '8' or role=='2' %}
+                                            <div class="form-group">
+                                                <label for="basicSelect">Файлы для отправки</label>
+                                                <div>
+                                                    {% for item in files %}
+                                                        {% if item.info == 'send' %}
+                                                            <a href="../../{{ item.alias }}{{ item.name }}"
+                                                               target="_blank"
+                                                               id="file_{{ item.id }}">{{ item.name }}</a>
+                                                            {% if role=='6' or role=='1' %}
+                                                                <i class="ft-delete deleteFile" id="btn_{{ item.id }}"
+                                                                   style="color: red; font-size: 18px; margin-left: 10px; cursor: pointer;"
+                                                                   data-id="{{ item.id }}"></i>
+                                                            {% endif %}
+                                                            <br>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+
+                                        <div class="form-group" style="display:none;">
+                                            <label for="deadline"><b>NBS Deadline: </b></label>
+                                            {% if role == '5'  or role=='3' or role == '7' or role == '8' %}
+
+                                                {{ fr.deadline | raw }}
+                                            {% else %}
+
+                                                <input type="date" id="deadline" class="form-control"
+                                                       value="{{ fr.deadline }}">
+                                            {% endif %}
+                                        </div>
+
+
+                                        <div class="form-group" style="display:none;">
+                                            <label for="deadline"><b>Delivery Deadline</b></label>
+                                            {% if role == '5'  or role=='3' or role == '7' or role == '8' %}
+
+                                                {{ fr.deadline_post | raw }}
+                                            {% else %}
+                                                <input type="date" id="deadline_post" class="form-control"
+                                                       value="{{ fr.deadline_post }}">
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="form-group" style="display:none;">
+                                            <label for="deadline"><b>Proposal Deadline: </b></label>
+                                            {% if role == '5'  or role=='3' or role == '7' or role == '8' %}
+
+                                                {{ fr.deadline_quote | raw }}
+                                            {% else %}
+
+                                                <input type="date" id="deadline_quote" class="form-control"
+                                                       value="{{ fr.deadline_quote }}">
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="form-group" style="display:none;">
+                                            <label for="communication_date"><b>Communication date: </b></label>
+                                            {% if role == '5'  or role=='3' or role == '7' or role == '8' %}
+                                                {{ fr.communication_date | raw }}
+                                            {% else %}
+
+                                                <input type="date" id="communication_date" class="form-control"
+                                                       value="{{ fr.communication_date }}">
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="form-group" style="display:none;">
+                                            <label for="communication_comment"><b>Communication comment: </b></label>
+                                            {% if role == '5'  or role=='3' or role == '7' or role == '8' %}
+                                                {{ fr.communication_comment | raw }}
+                                            {% else %}
+                                                <textarea id="communication_comment"
+                                                          class="form-control">{{ fr.communication_comment }}</textarea>
+
+                                            {% endif %}
+                                        </div>
+
+                                        <div style="display: none">
+                                            <div class="form-group">
+                                                <label for="status_client">Клиент: </label>
+                                                {% if role == '1' or role == '6' or role == '2' %}
+                                                    <select class="form-control" id="status_client">
+                                                        {% for item in orstatus %}
+                                                            {% if item.department_id == 7 %}
+                                                                <option value="{{ item.id }}"
+                                                                        {% if fr.status_client == item.id %}
+                                                                            selected
+                                                                        {% endif %}
+                                                                >{{ item.status_name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                {% else %}
+                                                    {% for item in orstatus %}
+                                                        {% if item.department_id == 7 %}
+                                                            {% if fr.status_client == item.id %}
+                                                                {{ item.status_name | raw }}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="status_client">Менеджер: </label>
+                                                {% if role == '1' or role == '6' or role == '2' %}
+                                                    <select class="form-control" id="status_manager">
+                                                        {% for item in orstatus %}
+                                                            {% if item.department_id == 2 %}
+                                                                <option value="{{ item.id }}"
+                                                                        {% if fr.status_manager == item.id %}
+                                                                            selected
+                                                                        {% endif %}
+                                                                >{{ item.status_name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                {% else %}
+                                                    {% for item in orstatus %}
+                                                        {% if item.department_id == 2 %}
+                                                            {% if fr.status_manager == item.id %}
+                                                                {{ item.status_name | raw }}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="status_client">Проектный отдел: </label>
+                                                {% if role == '1' or role == '6' or role == '2' %}
+                                                    <select class="form-control" id="status_project">
+                                                        {% for item in orstatus %}
+                                                            {% if item.department_id == 3 %}
+                                                                <option value="{{ item.id }}"
+                                                                        {% if fr.status_project == item.id %}
+                                                                            selected
+                                                                        {% endif %}
+                                                                >{{ item.status_name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                {% else %}
+
+                                                    {% for item in orstatus %}
+                                                        {% if item.department_id == 3 %}
+                                                            {% if fr.status_project == item.id %}
+                                                                {{ item.status_name | raw }}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="status_client">ЛТО: </label>
+                                                {% if role == '1' or role == '6' or role == '2' %}
+                                                    <select class="form-control" id="status_lpo">
+                                                        {% for item in orstatus %}
+                                                            {% if item.department_id == 4 %}
+                                                                <option value="{{ item.id }}"
+                                                                        {% if fr.status_lpo == item.id %}
+                                                                            selected
+                                                                        {% endif %}
+                                                                >{{ item.status_name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                {% else %}
+
+                                                    {% for item in orstatus %}
+                                                        {% if item.department_id == 4 %}
+                                                            {% if fr.status_lpo == item.id %}
+                                                                {{ item.status_name | raw }}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="status_client">Отдел ВЕД: </label>
+                                                {% if role == '1' or role == '6' or role == '2' %}
+                                                    <select class="form-control" id="status_ved">
+                                                        {% for item in orstatus %}
+                                                            {% if item.department_id == 5 %}
+                                                                <option value="{{ item.id }}"
+                                                                        {% if fr.status_ved == item.id %}
+                                                                            selected
+                                                                        {% endif %}
+                                                                >{{ item.status_name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                {% else %}
+
+                                                    {% for item in orstatus %}
+                                                        {% if item.department_id == 5 %}
+                                                            {% if fr.status_ved == item.id %}
+                                                                {{ item.status_name | raw }}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="status_client">Руководство: </label>
+                                                {% if role == '1' or role == '6' or role == '2' %}
+                                                    <select class="form-control" id="status_boss">
+                                                        {% for item in orstatus %}
+                                                            {% if item.department_id == 6 %}
+                                                                <option value="{{ item.id }}"
+                                                                        {% if fr.status_boss == item.id %}
+                                                                            selected
+                                                                        {% endif %}
+                                                                >{{ item.status_name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                {% else %}
+
+                                                    {% for item in orstatus %}
+                                                        {% if item.department_id == 6 %}
+                                                            {% if fr.status_boss == item.id %}
+                                                                {{ item.status_name | raw }}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+
+                                        <div>
+                                            {% if (role == 1 or role == 6 ) %}
+                                                <div class="form-group" style="display: none;">
+                                                    <label for="quote_type">Тип квоты:</label>
+                                                    <select class="form-control" id="quote_type">
+                                                        <option value="standart"
+                                                                {% if (fr.quote_type == 'standart') %}selected{% endif %}>
+                                                            Английский
+                                                        </option>
+                                                        <option value="russian"
+                                                                {% if (fr.quote_type == 'russian') %}selected{% endif %}>
+                                                            Русский
+                                                        </option>
+                                                        <option value="russian_mod"
+                                                                {% if (fr.quote_type == 'russian_mod') %}selected{% endif %}>
+                                                            Русский (мод)
+                                                        </option>
+
+                                                        <option value="ape"
+                                                                {% if (fr.quote_type == 'ape') %}selected{% endif %}>
+                                                            Приматы
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+
+                                        {% if (role == 1 or role == 6 or role == 2 ) %}
+                                            <div class="form-group" style="display:none;">
+                                                <label for="margin">Маржинальность:</label>
+                                                <input class="form-control" id="margin" value="{{ fr.margin }}">
+                                            </div>
+                                        {% endif %}
+
+
+                                        {% if (role == 1 or role == 6 or role == 2 ) %}
+                                            <div class="form-group">
+                                                <label for="po_text">Текст письма</label>
+                                                <p>
+                                                    Начинается новый проект {{ fr.po_number }} по квоте {{ fr.proj_id }}
+                                                    .
+                                                </p>
+                                                <textarea id="po_text" cols="20" rows="20">
+                                                {% if fr.po_text == '' %}
+                                                    <p>Вы квотировали данный проект</p>
+                                                    <p>Пожалуйста, активно подтвердите свою квоту или отзовите её. В случае отсутствия подтверждения Ваша оригинальная квота не будет считаться действительной!</p>
+                                                    <p>В приложении к данному письму – внутреннее проектное задание и тренинговые формы для сайтов, менеджеров и лабораторий.
+                                                    </p>
+                                                    <p>Тренинги должны быть проведены, тренинговые формы подписаны и предоставлены в проектный офис до начала любых работ по сбору образцов.
+                                                    </p>
+                                                    <p>Лаборатория: Просьба провести тренинги с персоналом всех лабораторий.
+                                                    </p>
+                                                    <p>Дата менеджерам: Просьба подтвердить ознакомление с клиническими критериями включения и исключения образцов из проекта.</p>
+                                                {% else %}
+                                                    {{ fr.po_text }}
+                                                {% endif %}
+                                                </textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="po_managers">Если не выбран ни один менеджер, отправляется
+                                                    всем</label>
+                                                <select id='po_managers' multiple='multiple'></select>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                Группа рассылки
+                                                <select class="form-control" id="lab">
+
+                                                    {% if(role =='3' and role == '7') %}
+
+                                                    {% else %}
+                                                        <option value="lab@nbioservice.com"
+                                                                {% if fr.lab == 'lab@nbioservice.com' %}
+                                                                    selected
+                                                                {% endif %}
+                                                        >lab@nbioservice.com
+                                                        </option>
+
+                                                        <option value="lab_spb@nbioservice.com"
+                                                                {% if fr.lab == 'lab_spb@nbioservice.com' %}
+                                                                    selected
+                                                                {% endif %}
+                                                        >lab_spb@nbioservice.com
+                                                        </option>
+
+                                                        <option value="lab_nn@nbioservice.com"
+                                                                {% if fr.lab == 'lab_nn@nbioservice.com' %}
+                                                                    selected
+                                                                {% endif %}
+                                                        >lab_nn@nbioservice.com
+                                                        </option>
+
+                                                    {% endif %}
+
+
+                                                </select>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btm-block btn-dark" onclick="sendPO()">Отправить PO
+                                                    на подтверждение менеджерам
+                                                </button>
+
+                                                <button class="btn btm-block btn-dark" onclick="sendMailPOModal()">
+                                                    Отправить письмо
+                                                </button>
+
+                                            </div>
+                                        {% endif %}
+
+                                        <br>
+                                        <br>
+
+
+                                        Статус PO
+                                        {% if (role !='3' and role != '7' and role != '9' and role != '2' and role != '8') or department_id == 3  %}
+                                        <select class="form-control" id="po_status">
+                                         {% else %}
+                                         <select class="form-control" id="po_status" disabled>
+                                         {% endif %}
+                                                <option value="0">Выберите cтатус po</option>
+
+                                                {% for item in po_status %}
+                                                    <option value="{{ item.status_id }}"
+                                                            {% if fr.po_status == item.status_id %}
+                                                                selected
+                                                            {% endif %}
+                                                    >{{ item.status_name }}</option>
+                                                {% endfor %}
+
+
+
+                                            </select>
+
+
+                                            <div class="form-group">
+                                                <label for="">Diseases</label>
+                                                {% if role in [1, 6, 7] %}
+                                                    <div class="row">
+                                                        {% if role != '1'  and role != '6' %}
+
+                                                        {% else %}
+                                                            <div class="col-9">
+
+                                                                <input list="disease_select" class="form-control"
+                                                                       id="disease_input">
+                                                                <datalist id="disease_select">
+                                                                    {% for disease in diseases %}
+                                                                        <option value="{{ disease.disease_name }} : {{ disease.id }}"
+                                                                                id="{{ disease.id }}"> {{ disease.disease_name_russian_old }}</option>
+                                                                    {% endfor %}
+                                                                </datalist>
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="col-3">
+                                                            {% if role != '1'  and role != '6' and role != '2' %}
+
+                                                        {% else %}
+                                                            <button class="btn btn-block btn-success" type="button"
+                                                                    id="disease_add">
+
+
+                                                                <i class="fa fa-plus"></i>
+                                                                ADD
+                                                            </button>
+                                                            {% endif %}>
+
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                                <div id="diseases_list">
+                                                    {% for order_disease in order_diseases %}
+                                                        {% if order_disease['disease'] != '' %}
+                                                            <div id="disease_biospecimen_types_{{ order_disease['disease_id'] }}"
+                                                            class="disease_block">
+                                                            <div class="row">
+                                                            <div class="col-9">
+                                                                <button class="btn btn-block btn-info">{{ order_disease['disease'] }}
+                                                                    <br>
+                                                                    <span style="font-size:10px;">{{ order_disease['mutation'] }}</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-3">
+                                                                {% if role != '1' and role != '6' %}
+
+
+                                                                {% else %}
+                                                                    <button class="btn btn-block btn-danger delete_disease"
+                                                                            id="deldisease_{{ order_disease['disease_id'] }}"
+                                                                            dbid="{{ order_disease['id'] }}">X
+                                                                    </button>
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="col-2"></div>
+                                                            {% if role != '1'  and role != '6' %}
+
+                                                            {% else %}
+                                                                <div class="col-7">
+                                                                    <input list="biospecimen_types_select_{{ order_disease['disease_id'] }}"
+                                                                           class="form-control"
+                                                                           id="biospecimen_types_input_{{ order_disease['disease_id'] }}">
+                                                                    <datalist
+                                                                            id="biospecimen_types_select_{{ order_disease['disease_id'] }}"></datalist>
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    <button class="btn btn-block btn-success biospecimen_types_add"
+                                                                            type="button"
+                                                                            id="biospecimen_types_add_{{ order_disease['disease_id'] }}">
+                                                                        <i class="fa fa-plus"></i>
+                                                                        ADD
+                                                                    </button>
+                                                                </div>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                        </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            {% if role in [1, 6] %}
+                                                <div class="row" style="display: none;">
+                                                    <div class="col-2">
+                                                        <input type="checkbox" {{ fr.history_quotes_search == 1 ? 'checked' : '' }}
+                                                               id="history_quotes_search" class="form-control">
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <label for="history_quotes_search">Участвовать в поиске</label>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                    </div>
+
+
+                                    {% if role == '2' %}
+                                        <button class="btn btn-default btn-success b10" type="button"
+                                                id="form-button-save_view">
+                                            <i class="fa fa-check"></i>
+                                            Update changes
+                                        </button>
+                                    {% elseif role == '3' or role == '8' or role == '9' %}
+
+
+                                    {% elseif role == '7' %}
+                                        <button class="btn btn-default btn-success b10" type="button"
+                                                id="form-button-save_commentar">
+                                            <i class="fa fa-check"></i>
+                                            Update changes
+                                        </button>
+
+                                    {% else %}
+                                        <button class="btn btn-default btn-success b10" type="button"
+                                                id="form-button-save">
+                                            <i class="fa fa-check"></i>
+                                            Update changes
+                                        </button>
+                                    {% endif %}
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% if role != '9'  %}
+            <div class="accordion" id="accordionExample6">
+                <div class="card collapse-icon accordion-icon-rotate">
+                    <div class="accordion-header card-header" id="heading6">
+                        <h2 class="mb-0">
+                            <a class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" data-toggle="collapse"
+                               data-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                                <h4 class="card-title"><h2>PO DATA</h2></h4>
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordionExample6">
+                        <div class="card-body pt-0">
+                            <form>
+                                <input name="id" type="hidden" value="{{ po_data.id }}" id="po_data_id">
+                                <input name="po_id" type="hidden" value="{{ fr.id }}" id="po_data_po_id">
+                                <div class="form-group">
+                                    <label for="po_data_fr_script_id">Company Name {{ po_data.fr_script_id }}</label>
+                                    <select name="fr_script_id" id="po_data_fr_script_id" class="form-control">
+                                        {% for item in company %}
+                                            <option value="{{ item.script_id }}"
+                                                    {% if item.script_id == po_data.fr_script_id or po_data.fr_script_id == '' and item.script_id == fr.fr_script_id %}selected{% endif %}
+                                            >
+                                                {{ item.script }}
+                                                - {{ item.company_name }} {{ item.last_script_num }} {{ item.script_id }} {{ po_data.fr_script_id }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    {# <input name="company_name" class="form-control" id="po_data_company_name" #}
+                                    {# value="{{ po_data.company_name }}"> #}
+                                </div>
+                                <div class="form-group">
+                                    <label for="po_data_nbs_scripts_staff_id">Attention to:</label>
+                                    <select name="nbs_scripts_staff_id" id="po_data_nbs_scripts_staff_id"
+                                            class="form-control"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="po_data_country">Country</label>
+                                    <input name="country" class="form-control" id="po_data_country"
+                                           value="{{ po_data.country }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="po_data_shipping_address">Shipping Address</label>
+                                    <input name="shipping_address" class="form-control" id="po_data_shipping_address"
+                                           value="{{ po_data.shipping_address }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="po_data_contact">Contact</label>
+                                    <input name="contact" class="form-control" id="po_data_contact"
+                                           value="{{ po_data.contact }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="po_data_phone">Phone</label>
+                                    <input name="phone" class="form-control" id="po_data_phone"
+                                           value="{{ po_data.phone }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="po_data_email">E-mail</label>
+                                    <input name="email" class="form-control" id="po_data_email"
+                                           value="{{ po_data.email }}">
+                                </div>
+                                <div class="form-group">
+                                    <input type="button" class="btn btn-success" id="po_data_submit" value="Сохранить">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+            {% if role != '3' and role != '7'  and role != '8' %}
+                <div class="accordion" id="accordionExample7">
+                    <div class="card collapse-icon accordion-icon-rotate">
+                        <div class="accordion-header card-header" id="heading100">
+                            <h2 class="mb-0">
+                                <a class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" data-toggle="collapse"
+                                   data-target="#collapse100" aria-expanded="true" aria-controls="collapse100">
+                                    <h4 class="card-title"><h2>Квоты по проекту</h2></h4>
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse100" aria-labelledby="heading100"
+                             data-parent="#accordionExample7"
+                             style="">
+                            <div class="card-body pt-0">
+                                <section>
+                                    <div class="row" id="app">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                </div>
+                                                <div class="card-content ">
+                                                    <div class="card-body card-dashboard ">
+                                                        <poquotesucces
+                                                                :proj_id="{{ fr.proj_id }}"
+                                                                :mode="0"
+                                                                :back_url="''"
+                                                                :quotecreatevisible="0"
+                                                                :role="{{ role }}"
+                                                                :user_id="{{ user_id }}"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+
+        {% if role == '1' or role == '6' or user_id == '23' or user_id == '25' %}
+            <div class="accordion" id="accordionExample18">
+                <div class="card collapse-icon accordion-icon-rotate">
+                    <div class="accordion-header card-header" id="heading18">
+                        <h2 class="mb-0">
+                            <a class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" data-toggle="collapse"
+                               data-target="#collapse18" aria-expanded="false" aria-controls="collapse18">
+                                <h4 class="card-title"><h2>Исторические квоты</h2></h4>
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapse18" class="collapse" aria-labelledby="heading18"
+                         data-parent="#accordionExample18">
+                        <div class="card-body pt-0">
+                            <br><br>
+                            <div class="row">
+                                <div class="col-md-2 col-sm-12">
+                                    <label for="disease_filter">Disease</label>
+                                    <select id="disease_filter" class="form-control">
+                                        {% for disease in order_diseases %}#}
+                                            <option value="{{ disease.disease_id }}">
+                                                {{ disease.disease }} ({{ disease.mutation }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-2 col-sm-12">
+                                    <label for="biospecimen_type_filter">Biospecimen type</label>
+                                    <select class="form-control" id="biospecimen_type_filter">
+                                        {% for item in diseases_biospecimen_types %}
+                                            <option value="{{ item.biospecimen_type_id }}">
+                                                {{ item.biospecimen_type }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <br><br>
+                            <div style="overflow-y: auto;">
+                                <table class="table table-striped table-bordered file-export dataTable" id="HQTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Дата</th>
+                                        <th>Сайт</th>
+                                        <th>Кол-во в месяц</th>
+                                        <th>Срок в днях</th>
+                                        <th>Оплата сайту</th>
+                                        <th>Оплаты доктору</th>
+                                        <th>Комментарий</th>
+                                        <th>Болезнь</th>
+                                        <th>Образец</th>
+                                        <th></th>
+                                        <th>Менеджер</th>
+                                        <th style="display: none;">disease_id</th>
+                                        <th style="display: none;">biospecimen_type_id</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for quote in history_quotes %}
+                                        {% if (user_id == '23' and quote.department_id == '8') or ( quote.user_id =='23' and user_id == '23') %}
+
+                                            <tr>
+                                                <td>{{ quote.created_at }}</td>
+                                                <td>{{ quote.site_name }}</td>
+                                                <td>{{ quote.value_mount }}</td>
+                                                <td>{{ quote.days }}</td>
+                                                <td>{{ quote.price }}</td>
+                                                <td>
+                                                    <table>
+                                                        {% for doc_payment in quote.doctor_payments %}
+                                                            <tr>
+                                                                <td>{{ doc_payment.doc_name }}</td>
+                                                                <td>{{ doc_payment.doc_payment }}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </table>
+                                                </td>
+                                                <td>{{ quote.comment | raw }}</td>
+                                                <td>{{ quote.disease }}</td>
+                                                <td>
+                                                    <table>
+                                                        {% for bio_type in quote.samples_table %}
+                                                            <tr>
+                                                                <td>{{ bio_type.biospecimen_type }}
+                                                                    <b>{{ bio_type.biospecimen_type_russian }}</b> {{ bio_type.mod }}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-info btn-block quote_info"
+                                                            id="qi_{{ quote.id }}"><i class="fa fa-info"
+                                                                                      aria-hidden="true"></i></button>
+                                                </td>
+                                                <td>{{ quote.lasttname }} {{ quote.firstname }} {{ quote.patronymic }}</td>
+                                                <td style="display: none;">{{ quote.disease_id }}</td>
+                                                <td style="display: none;">{{ quote.biospecimen_type_id }}</td>
+                                            </tr>
+
+                                        {% elseif (user_id == '25' and quote.department_id == '9') or ( quote.user_id =='25' and user_id == '25') %}
+                                            <tr>
+                                                <td>{{ quote.created_at }}</td>
+                                                <td>{{ quote.site_name }}</td>
+                                                <td>{{ quote.value_mount }}</td>
+                                                <td>{{ quote.days }}</td>
+                                                <td>{{ quote.price }}</td>
+                                                <td>
+                                                    <table>
+                                                        {% for doc_payment in quote.doctor_payments %}
+                                                            <tr>
+                                                                <td>{{ doc_payment.doc_name }}</td>
+                                                                <td>{{ doc_payment.doc_payment }}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </table>
+                                                </td>
+                                                <td>{{ quote.comment | raw }}</td>
+                                                <td>{{ quote.disease }}</td>
+                                                <td>
+                                                    <table>
+                                                        {% for bio_type in quote.samples_table %}
+                                                            <tr>
+                                                                <td>{{ bio_type.biospecimen_type }}
+                                                                    <b>{{ bio_type.biospecimen_type_russian }}</b> {{ bio_type.mod }}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-info btn-block quote_info"
+                                                            id="qi_{{ quote.id }}"><i class="fa fa-info"
+                                                                                      aria-hidden="true"></i></button>
+                                                </td>
+                                                <td>{{ quote.lasttname }} {{ quote.firstname }} {{ quote.patronymic }}</td>
+                                                <td style="display: none;">{{ quote.disease_id }}</td>
+                                                <td style="display: none;">{{ quote.biospecimen_type_id }}</td>
+                                            </tr>
+                                        {% elseif role == '1' or role == '6' %}
+                                            <tr>
+                                                <td>{{ quote.created_at }}</td>
+                                                <td>{{ quote.site_name }}</td>
+                                                <td>{{ quote.value_mount }}</td>
+                                                <td>{{ quote.days }}</td>
+                                                <td>{{ quote.price }}</td>
+                                                <td>
+                                                    <table>
+                                                        {% for doc_payment in quote.doctor_payments %}
+                                                            <tr>
+                                                                <td>{{ doc_payment.doc_name }}</td>
+                                                                <td>{{ doc_payment.doc_payment }}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </table>
+                                                </td>
+                                                <td>{{ quote.comment | raw }}</td>
+                                                <td>{{ quote.disease }}</td>
+                                                <td>
+                                                    <table>
+                                                        {% for bio_type in quote.samples_table %}
+                                                            <tr>
+                                                                <td>{{ bio_type.biospecimen_type }}
+                                                                    <b>{{ bio_type.biospecimen_type_russian }}</b> {{ bio_type.mod }}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-info btn-block quote_info"
+                                                            id="qi_{{ quote.id }}"><i class="fa fa-info"
+                                                                                      aria-hidden="true"></i></button>
+                                                </td>
+                                                <td>{{ quote.lasttname }} {{ quote.firstname }} {{ quote.patronymic }}</td>
+                                                <td style="display: none;">{{ quote.disease_id }}</td>
+                                                <td style="display: none;">{{ quote.biospecimen_type_id }}</td>
+                                            </tr>
+                                        {% endif %}
+
+
+
+
+
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if role == '1' or role == '6' or user_id == '23' or user_id == '25' or role == '2' %}
+            <section>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card collapse-icon accordion-icon-rotate">
+                            <div class="card-header" id="heading19">
+                                <a class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" data-toggle="collapse"
+                                   data-target="#collapse19" aria-expanded="false" aria-controls="collapse19">
+                                    <h4 class="card-title"><h2>Квоты менеджеров FR TABLE</h2></h4>
+                                </a>
+                            </div>
+                            <div class="card-content collapse" id="collapse19" aria-labelledby="heading19">
+                                <div class="card-body card-dashboard " style="overflow-y: auto;">
+                                    <table class="table table-striped table-bordered file-export dataTable">
+                                        <thead>
+                                        <tr>
+                                            <th>Менеджер</th>
+                                            <th>Дата</th>
+                                            <th>Сайт</th>
+                                            <th>Кол-во в месяц</th>
+                                            <th>Срок в днях</th>
+                                            <th>Оплата сайту</th>
+                                            <th>Оплаты доктору</th>
+                                            <th>Комментарий</th>
+                                            <th>Болезнь</th>
+                                            <th>Образец</th>
+                                            <th></th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+
+                                        {% for quote in quotes %}
+                                            {% if (user_id == '23' and quote.department_id == '8') or ( quote.user_id =='23' and user_id == '23') %}
+                                                <tr>
+                                                    <td>{{ quote.lasttname }} {{ quote.firstname }} {{ quote.patronymic }}</td>
+                                                    <td>{{ quote.created_at }}</td>
+                                                    <td>{{ quote.site_id-1 }} {{ quote.site_name }}</td>
+                                                    <td>{{ quote.value_mount }}</td>
+                                                    <td>{{ quote.days }}</td>
+                                                    <td>{{ quote.price }}</td>
+                                                    <td>
+                                                        <table>
+                                                            {% for doc_payment in quote.doctor_payments %}
+                                                                <tr>
+                                                                    <td>{{ doc_payment.doc_name }}</td>
+                                                                    <td>{{ doc_payment.doc_payment }}</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </table>
+                                                    </td>
+                                                    <td>{{ quote.comment | raw }}</td>
+                                                    <td>{{ quote.disease }}</td>
+                                                    <td>
+                                                        <table>
+                                                            {% for bio_type in quote.samples_table %}
+                                                                <tr>
+                                                                    <td>{{ bio_type.biospecimen_type }}
+                                                                        <b>{{ bio_type.biospecimen_type_russian }}</b> {{ bio_type.mod }}
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </table>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-info btn-block quote_info"
+                                                                id="qi_{{ quote.id }}"><i class="fa fa-info"
+                                                                                          aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>{{ quote.lasttname }} {{ quote.firstname }} {{ quote.patronymic }}</td>
+                                                </tr>
+                                            {% elseif (user_id == '25' and quote.department_id == '9') or ( quote.user_id =='25' and user_id == '25') %}
+                                                <tr>
+                                                    <td>{{ quote.lasttname }} {{ quote.firstname }} {{ quote.patronymic }}</td>
+                                                    <td>{{ quote.created_at }}</td>
+                                                    <td>{{ quote.site_id-1 }} {{ quote.site_name }}</td>
+                                                    <td>{{ quote.value_mount }}</td>
+                                                    <td>{{ quote.days }}</td>
+                                                    <td>{{ quote.price }}</td>
+                                                    <td>
+                                                        <table>
+                                                            {% for doc_payment in quote.doctor_payments %}
+                                                                <tr>
+                                                                    <td>{{ doc_payment.doc_name }}</td>
+                                                                    <td>{{ doc_payment.doc_payment }}</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </table>
+                                                    </td>
+                                                    <td>{{ quote.comment | raw }}</td>
+                                                    <td>{{ quote.disease }}</td>
+                                                    <td>
+                                                        <table>
+                                                            {% for bio_type in quote.samples_table %}
+                                                                <tr>
+                                                                    <td>{{ bio_type.biospecimen_type }}
+                                                                        <b>{{ bio_type.biospecimen_type_russian }}</b> {{ bio_type.mod }}
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </table>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-info btn-block quote_info"
+                                                                id="qi_{{ quote.id }}"><i class="fa fa-info"
+                                                                                          aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>{{ quote.lasttname }} {{ quote.firstname }} {{ quote.patronymic }}</td>
+                                                </tr>
+                                            {% elseif role == '1' or role == '6' or role == '2' %}
+                                                <tr>
+                                                    <td>{{ quote.lasttname }} {{ quote.firstname }} {{ quote.patronymic }}</td>
+                                                    <td>{{ quote.created_at }}</td>
+                                                    <td>{{ quote.site_id-1 }} {{ quote.site_name }}</td>
+                                                    <td>{{ quote.value_mount }}</td>
+                                                    <td>{{ quote.days }}</td>
+                                                    <td>{{ quote.price }}</td>
+                                                    <td>
+                                                        <table>
+                                                            {% for doc_payment in quote.doctor_payments %}
+                                                                <tr>
+                                                                    <td>{{ doc_payment.doc_name }}</td>
+                                                                    <td>{{ doc_payment.doc_payment }}</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </table>
+                                                    </td>
+                                                    <td>{{ quote.comment | raw }}</td>
+                                                    <td>{{ quote.disease }}</td>
+                                                    <td>
+                                                        <table>
+                                                            {% for bio_type in quote.samples_table %}
+                                                                <tr>
+                                                                    <td>{{ bio_type.biospecimen_type }}
+                                                                        <b>{{ bio_type.biospecimen_type_russian }}</b> {{ bio_type.mod }}
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </table>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-info btn-block quote_info"
+                                                                id="qi_{{ quote.id }}"><i class="fa fa-info"
+                                                                                          aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
+        {% if (inventory.id > 0) %}
+            {% if (role == '3' and department_id == '3') or (role != '3' and role != '8') %}
+                <div class="accordion" id="accordionExample11">
+                    <div class="card collapse-icon accordion-icon-rotate">
+                        <div class="accordion-header card-header" id="heading11">
+                            <h2 class="mb-0">
+                                <a class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" data-toggle="collapse"
+                                   data-target="#collapse11" aria-expanded="false" aria-controls="collapse11">
+                                    <h4 class="card-title"><h2>Инвентори</h2></h4>
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse11" class="collapse" aria-labelledby="heading11"
+                             data-parent="#accordionExample11"
+                             style="">
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+
+
+                                        {% if role == '6'  or department_id == '3' %}
+                                            <div class="col-md-12 col-sm-12">
+                                                <label for="inventory_sample">Есть ли образец</label>
+                                                <select class="form-control" id="inventory_sample" class="form-control">
+                                                    <option value="0"
+                                                            {% if inventory.sample == 0 %}
+                                                                selected
+                                                            {% endif %}
+                                                    >Есть ли образец
+                                                    </option>
+                                                    <option value="1"
+                                                            {% if inventory.sample == 1 %}
+                                                                selected
+                                                            {% endif %}
+                                                    >Да
+                                                    </option>
+                                                    <option value="2"
+                                                            {% if inventory.sample == 2 %}
+                                                                selected
+                                                            {% endif %}
+                                                    >Нет
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-12 col-sm-12 mt-2">
+                                                <label for="inventory_alias">Ссылка</label>
+                                                <input type="text" value="{{ inventory.alias }}"
+                                                       id="inventory_alias" class="form-control">
+                                            </div>
+
+                                            <div class="col-md-12 col-sm-12 mt-2">
+                                                <label for="inventory_comments">Комментарий</label>
+                                                <textarea name="inventory_comments" id="inventory_comments" cols="30"
+                                                          rows="10">{{ inventory.comments }}</textarea>
+                                                <input type="hidden" id="inventory_id" value="{{ inventory.id }}">
+                                            </div>
+
+
+                                            <div class="col-md-12 col-sm-12">
+                                                {{ inventory.lasttname }}
+                                                {{ inventory.firstname }}
+                                                {{ inventory.created_at }}
+                                            </div>
+                                            <div class="col-md-12 col-sm-12 mt-4">
+                                                <button class="btn btn-dark" id="inventory_save">Сохранить</button>
+                                            </div>
+                                        {% else %}
+
+                                            <div class="col-md-12 col-sm-12">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <td>Если ли инвентори</td>
+                                                        <td><b> {% if inventory.sample == 2 %} Нет {% endif %}
+                                                                {% if inventory.sample == 1 %} Да {% endif %}
+                                                                {% if inventory.sample == 0 %} Инветори не отработан {% endif %}</b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Ссылка</td>
+                                                        <td><b>{{ inventory.alias }}</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Комментарий</td>
+                                                        <td>{{ inventory.comments | raw }}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>  {{ inventory.lasttname }}   {{ inventory.firstname }}</td>
+                                                        <td>  {{ inventory.created_at }} </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        {% if (laboratory.id > 0) %}
+        {% if (department_id == '4') or (role != '3' and role != '7'  and role != '8') %}
+        <div class="accordion" id="accordionExample12">
+            <div class="card collapse-icon accordion-icon-rotate">
+                <div class="accordion-header card-header" id="heading12">
+                    <h2 class="mb-0">
+                        <a class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" data-toggle="collapse"
+                           data-target="#collapse12" aria-expanded="false" aria-controls="collapse12">
+                            <h4 class="card-title"><h2>ЛТО</h2></h4>
+                        </a>
+                    </h2>
+                </div>
+                <div id="collapse12" class="collapse" aria-labelledby="heading12"
+                     data-parent="#accordionExample12"
+                     style="">
+                    <div class="card-body pt-0">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+
+                                {% if role == '6'  or department_id == '4' %}
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <label for="laboratory_sample">Требуется процессинг/исследования по
+                                            данному
+                                            образцу выполнимы ДА/НЕТ</label>
+                                        <select class="form-control" id="laboratory_sample"
+                                                class="form-control">
+                                            <option value="0"
+                                                    {% if laboratory.sample == 0 %}
+                                                        selected
+                                                    {% endif %}
+                                            >Требуется процессинг/исследования
+                                            </option>
+                                            <option value="1"
+                                                    {% if laboratory.sample == 1 %}
+                                                        selected
+                                                    {% endif %}
+                                            >Да
+                                            </option>
+                                            <option value="2"
+                                                    {% if laboratory.sample == 2 %}
+                                                        selected
+                                                    {% endif %}
+                                            >Нет
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-12 mt-2">
+                                        <label for="material_intake">Потребуют дополнительный забора образца
+                                            ДА/НЕТ</label>
+                                        <select class="form-control" id="material_intake" class="form-control">
+                                            <option value="0"
+                                                    {% if laboratory.material_intake == 0 %}
+                                                        selected
+                                                    {% endif %}
+                                            >Потребуют дополнительный забора образца
+                                            </option>
+                                            <option value="1"
+                                                    {% if laboratory.material_intake == 1 %}
+                                                        selected
+                                                    {% endif %}
+                                            >Да
+                                            </option>
+                                            <option value="2"
+                                                    {% if laboratory.material_intake == 2 %}
+                                                        selected
+                                                    {% endif %}
+                                            >Нет
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12 mt-2">
+                                        <label for="material_intake_text">Какого</label>
+                                        <input type="text" value="{{ laboratory.material_intake_text }}"
+                                               id="material_intake_text" class="form-control">
+                                    </div>
+                                    <div class="col-md-4 col-sm-12 mt-2">
+                                        <label for="material_intake_num">Сколько</label>
+                                        <input type="number" value="{{ laboratory.material_intake_num }}"
+                                               id="material_intake_num" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-12 mt-2">
+                                        <label for="expendable_materials">Потребуют дополнительных расходных
+                                            материалов ДА/НЕТ</label>
+                                        <select class="form-control" id="expendable_materials"
+                                                class="form-control">
+                                            <option value="0"
+                                                    {% if laboratory.expendable_materials == 0 %}
+                                                        selected
+                                                    {% endif %}
+                                            >Потребуют дополнительных расходных материалов
+                                            </option>
+                                            <option value="1"
+                                                    {% if laboratory.expendable_materials == 1 %}
+                                                        selected
+                                                    {% endif %}
+                                            >Да
+                                            </option>
+                                            <option value="2"
+                                                    {% if laboratory.expendable_materials == 2 %}
+                                                        selected
+                                                    {% endif %}
+                                            >Нет
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12 mt-2">
+                                        <label for="expendable_materials_text">Каких</label>
+                                        <input type="text" value="{{ laboratory.expendable_materials_text }}"
+                                               id="expendable_materials_text" class="form-control">
+                                    </div>
+                                    <div class="col-md-4 col-sm-12 mt-2">
+                                        <label for="expendable_materials_num">Стоимость полного
+                                            комплекта</label>
+                                        <input type="number" value="{{ laboratory.expendable_materials_num }}"
+                                               id="expendable_materials_num" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-12 mt-2">
+                                        <label for="financial_expenses">Потребуются дополнительные финансовые
+                                            расходы</label>
+                                        <select class="form-control" id="financial_expenses"
+                                                class="form-control">
+                                            <option value="0"
+                                                    {% if laboratory.financial_expenses == 0 %}
+                                                        selected
+                                                    {% endif %}
+                                            >Потребуются дополнительные финансовые расходы
+                                            </option>
+                                            <option value="1"
+                                                    {% if laboratory.financial_expenses == 1 %}
+                                                        selected
+                                                    {% endif %}
+                                            >Да
+                                            </option>
+                                            <option value="2"
+                                                    {% if laboratory.financial_expenses == 2 %}
+                                                        selected
+                                                    {% endif %}
+                                            >Нет
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12 mt-2">
+                                        <label for="financial_expenses_text">На что ?</label>
+                                        <input type="text" value="{{ laboratory.financial_expenses_text }}"
+                                               id="financial_expenses_text" class="form-control">
+                                    </div>
+                                    <div class="col-md-4 col-sm-12 mt-2">
+                                        <label for="financial_expenses_num">Сумма</label>
+                                        <input type="number" value="{{ laboratory.financial_expenses_num }}"
+                                               id="financial_expenses_num" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 mt-2">
+                                        <label for="lavaratory_comments">Комментарий</label>
+                                        <textarea name="laboratory_comments" id="laboratory_comments" cols="30"
+                                                  rows="10">{{ laboratory.comments }}</textarea>
+                                        <input type="hidden" id="laboratory_id" value="{{ laboratory.id }}">
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        {{ laboratory.lasttname }}
+                                        {{ laboratory.firstname }}:
+                                        {{ laboratory.created_at }}
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 mt-4">
+                                        <button class="btn btn-dark" id="lavaratory_save">Сохранить</button>
+                                    </div>
+
+                                </div>
+                                {% else %}
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td colspan="4">Требуется процессинг/исследования по данному
+                                                    образцу выполнимы:
+                                                </td>
+                                                <td colspan="2">
+                                                    <b>{% if laboratory.sample == 2 %} Нет {% endif %}
+                                                        {% if laboratory.sample == 1 %} Да {% endif %}
+                                                        {% if laboratory.sample == 0 %} ЛТО не отработан {% endif %}</b>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Потребуют дополнительный забора образца:</td>
+                                                <td>
+                                                    <b>  {% if laboratory.material_intake == 2 %} Нет {% endif %}
+                                                        {% if laboratory.material_intake == 1 %} Да {% endif %}
+                                                        {% if laboratory.material_intake == 0 %} Не выбрано {% endif %}</b>
+                                                </td>
+                                                <td>Какого:</td>
+                                                <td><b>{{ laboratory.material_intake_text }}</b></td>
+                                                <td>Сколько</td>
+                                                <td><b>{{ laboratory.material_intake_num }} </b></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Потребуют дополнительных расходных материалов</td>
+                                                <td>
+                                                    <b>  {% if laboratory.expendable_materials == 2 %} Нет {% endif %}
+                                                        {% if laboratory.expendable_materials == 1 %} Да {% endif %}
+                                                        {% if laboratory.expendable_materials == 0 %} Не выбрано {% endif %}</b>
+                                                </td>
+                                                <td>Каких:</td>
+                                                <td><b>{{ laboratory.expendable_materials_text }}</b></td>
+                                                <td>Стоиомсть полного комплекта</td>
+                                                <td><b>{{ laboratory.expendable_materials_num }} </b></td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>Потребуются дополнительные финансовые расходы</td>
+                                                <td>
+                                                    <b>  {% if laboratory.financial_expenses == 2 %} Нет {% endif %}
+                                                        {% if laboratory.financial_expenses == 1 %} Да {% endif %}
+                                                        {% if laboratory.financial_expenses == 0 %} Не выбрано {% endif %}</b>
+                                                </td>
+                                                <td>На что:</td>
+                                                <td><b>{{ laboratory.financial_expenses_text }}</b></td>
+                                                <td>Сумма</td>
+                                                <td><b>{{ laboratory.financial_expenses_num }} </b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Комментарий</td>
+                                                <td colspan="5">{{ laboratory.comments | raw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">{{ laboratory.lasttname }}  {{ laboratory.firstname }}
+                                                    :
+                                                </td>
+                                                <td colspan="3">{{ laboratory.created_at }}:</td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+
+                                    {% endif %}
+                                </div>
+                            </div>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+            {% endif %}
+
+
+
+
+            {% if role != '3' and role != '7'  and role != '8' %}
+                <div class="accordion" id="accordionExample3" style="display: none;">
+                    <div class="card collapse-icon accordion-icon-rotate">
+                        <div class="accordion-header card-header" id="heading10">
+                            <h2 class="mb-0">
+                                <a class="btn btn-link mb-0 pb-3 text-decoration-none collapsed" data-toggle="collapse"
+                                   data-target="#collapse09" aria-expanded="false" aria-controls="collapse09">
+                                    <h4 class="card-title"><h2>Статистика по worksheets</h2></h4>
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse09" class="collapse" aria-labelledby="heading10"
+                             data-parent="#accordionExample3"
+                             style="">
+                            <div class="card-body pt-0">
+                                <section>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                </div>
+                                                <div class="card-content ">
+                                                    <div class="card-body card-dashboard ">
+                                                        <table class="table table-striped table-bordered file-export dataTable">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Статус</th>
+                                                                <th>Комментарий</th>
+                                                                <th>Менеджер</th>
+                                                                <th>Действие</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            {% for worksheet in worksheets %}
+                                                                <tr>
+                                                                    <td> {% if worksheet.status_id == 1 %}
+                                                                            Не отработан
+                                                                        {% elseif worksheet.status_id == 3 %}
+                                                                            Отказ
+                                                                        {% endif %}
+                                                                    </td>
+                                                                    <td>{{ worksheet.comments }}</td>
+                                                                    <td>{{ worksheet.lasttname }} {{ worksheet.firstname }} {{ worksheet.patronymic }}
+                                                                    <td>  {% if worksheet.status_id == 1 %}
+                                                                        <button class="btn-dark btn"
+                                                                                onclick="sendMail({{ worksheet.user_id }})">
+                                                                            <i
+                                                                                    class="ft-rotate-cw"></i> Resend
+                                                                        </button>
+                                                                    </td>
+                                                                    {% endif %}</td>
+                                                                </tr>
+                                                            {% endfor %}
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="modal fade text-left" id="offerTaskModal" role="dialog" aria-labelledby="myModalLabel4"
+                 aria-hidden="true">
+                <div id="modalview">
+                    <div class="modal-dialog modal-xl" role="document" style="width: 80% !important;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel2"><i class="fa fa-road2"></i> <b>Добавить
+                                        задачу </b></h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="task_text">Комментарий</label>
+                                <input type="text" class="form-control" id="task_text">
+                                <label for="task_trigger_status">Статус</label>
+                                <select class="form-control" id="task_trigger_status"></select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="button" class="btn  btn-success" id="saveTask">Сохранить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade text-left" id="mailModal" role="dialog" aria-labelledby="mailModal"
+                 aria-hidden="true">
+                <div id="modalview">
+                    <div class="modal-dialog modal-xl" role="document" style="width: 80% !important;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="mailModal"><i class="fa fa-road2"></i> <b>Отправить
+                                        письмо</b></h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+
+                                <div class="form-group">
+                                    <label for="po_managers_send">Если не выбран ни один менеджер, отправляется
+                                        всем</label>
+                                    <select id='po_managers_send' multiple='multiple'></select>
+                                </div>
+
+                                <label for="subjectMail">Тема письма</label>
+                                <input type="text" class="form-control" id="subjectMail">
+                                <label for="subjectMail">Текст письма</label>
+                                <textarea name="" id="textMail" cols="30" rows="10"></textarea>
+
+                                <label for="fileCheck">Отправить вложения</label>
+                                <input id='fileCheck' type="checkbox" checked>
+
+                                <div class="form-group">
+                                    Группа рассылки
+                                    <select class="form-control" id="labMail">
+
+                                        {% if(role =='3' and role == '7') %}
+
+                                        {% else %}
+                                            <option value="lab@nbioservice.com"
+                                                    {% if fr.lab == 'lab@nbioservice.com' %}
+                                                        selected
+                                                    {% endif %}
+                                            >lab@nbioservice.com
+                                            </option>
+
+                                            <option value="lab_spb@nbioservice.com"
+                                                    {% if fr.lab == 'lab_spb@nbioservice.com' %}
+                                                        selected
+                                                    {% endif %}
+                                            >lab_spb@nbioservice.com
+                                            </option>
+
+                                            <option value="lab_nn@nbioservice.com"
+                                                    {% if fr.lab == 'lab_nn@nbioservice.com' %}
+                                                        selected
+                                                    {% endif %}
+                                            >lab_nn@nbioservice.com
+                                            </option>
+
+                                        {% endif %}
+
+
+                                    </select>
+
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="button" class="btn  btn-success" onclick="sendMailPO()">Сохранить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade text-left" id="quotes_info_modal" role="dialog" aria-hidden="true">
+                <div>
+                    <div class="modal-dialog modal-xl" role="document" style="width: 80% !important;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Образцы</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="quote_info_rows"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Выделяем нужны select
+        if (document.getElementById('fr_status_id')) {
+            document.getElementById('fr_status_id').value = Number(`{{ fr.fr_status }}`);
+        }
+
+        if (document.getElementById('fr_script_id')) {
+            document.getElementById('fr_script_id').value = Number(`{{ fr.fr_script_id }}`);
+        }
+
+        if (document.getElementById('answering_id')) {
+            document.getElementById('answering_id').value = Number(`{{ fr.answering_id }}`);
+
+        }
+
+
+        if (document.getElementById('status_client')) {
+            $('#status_client').change(() => {
+                let proj_id = `{{ fr.proj_id }}`;
+                let status_client = $('#status_client').val();
+
+                $.ajax({
+                    url: '/po/save/',
+                    method: 'POST',
+                    data: {
+                        "proj_id": proj_id,
+                        "status_client": status_client
+                    }
+                })
+                    .done(function (text) {
+                        if (text == 1) {
+                            toastr.success('Статус изменен');
+                            socket.emit('eventChangeStatusFRTABLE', proj_id);
+                            if (status_client == '27') {
+                                location.reload();
+                            }
+
+                        } else {
+                            toastr.error(text);
+                        }
+
+                    })
+            })
+        }
+
+        // Слушатель на изменения статуса клиента
+
+
+        // Слушатель на измененеия статуса менеджера
+
+        if (document.getElementById('status_manager')) {
+            $('#status_manager').change(() => {
+                let proj_id = `{{ fr.proj_id }}`;
+                let status_manager = $('#status_manager').val();
+                $.ajax({
+                    url: '/po/save/',
+                    method: 'POST',
+                    data: {
+                        "proj_id": proj_id,
+                        "status_manager": status_manager
+                    }
+                })
+                    .done(function (text) {
+                        if (text == 1) {
+                            toastr.success('Статус изменен');
+                            socket.emit('eventChangeStatusFRTABLE', proj_id);
+                        } else {
+                            toastr.error(text);
+                        }
+                    })
+            })
+        }
+
+        //Слушатель на изменение статуса Проектный отдел
+
+        if (document.getElementById('status_project')) {
+            $('#status_project').change(() => {
+                let proj_id = `{{ fr.proj_id }}`;
+                let status_project = $('#status_project').val();
+                $.ajax({
+                    url: '/po/save/',
+                    method: 'POST',
+                    data: {
+                        "proj_id": proj_id,
+                        "status_project": status_project
+                    }
+                })
+                    .done(function (text) {
+                        if (text == 1) {
+                            toastr.success('Статус изменен');
+                            socket.emit('eventChangeStatusFRTABLE', proj_id);
+                        } else {
+                            toastr.error(text);
+                        }
+                    })
+            })
+        }
+
+
+        // Слушатель на изменения статуса ЛТО
+
+        if (document.getElementById('status_lpo')) {
+            $('#status_lpo').change(() => {
+                let proj_id = `{{ fr.proj_id }}`;
+                let status_lpo = $('#status_lpo').val();
+                $.ajax({
+                    url: '/po/save/',
+                    method: 'POST',
+                    data: {
+                        "proj_id": proj_id,
+                        "status_lpo": status_lpo
+                    }
+                })
+                    .done(function (text) {
+                        if (text == 1) {
+                            toastr.success('Статус изменен');
+                            socket.emit('eventChangeStatusFRTABLE', proj_id);
+                        } else {
+                            toastr.error(text);
+                        }
+                    })
+            })
+        }
+
+        // Слушатель на изменеия статуса ВЭД
+
+        if (document.getElementById('status_ved')) {
+            $('#status_ved').change(() => {
+                let proj_id = `{{ fr.proj_id }}`;
+                let status_ved = $('#status_ved').val();
+                $.ajax({
+                    url: '/po/save/',
+                    method: 'POST',
+                    data: {
+                        "proj_id": proj_id,
+                        "status_ved": status_ved
+                    }
+                })
+                    .done(function (text) {
+                        if (text == 1) {
+                            toastr.success('Статус изменен');
+                            socket.emit('eventChangeStatusFRTABLE', proj_id);
+                        } else {
+                            toastr.error(text);
+                        }
+                    })
+            })
+        }
+
+        // Слушатель на изменение статуса Руководитель
+
+        if (document.getElementById('status_boss')) {
+            $('#status_boss').change(() => {
+                let proj_id = `{{ fr.proj_id }}`;
+                let status_boss = $('#status_boss').val();
+
+                if (status_boss == '40') {
+                    if ($("#margin").val() != '') {
+
+                        $.ajax({
+                            url: '/po/save/',
+                            method: 'POST',
+                            data: {
+                                "proj_id": proj_id,
+                                "status_boss": status_boss
+                            }
+                        })
+                            .done(function (text) {
+                                if (text == 1) {
+                                    toastr.success('Статус изменен');
+                                    socket.emit('eventChangeStatusFRTABLE', proj_id);
+                                } else {
+                                    toastr.error(text);
+                                }
+                            })
+                    } else {
+                        toastr.error('Нельзя выставить данный статус', 'Заполните поле маржинальность')
+                    }
+
+                } else {
+                    $.ajax({
+                        url: '/po/save/',
+                        method: 'POST',
+                        data: {
+                            "proj_id": proj_id,
+                            "status_boss": status_boss
+                        }
+                    })
+                        .done(function (text) {
+                            if (text == 1) {
+                                toastr.success('Статус изменен');
+                                socket.emit('eventChangeStatusFRTABLE', proj_id);
+                            } else {
+                                toastr.error(text);
+                            }
+                        })
+                }
+
+
+            })
+        }
+
+
+        // TODO Статусы сохроняются автоматом , нужно убрать из из отправик общего сохранения
+
+        let saveOrder = () => {
+            let proj_id = `{{ fr.proj_id }}`;
+            let fr_date = document.getElementById('fr_date').value;
+            let po_number = document.getElementById('po_number').value;
+            let linked_fr_id = document.getElementById('linked_fr_id').value;
+            let fr_script_id = document.getElementById('fr_script_id').value;
+
+            let attention_to;
+
+            if (document.getElementById('fr_attention_to')) {
+                attention_to = document.getElementById('fr_attention_to').value;
+            }
+
+            let script_number = document.getElementById('script_number').value;
+            let internal_id = document.getElementById('internal_id').value;
+            let project_name = document.getElementById('project_name').value;
+            let quote_date = document.getElementById('quote_date').value;
+            let external_id = document.getElementById('external_id').value;
+            // let comments = document.getElementById('comments');
+            let comments = tinymce.get('comments').getContent();
+            let feas_russian = tinymce.get('feas_russian').getContent();
+            let unformal_quote = tinymce.get('unformal_quote').getContent();
+            let history_po = '';
+            if (document.getElementById('history_po')) {
+                history_po = tinymce.get('history_po').getContent();
+            }
+
+            let clinical_inclusion = tinymce.get('clinical_inclusion').getContent();
+            let quotes_from_managers = tinymce.get('quotes_from_managers').getContent();
+            let project_details = tinymce.get('project_details').getContent();
+
+
+            let fr_status_id = document.getElementById('fr_status_id').value;
+            let fr_status_date = document.getElementById('fr_status_date').value;
+            let currency = document.getElementById('currency').value;
+
+
+            let deadline = document.getElementById('deadline').value;
+            let answering_id = document.getElementById('answering_id').value;
+
+            let deadline_quote = document.getElementById('deadline_quote').value;
+            let deadline_post = document.getElementById('deadline_post').value;
+            let history_quotes_search = $("#history_quotes_search").prop('checked') ? 1 : 0
+
+            let status_manager = document.getElementById('status_manager').value;
+            let status_project = document.getElementById('status_project').value;
+            let status_lpo = document.getElementById('status_lpo').value;
+            let status_ved = document.getElementById('status_ved').value;
+            let status_boss = document.getElementById('status_boss').value;
+            let status_client = document.getElementById('status_client').value;
+            let quote_type = document.getElementById('quote_type').value;
+            let po_status =  document.getElementById('po_status').value;
+            let lab = `{{ fr.lab }}`;
+            let po_text = `{{ fr.po_text }}`;
+
+            let communication_date = '';
+            if (document.getElementById('communication_date')) {
+                communication_date = document.getElementById('communication_date').value;
+            }
+
+            let communication_comment = '';
+            if (document.getElementById('communication_comment')) {
+                communication_comment = tinymce.get('communication_comment').getContent();
+            }
+            if (document.getElementById('po_status')) {
+                po_status = document.getElementById('po_status').value;
+            }
+
+            if (document.getElementById('lab')) {
+                lab = document.getElementById('lab').value;
+            }
+
+            if (document.getElementById('po_text')) {
+                po_text = tinymce.get('po_text').getContent();
+            }
+
+
+            let data = {
+                proj_id: proj_id,
+                fr_date: fr_date,
+                po_number: po_number,
+                linked_fr_id: linked_fr_id,
+                fr_script_id: fr_script_id,
+                attention_to: attention_to,
+                script_number: script_number,
+                internal_id: internal_id,
+                project_name: project_name,
+                comments: comments,
+                feas_russian: feas_russian,
+                fr_status: fr_status_id,
+                fr_status_date: fr_status_date,
+                project_details: project_details,
+                currency: currency,
+                clinical_inclusion: clinical_inclusion,
+                unformal_quote: unformal_quote,
+                history_po: history_po,
+                quote_date: quote_date,
+                quotes_from_managers: quotes_from_managers,
+                answering_id: answering_id,
+                external_id: external_id,
+                deadline: deadline,
+                deadline_quote: deadline_quote,
+                deadline_post: deadline_post,
+                status_manager: status_manager,
+                status_project: status_project,
+                status_lpo: status_lpo,
+                status_ved: status_ved,
+                status_boss: status_boss,
+                status_client: status_client,
+                history_quotes_search: history_quotes_search,
+                quote_type: quote_type,
+                communication_date: communication_date,
+                communication_comment: communication_comment,
+                po_status: po_status,
+                lab: lab,
+                po_text: po_text
+            }
+            if (document.getElementById('historical_data'))
+                data.historical_data = tinymce.get('historical_data').getContent()
+            if ($("#margin").length)
+                data.margin = $("#margin").val()
+
+            if (deadline == '') {
+                toastr.error('Заполните поле deadline');
+            } else if (answering_id == 0) {
+                toastr.error('Выберите ответственного');
+            } else {
+
+
+                $.ajax({
+                    url: '/po/save/',
+                    method: 'POST',
+                    data: data
+                })
+                    .done(function (text) {
+                        toastr.success('Данные сохранены');
+
+                        if (fr_status_id == 3 || fr_status_id == 5 || fr_status_id == 6) {
+                            let data = {
+                                'users_id': user_id
+                            }
+                        }
+                        location.reload();
+                    });
+            }
+
+
+        };
+
+
+        let saveOrderCommenter = () => {
+            let proj_id = `{{ fr.proj_id }}`;
+
+            let comments = tinymce.get('comments').getContent();
+
+            $.ajax({
+                url: '/po/save/',
+                method: 'POST',
+                data: {
+                    proj_id: proj_id,
+                    comments: comments,
+                }
+            }).done(function (text) {
+                toastr.success('Данные сохранены');
+                location.reload();
+            });
+        }
+
+
+        let saveOrder_view = () => {
+            let proj_id = `{{ fr.proj_id }}`;
+            let fr_status_id = document.getElementById('fr_status_id').value;
+            let deadline_post = document.getElementById('deadline_post').value;
+            let deadline_quote = document.getElementById('deadline_quote').value;
+            let deadline = document.getElementById('deadline').value;
+            let po_status = document.getElementById('po_status').value;
+
+            $.ajax({
+                url: '/po/save/',
+                method: 'POST',
+                data: {
+                    proj_id: proj_id,
+                    fr_status: fr_status_id,
+                    deadline_quote: deadline_quote,
+                    deadline_post: deadline_post,
+                    deadline: deadline,
+                    po_status: po_status,
+                }
+            })
+                .done(function (text) {
+                    toastr.success('Данные сохранены');
+
+                    if (fr_status_id == 3 || fr_status_id == 5 || fr_status_id == 6) {
+                        let data = {
+                            'users_id': user_id
+                        }
+                        socket.emit('eventPriority', data);
+                        location.reload();
+
+                    }
+
+
+                });
+
+
+        };
+
+        if (document.getElementById('form-button-save-fixed')) {
+            document.getElementById('form-button-save-fixed').addEventListener('click', () => {
+                saveOrder();
+            });
+        }
+
+        if (document.getElementById('form-button-save_view')) {
+            document.getElementById('form-button-save_view').addEventListener('click', () => {
+                saveOrder_view();
+            });
+        }
+
+        if (document.getElementById('form-button-save')) {
+            document.getElementById('form-button-save').addEventListener('click', () => {
+                saveOrder();
+            });
+
+        }
+
+        if (document.getElementById('form-button-save_commentar')) {
+            document.getElementById('form-button-save_commentar').addEventListener('click', () => {
+                saveOrderCommenter();
+            });
+        }
+
+
+        $('#fr_script_id').change(() => {
+            let fr_script_id = $('#fr_script_id').val();
+
+
+            $.ajax({
+                url: '/orders/getMaxScriptNum/',
+                method: 'POST',
+                data: {
+                    fr_script_id: fr_script_id,
+
+                }
+            })
+                .done(function (max) {
+                    max = JSON.parse(max)
+
+                    $('#script_number').val(max.script_number)
+
+                });
+
+
+        });
+
+        let role = `{{ role }}`;
+        let user_id = `{{ user_id }}`;
+        let department_id = `{{ department_id }}`;
+        if (role == '3' || role == '5' || role == '7' || role == '8') {
+            let arrayInput = document.querySelectorAll('.form-control');
+            [...arrayInput].forEach((el) => {
+
+                if (el.id != 'fr_status_id') {
+                    el.disabled = 'true';
+                }
+
+                if (el.id == 'fr_status_id' && role == '7') {
+                    el.disabled = 'true';
+                }
+
+                if (el.id == 'deadline' || el.id == 'deadline_post' || el.id == 'deadline_quote') {
+                    el.disabled = '';
+                }
+
+                if (el.id == 'inventory_sample' || el.id == 'inventory_alias') {
+                    el.disabled = '';
+                }
+
+                if (document.getElementById('accordionExample18')) {
+                    if (el.id == 'disease_filter') {
+                        el.disabled = '';
+                    }
+                    if (el.id == 'biospecimen_type_filter') {
+                        el.disabled = '';
+                    }
+
+                }
+
+                if (department_id == '4') {
+                    if (el.id == 'laboratory_sample'
+                        || el.id == 'material_intake'
+                        || el.id == 'expendable_materials'
+                        || el.id == 'financial_expenses'
+                        || el.id == 'material_intake_text'
+                        || el.id == 'expendable_materials_text'
+                        || el.id == 'financial_expenses_text'
+                        || el.id == 'material_intake_num'
+                        || el.id == 'expendable_materials_num'
+                        || el.id == 'financial_expenses_num'
+                    ) {
+                        el.disabled = '';
+                    }
+
+
+                }
+
+
+            })
+
+
+        } else {
+
+            if (role == '7') {
+
+            }
+            if (document.getElementById("form-button-save-fixed")) {
+                document.getElementById("form-button-save-fixed").style.display = "block";
+            }
+
+        }
+
+    })
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var input = $('#file-input'), button = $('#file-submit'), container = $('#file-container')
+
+        input.on('change', function () {
+            let files = $(this).prop('files');
+            for (let file of files) {
+                let elem = $('<div class="file-info"><p>' + file.name + '</p><progress class="progress-bar" max="100" value="0"></progress></div>').appendTo(container);
+                //добавляем инфу о файле в свойство превью
+                elem.get(0).file = file;
+            }
+        })
+
+        //асинхронный колбек закачки файлов
+        button.on('click', async function (evt) {
+            evt.preventDefault();
+            //пускаем закачку каждого файла параллельно с помощью Promise.all и дожидаемся закачки всех файлов с помощью await.
+            await Promise.all($('.file-info').map(upload));
+        })
+
+        //асинхронная функция закачки файла
+        async function upload(index, elem) {
+            let proj_id = `{{ fr.proj_id }}`, data = new FormData(), progress = $(elem).find('.progress-bar'),
+                info = $("#file_info").val()
+            data.append('file', elem.file)
+            data.append('proj_id', proj_id)
+            data.append('info', info)
+            //ждем ответа об успешной обработке файла на стороне сервера
+            const res = await $.ajax({
+                url: '/po/saveFile',
+                contentType: false,
+                processData: false,
+                data: data,
+                type: 'post',
+                xhr: function () {
+                    var xhr = new XMLHttpRequest();
+                    xhr.upload.onprogress = function (evt) {
+                        var percent = Math.ceil(evt.loaded / evt.total * 100);
+                        progress.attr('value', percent);
+                    }
+                    return xhr;
+                }
+            }).done((data) => {
+                toastr.info(data);
+            });
+        }
+        {# async function upload_lto (index, elem) { #}
+        {# let proj_id = `{{ fr.proj_id }}`; #}
+        {# var data = new FormData(); #}
+        {# data.append('file', elem.file); #}
+        {# data.append('proj_id', proj_id); #}
+        {# data.append('info', 'lto'); #}
+        {# var progress = $(elem).find('.progress-bar'); #}
+        {# //ждем ответа об успешной обработке файла на стороне сервера #}
+        {# const res = await $.ajax({ #}
+        {# url: '/po/saveFile', #}
+        {# contentType: false, #}
+        {# processData: false, #}
+        {# data: data, #}
+        {# type: 'post', #}
+        {# xhr: function () { #}
+        {# var xhr = new XMLHttpRequest(); #}
+        {# xhr.upload.onprogress = function (evt) { #}
+        {# var percent = Math.ceil(evt.loaded / evt.total * 100); #}
+        {# progress.attr('value', percent); #}
+        {# } #}
+        {# return xhr; #}
+        {# } #}
+        {# }).done((data) => { #}
+        {# toastr.info(data); #}
+        {# }); #}
+        {# } #}
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        $('#inventory_save').click(() => {
+            let sample = $('#inventory_sample').val();
+            let alias = $('#inventory_alias').val();
+            let id = $('#inventory_id').val();
+            let comments = tinymce.get('inventory_comments').getContent();
+            let proj_id = `{{ fr.proj_id }}`;
+            if (sample == 0) {
+                toastr.error('Нужно выбрать', 'Есть ли образец')
+            } else {
+
+                $.ajax({
+                    url: '../../invertory/save/',
+                    method: 'POST',
+                    data: {
+                        sample: sample,
+                        alias: alias,
+                        comments: comments,
+                        proj_id: proj_id,
+                        id: id,
+                    }
+                })
+                    .done(function (result) {
+                        if (result == 1) {
+                            toastr.success('Инветори сохранен');
+                            socket.emit('eventChangeStatusFRTABLE', proj_id);
+                        } else {
+                            toastr.error('Что-то пошло не так :)')
+                        }
+                    });
+
+            }
+
+        })
+
+
+        $('#lavaratory_save').click(() => {
+            let sample = $('#laboratory_sample').val();
+            let id = $('#laboratory_id').val();
+            let comments = tinymce.get('laboratory_comments').getContent();
+            let proj_id = `{{ fr.proj_id }}`;
+
+            let material_intake = $('#material_intake').val();
+            let material_intake_text = $('#material_intake_text').val();
+            let material_intake_num = $('#material_intake_num').val();
+
+            let expendable_materials = $('#expendable_materials').val();
+            let expendable_materials_text = $('#expendable_materials_text').val();
+            let expendable_materials_num = $('#expendable_materials_num').val();
+
+            let financial_expenses = $('#financial_expenses').val();
+            let financial_expenses_text = $('#financial_expenses_text').val();
+            let financial_expenses_num = $('#financial_expenses_num').val();
+
+
+            if (sample == 0) {
+                toastr.error('Нужно выбрать', 'Требуется процессинг/исследования');
+            } else if (material_intake == 0) {
+                toastr.error('Нужно выбрать', 'Потребуют дополнительный забора образца');
+            } else if (expendable_materials == 0) {
+                toastr.error('Нужно выбрать', 'Потребуют дополнительных расходных материалов');
+            } else if (financial_expenses == 0) {
+                toastr.error('Нужно выбрать', 'Потребуются дополнительные финансовые расходы');
+            } else {
+
+                $.ajax({
+                    url: '../../laboratory/save/',
+                    method: 'POST',
+                    data: {
+                        sample: sample,
+                        comments: comments,
+                        proj_id: proj_id,
+                        id: id,
+
+                        material_intake: material_intake,
+                        material_intake_text: material_intake_text,
+                        material_intake_num: material_intake_num,
+
+                        expendable_materials: expendable_materials,
+                        expendable_materials_text: expendable_materials_text,
+                        expendable_materials_num: expendable_materials_num,
+
+                        financial_expenses: financial_expenses,
+                        financial_expenses_text: financial_expenses_text,
+                        financial_expenses_num: financial_expenses_num,
+                    }
+                }).done(function (result) {
+                    if (result == 1) {
+                        toastr.success('ЛТО сохранен');
+                        socket.emit('eventChangeStatusFRTABLE', proj_id);
+                    } else {
+                        toastr.error('Что-то пошло не так :)')
+                    }
+                });
+            }
+        })
+    });
+
+</script>
+
+
+<script src="../../../js/dist/vue.js"></script>
+<script src="../../../js/components/Orders/offer.js?v=1.16"></script>
+<script src="../../../js/components/Orders/offer_ru.js?v=2.0.1"></script>
+<script src="../../../js/components/Orders/offer_ru_mod.js?v=1.93"></script>
+<script src="../../../js/components/Orders/ape_offer.js?v=1.04"></script>
+<script src="../../../js/components/PO/poquotesucces.js?v=1.12"></script>
+<script src="../../../js/main.js"></script>
+
+<script>
+    $(document).ready(() => {
+        function getBiotypes() {
+            return new Promise(resolve => {
+                $.post({
+                    url: '/biospecimenType/getAll'
+                }).then(data => {
+                    resolve(JSON.parse(data))
+                })
+            });
+
+        }
+
+        function getMods() {
+            return new Promise(resolve => {
+                $.get('/sampleMod/getAll').done(res => {
+                    resolve(JSON.parse(res))
+                })
+            })
+        }
+
+        let Diseases = {{ order_diseases|json_encode|raw }}, DiseasesBiospecimenTypes = {}, DiseasesIds = [],
+            BiotypesById = {}, DiseaseBiospecimen = [], Mods, ModsDatalist = ''
+
+        async function loadDiseaseBiospecimenMods() {
+            let Biotypes = await getBiotypes();
+            Mods = await getMods();
+            Mods.result.forEach(mod => {
+                ModsDatalist += `<option value="${mod.modification}">${mod.modification}</option>`
+            })
+
+            Diseases.forEach((disease) => {
+                DiseasesIds.push(disease.disease_id);
+                let OrderDiseasesBiospecimenTypes = {{ diseases_biospecimen_types|json_encode|raw }}
+                if (!DiseasesBiospecimenTypes[disease.disease_id])
+                    DiseasesBiospecimenTypes[disease.disease_id] = []
+                OrderDiseasesBiospecimenTypes.forEach(el => {
+                    if (!DiseasesBiospecimenTypes[el.disease_id])
+                        DiseasesBiospecimenTypes[el.disease_id] = []
+                    if (DiseasesBiospecimenTypes[el.disease_id].indexOf(`${el.disease_id}_${el.biospecimen_type_id}`) === -1)
+                        DiseasesBiospecimenTypes[el.disease_id].push(`${el.disease_id}_${el.biospecimen_type_id}`)
+                })
+                let biospecimen_types_datalist = $(`#biospecimen_types_select_${disease.disease_id}`)
+                Biotypes.result.forEach(biotype => {
+                    BiotypesById[biotype.id] = biotype.biospecimen_type;
+                    biospecimen_types_datalist.append(`<option value="${biotype.biospecimen_type}" id="${disease.disease_id}_${biotype.id}">`)
+                })
+                OrderDiseasesBiospecimenTypes.forEach(diseases_biospecimen_type => {
+                    if (diseases_biospecimen_type.disease_id === disease.disease_id) {
+                        $(`#disease_biospecimen_types_${disease.disease_id}`).append(`<div class="row">
+                                    <div class="col-2"></div>
+                                    <div class="col-7">
+                                        <button class="btn btn-block btn-info">${BiotypesById[diseases_biospecimen_type.sample_id]}</button>
+                                    </div>
+                                     <div class="col-3">
+                                    {% if role != '1' and role != '6' %}
+
+
+
+                                      {% else %}
+                                        <button class="btn btn-block btn-danger delete_biospecimen" dbid="${diseases_biospecimen_type.id}"
+                                            id="delbio_${disease.disease_id}_${diseases_biospecimen_type.sample_id}">X</button>
+
+                                    {% endif %}
+                                     </div>
+                                <div class="col-3">Modification</div>
+                                <div class="col-6">
+                                {% if role != '1' and role != 6  and role != '2' %}
+                                <span>${diseases_biospecimen_type.modification}</span>
+                                {% else %}
+                                    <input list="sample_mod_select_${disease.disease_id}_${diseases_biospecimen_type.sample_id}" class="form-control mod_input"
+                                        id="sample_mod_input_${diseases_biospecimen_type.id}"
+                                        value="${diseases_biospecimen_type.modification || ''}"
+                                        disabled>
+
+                                    <datalist id="sample_mod_select_${disease.disease_id}_${diseases_biospecimen_type.sample_id}"
+                                        class="sample_mod_select sample_mod_input_${diseases_biospecimen_type.id}"></datalist>
+                                </div>
+                                {% endif %}
+                                <div class="col-3">
+                                {% if role != '3' and role != '2' and role != '9' %}
+                                    <button class="btn btn-block btn-success sample_mod_add" type="button"
+                                        id="sample_mod_add_${disease.disease_id}_${diseases_biospecimen_type.sample_id}"
+                                        dbid="${diseases_biospecimen_type.id}">
+                                        SAVE
+                                    </button>
+                                {% endif %}
+                                </div>
+                            </div>`)
+                    }
+                })
+            })
+            $(".mod_input").focus(e => {
+                let ModInput = $(e.currentTarget), sampleid = ModInput.attr('id').split('_')[3],
+                    Datalist = $(`.sample_mod_input_${sampleid}`)
+                Datalist.html(ModsDatalist)
+            })
+        }
+
+        loadDiseaseBiospecimenMods()
+
+        $("#disease_add").click(() => {
+            let disease_select = $("#disease_input"),
+                disease_name = disease_select.val(),
+                mutation = $(`#disease_select option[value="${disease_name}"]`).html(),
+                disease_id = $(`#disease_select option[value="${disease_name}"]`).attr('id')
+            if (disease_name && DiseasesIds.indexOf(disease_id) === -1) {
+                DiseasesIds.push(disease_id)
+                DiseasesBiospecimenTypes[disease_id] = []
+                $("#diseases_list").append(`<div id="disease_biospecimen_types_${disease_id}" class="disease_block">
+                    <div class="row">
+                        <div class="col-9">
+                            <button class="btn btn-block btn-info">${disease_name}<br> <span style="font-size:10px;">${mutation}</span></button>
+                        </div>
+                        <div class="col-3">
+{% if role != '1' and role != '6' and role != '2' %}
+
+
+
+                                      {% else %}
+                            <button class="btn btn-block btn-danger delete_disease" id="deldisease_${disease_id}">X</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-7">
+                            <input list="biospecimen_types_select_${disease_id}" class="form-control" id="biospecimen_types_input_${disease_id}">
+                            <datalist id="biospecimen_types_select_${disease_id}"></datalist>
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-block btn-success biospecimen_types_add" type="button" id="biospecimen_types_add_${disease_id}">
+                                <i class="fa fa-plus"></i>
+                                ADD
+                            </button>
+                        </div>
+                    </div>
+                </div>`)
+
+                $.post({
+                    url: '/poDisease/save/',
+                    data: {
+                        proj_id: `{{ fr.proj_id }}`,
+                        disease_id
+                    }
+                })
+                $.post({
+                    url: '/biospecimenType/getAll'
+                }).then(data => {
+                    let Biotypes = JSON.parse(data),
+                        biospecimen_types_datalist = $(`#biospecimen_types_select_${disease_id}`)
+                    Biotypes.result.forEach(biotype => {
+                        biospecimen_types_datalist.append(`<option value="${biotype.biospecimen_type}" id="${disease_id}_${biotype.id}">`)
+                    })
+                })
+            }
+            disease_select.val('')
+        })
+
+        $('body').on('click', 'button.delete_biospecimen', function (e) {
+            let id = $(e.currentTarget).attr('id'), disease_id = id.split('_')[1], biospecimen_id = id.split('_')[2],
+                index = DiseasesBiospecimenTypes[disease_id].indexOf(`${disease_id}_${biospecimen_id}`)
+            DiseasesBiospecimenTypes[disease_id].splice(index, 1)
+            $(e.currentTarget).closest('.row').remove()
+            let dbid = $(this).attr('dbid')
+            if (typeof dbid !== 'undefined' && dbid !== false) {
+                $.post({
+                    url: '/poDiseaseSampleMod/delete',
+                    data: {id: dbid}
+                })
+            }
+        })
+
+        $('body').on('click', 'button.delete_disease', function (e) {
+            let id = $(e.currentTarget).attr('id'), disease_id = id.split('_')[1]
+            if (DiseasesBiospecimenTypes[disease_id].length === 0) {
+                delete DiseasesBiospecimenTypes[disease_id]
+                delete DiseasesIds[DiseasesIds.indexOf(disease_id)]
+                $(e.currentTarget).closest('.disease_block').remove()
+                let dbid = $(this).attr('dbid')
+                if (typeof dbid !== 'undefined' && dbid !== false) {
+                    $.post({
+                        url: '/poDisease/delete',
+                        data: {id: dbid}
+                    })
+                }
+            }
+        })
+
+        $('body').on('click', '.sample_mod_add', function (e) {
+            let id = $(e.currentTarget).attr('id'), disease_id = id.split('_')[3],
+                biospecimen_type_id = id.split('_')[4],
+                dbid = $(e.currentTarget).attr('dbid'), modification = $(`#sample_mod_input_${dbid}`).val()
+
+            $.post({
+                url: '/sampleMod/getByMod',
+                data: {modification}
+            }).done(res => {
+                let Mod = JSON.parse(res), mod_id
+                if (!Mod.length) {
+                    $.post({
+                        url: '/sampleMod/save',
+                        data: {modification}
+                    }).done(res2 => {
+                        mod_id = res2
+                        $.post({
+                            url: '/poDiseaseSampleMod/save/',
+                            data: {
+                                proj_id: `{{ fr.proj_id }}`,
+                                id: dbid,
+                                mod_id,
+                                disease_id,
+                                sample_id: biospecimen_type_id,
+                                modification
+                            }
+                        })
+                    })
+                } else {
+                    mod_id = Mod[0].id
+                    $.post({
+                        url: '/poDiseaseSampleMod/save/',
+                        data: {
+                            proj_id: `{{ fr.proj_id }}`,
+                            id: dbid,
+                            mod_id,
+                            disease_id,
+                            sample_id: biospecimen_type_id,
+                            modification
+                        }
+                    })
+                }
+            })
+        })
+
+        $('body').on('click', '.biospecimen_types_add', (e) => {
+            let role = `{{ role }}`;
+            let disease_id = $(e.currentTarget).attr('id').split('_')[3],
+                biospecimen_type_input = $(`#biospecimen_types_input_${disease_id}`),
+                biospecimen_type = biospecimen_type_input.val(),
+                biospecimen_type_id = $(`#biospecimen_types_select_${disease_id} option[value="${biospecimen_type}"]`).attr('id')
+            if (!DiseasesBiospecimenTypes[disease_id]) {
+                DiseasesBiospecimenTypes[disease_id] = []
+            }
+            if (biospecimen_type_id /*&& DiseasesBiospecimenTypes[disease_id].indexOf(biospecimen_type_id) === -1*/) {
+                DiseasesBiospecimenTypes[disease_id].push(biospecimen_type_id)
+                DiseaseBiospecimen.push(biospecimen_type_id)
+                biospecimen_type_id = biospecimen_type_id.split('_')[1]
+                $.post({
+                    url: '/poDiseaseSampleMod/save/',
+                    data: {
+                        proj_id: `{{ fr.proj_id }}`,
+                        disease_id,
+                        sample_id: biospecimen_type_id,
+                        modification: biospecimen_type
+                    }
+                }).done(dbid => {
+                    $(`#disease_biospecimen_types_${disease_id}`).append(`<div class="row">
+                                <div class="col-2"></div>
+                                <div class="col-7">
+                                    <button class="btn btn-block btn-info">${biospecimen_type}</button>
+                                </div>
+                                <div class="col-3">
+                                    <button class="btn btn-block btn-danger delete_biospecimen"   id="delbio_${disease_id}_${biospecimen_type_id}" dbid="${dbid}">X</button>
+                                </div>
+                                <div class="col-3">Modification</div>
+                                <div class="col-6">
+                                    <input list="sample_mod_select_${disease_id}_${biospecimen_type}" class="form-control"
+                                        id="sample_mod_input_${dbid}">
+                                    <datalist id="sample_mod_select_${disease_id}_${biospecimen_type}"
+                                        class="sample_mod_select"></datalist>
+                                </div>
+                                <div class="col-3">
+                                    <button class="btn btn-block btn-success sample_mod_add" type="button" id="sample_mod_add_${disease_id}_${biospecimen_type_id}" dbid="${dbid}">
+                                        SAVE
+                                    </button>
+                                </div>
+                            </div>`)
+                    $.get('/sampleMod/getAll').done(res => {
+                        let Mods = JSON.parse(res)
+                        $(".sample_mod_select").empty()
+                        Mods.result.forEach(mod => {
+                            $(".sample_mod_select").append(`<option value="${mod.modification}">${mod.modification}</option>`)
+                        })
+                    })
+                })
+            }
+            biospecimen_type_input.val('')
+        })
+
+        let script_id = $('#fr_script_id').val()
+        $.get({
+            url: `/staff/GetByCompany/?script_id=${script_id}`
+        }).done((result) => {
+            let managers = (JSON.parse(result))['result'], attention_to = $("#fr_attention_to"),
+                current_attention = {{ attention_to }}
+                    attention_to.html('<option value="0">Веберите менеджера</option>')
+            managers.forEach(manager => {
+                attention_to.append(`<option value="${manager.id}" ${current_attention == manager.id ? 'selected' : ''}>
+                    ${manager.name || ''} ${manager.position || ''}</option>`)
+            })
+        })
+
+        $('#fr_script_id').change(() => {
+            let script_id = $('#fr_script_id').val()
+            $.get({
+                url: `/staff/GetByCompany/?script_id=${script_id}`
+            }).done((result) => {
+                let managers = (JSON.parse(result))['result'], attention_to = $("#fr_attention_to"),
+                    current_attention = {{ attention_to }}
+                        attention_to.html('<option value="0">Веберите менеджера</option>')
+                managers.forEach(manager => {
+                    attention_to.append(`<option value="${manager.id}" ${current_attention == manager.id ? 'selected' : ''}>
+                    ${manager.name || ''} ${manager.position || ''}</option>`)
+                })
+            })
+        })
+
+    })
+
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        $(".quote_info").click(e => {
+            let btn = $(e.currentTarget), quote_id = btn.attr('id').split('_')[1], data = {id: quote_id},
+                quotes_info_modal = $("#quotes_info_modal"), quote_info_rows = $("#quote_info_rows")
+            $.post({url: '/quote/samplesInfo', data}).done(res => {
+                quotes_info_modal.modal('show')
+                quote_info_rows.empty()
+                let Quotes = JSON.parse(res)
+                Quotes.result.forEach(quote => {
+                    let rowClass =
+                        quote.status === 'deleted' ? 'alert-danger' :
+                            quote.status === 'manual' ? 'alert-success' : 'alert-dark'
+                    quote_info_rows.append(`
+                        <div class="alert ${rowClass} mb-2" role="alert">
+                            ${quote.biospecimen_type} <b>${quote.biospecimen_type_russian}</b> ${quote.mod ? quote.mod : ''}
+                        </div>
+                    `)
+                })
+            })
+        })
+    })
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        let ScreenTickets = {}, user_id = parseInt(`{{ user_id }}`), UserNamesById = {}, ScreenManagerTickets = {},
+            role_id = parseInt(`{{ role_id }}`), ManagerResponsesTable = $("#manager_responses_table")
+
+        $.get({url: '/users/getEverybody'}).done((res) => {
+            let Users = JSON.parse(res)
+            Users.data.forEach(user => {
+                UserNamesById[user.id] = `${user.lasttname} ${user.firstname} ${user.patronymic || ''}`
+            })
+        })
+
+
+    })
+</script>
+<script src="../../../app-assets/js/jquery.multi-select.js"></script>
+<script src="../../../app-assets/js/jquery.quicksearch.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        let deletBotton = document.querySelectorAll('.deleteFile');
+        [...deletBotton].forEach(el => {
+            el.addEventListener('click', (e) => {
+
+                $.get({
+                    url: '/file/delete/?id=' + e.target.dataset.id
+                }).done((data) => {
+                    document.getElementById('file_' + e.target.dataset.id).remove();
+                    document.getElementById('btn_' + e.target.dataset.id).remove();
+                })
+
+            })
+        })
+
+
+        let datatable = $('#HQTable').DataTable()
+
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                let disease_id = $("#disease_filter").val(),
+                    biospecimen_type_id = $("#biospecimen_type_filter").val()
+                if (data[11] !== disease_id)
+                    return false
+                if (data[12] !== biospecimen_type_id)
+                    return false
+                return true
+            }
+        )
+
+        $("#disease_filter, #biospecimen_type_filter").on('click change', () => {
+            datatable.draw();
+        })
+
+        let TicketManagerSelect = $("#po_managers")
+        let TicketManagerSelectSend = $("#po_managers_send")
+
+        $.get({url: '/users/getManagers/'}).done(man_res => {
+            let Managers = JSON.parse(man_res)
+            Managers.result.forEach(Man => {
+                let FullName = `${Man.firstname} ${Man.lasttname} ${Man.patronymic ? Man.patronymic : ''}`
+                TicketManagerSelect.append(`<option value="${Man.id}">${FullName}</option>`)
+                TicketManagerSelectSend.append(`<option value="${Man.id}">${FullName}</option>`)
+            })
+            TicketManagerSelect.multiSelect({
+                cssClass: 'selector-container',
+                selectableHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='Поиск'>",
+                selectionHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='Поиск'>",
+                afterInit: function (ms) {
+                    let that = this,
+                        $selectableSearch = that.$selectableUl.prev(),
+                        $selectionSearch = that.$selectionUl.prev(),
+                        selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
+                        selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
+                    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                        .on('keydown', function (e) {
+                            if (e.which === 40) {
+                                that.$selectableUl.focus();
+                                return false;
+                            }
+                        });
+                    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+                        .on('keydown', function (e) {
+                            if (e.which == 40) {
+                                that.$selectionUl.focus();
+                                return false;
+                            }
+                        });
+                }
+            })
+            TicketManagerSelectSend.multiSelect({
+                cssClass: 'selector-container',
+                selectableHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='Поиск'>",
+                selectionHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='Поиск'>",
+                afterInit: function (ms) {
+                    let that = this,
+                        $selectableSearch = that.$selectableUl.prev(),
+                        $selectionSearch = that.$selectionUl.prev(),
+                        selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
+                        selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
+                    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                        .on('keydown', function (e) {
+                            if (e.which === 40) {
+                                that.$selectableUl.focus();
+                                return false;
+                            }
+                        });
+                    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+                        .on('keydown', function (e) {
+                            if (e.which == 40) {
+                                that.$selectionUl.focus();
+                                return false;
+                            }
+                        });
+                }
+            })
+        })
+
+    })
+
+    function sendPO() {
+
+        let po_number = document.getElementById('po_number').value;
+        let po_status = document.getElementById('po_status').value;
+
+        if (po_number === '' || po_status !== '2') {
+            toastr.error('не заполнено поле "Project internal number" и не проставлен статус "в работе". Заполните необходимые поля и нажмите кнопку "update change"', 'Нельзя отправить менеджерам:')
+        } else {
+
+
+            let manager_ids = [];
+            let lab = document.getElementById('lab').value;
+            let data = {
+                id: `{{ fr.proj_id }}`,
+                manager_ids: $("#po_managers").val(),
+                po_text: tinymce.get('po_text').getContent(),
+                lab: lab
+            };
+            $.post({url: '/poWorksheets/GenerateByIdForManagerId/', data}).done((res) => {
+                toastr.info(res);
+            })
+
+        }
+
+
+    }
+
+
+    function sendMailPOModal() {
+
+        $('#mailModal').modal('show');
+    }
+
+    function sendMailPO() {
+
+        let fileCheck = document.getElementById('fileCheck').checked;
+        let labMail = document.getElementById('labMail').value;
+
+        let action = '';
+
+        if (fileCheck) {
+            action = 'send'
+        } else {
+            action = 'no'
+        }
+
+        let data = {
+            proj_id: `{{ fr.proj_id }}`,
+            manager_ids: $("#po_managers_send").val(),
+            subjectMail: $("#subjectMail").val(),
+            textMail: tinymce.get('textMail').getContent(),
+            action: action,
+            lab: labMail
+        };
+
+        $.post({url: '/Mail/SendManagerPoMail/', data}).done((res) => {
+            toastr.info(res);
+            $('#mailModal').modal('hide');
+        })
+
+
+    }
+
+
+    $("#po_data_submit").click(() => {
+        let id = $("#po_data_id").val(), po_id = $("#po_data_po_id").val(),
+            nbs_scripts_staff_id = $("#po_data_nbs_scripts_staff_id").val(),
+            fr_script_id = $("#po_data_fr_script_id").val(), country = $("#po_data_country").val(),
+            shipping_address = $("#po_data_shipping_address").val(), contact = $("#po_data_contact").val(),
+            phone = $("#po_data_phone").val(), email = $("#po_data_email").val(), data = {
+                po_id, nbs_scripts_staff_id, fr_script_id, country, shipping_address, contact, phone, email
+            }
+        if (!!id)
+            data.id = id
+        console.log(data)
+        $.post({url: '/poData/save/', data}).done(() => location.reload())
+    })
+
+    let PoDataScriptSelect = $('#po_data_fr_script_id')
+    PoDataScriptSelect.change(() => {
+        let script_id = PoDataScriptSelect.val()
+        $.get({
+            url: `/staff/GetByCompany/?script_id=${script_id}`
+        }).done((result) => {
+            let managers = (JSON.parse(result))['result'], attention_to = $("#po_data_nbs_scripts_staff_id"),
+                current_attention = `{{ po_data.nbs_scripts_staff_id }}`, fr_attention = `{{ attention_to }}`
+            attention_to.empty()
+            managers.forEach(manager => {
+                attention_to.append(`<option value="${manager.id}"
+                    ${(manager.id === current_attention || !current_attention && manager.id === fr_attention) ? 'selected' : ''}>
+                    ${manager.name || ''} ${manager.position || ''}</option>`)
+            })
+        })
+    })
+    PoDataScriptSelect.trigger('change')
+
+
+</script>

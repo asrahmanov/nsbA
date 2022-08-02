@@ -1,0 +1,219 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><h2>Создание сайта</h2></h4>
+                        </div>
+                        <div class="card-content ">
+                            <div class="card-body card-dashboard ">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+
+                                        <div class="form-group">
+                                            <label for="site_name">Сайт</label>
+                                            <input type="text" id="site_name" class="form-control"
+                                                   value="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="site_type">Тип</label>
+                                            <select class="form-control" id="site_type">
+                                                <option value="0">Выберите тип сайта</option>
+                                                {% for item in siteType %}
+                                                    <option value="{{ item.site_type_id }}"
+                                                            {% if sites.site_type == item.site_type_id %}
+                                                                selected
+                                                            {% endif %}
+                                                    >{{ item.site_type }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="Город">Город</label>
+                                            <select class="form-control" id="city">
+                                                <option value="0">Выберите город</option>
+                                                {% for item in сities %}
+                                                <option value="{{ item.city_id }}"
+                                                        {% if sites.city == item.city_id %}
+                                                        selected
+                                                        {% endif %}
+                                                >{{ item.city_name }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="contract">Регуляторика</label>
+                                            <input type="text" id="contract" class="form-control"
+                                                   value="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="term_validity">Срок дейсвия</label>
+                                            <input type="text" id="term_validity" class="form-control"
+                                                   value="">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="approved">ЛЭК/НЭК одобрение</label>
+                                            <input type="text" id="approved" class="form-control"
+                                                   value="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="site_status">Статус сайта</label>
+                                            <input type="text" id="site_status" class="form-control"
+                                                   value="">
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="col-md-6 col-sm-12">
+
+
+                                        <div class="form-group">
+                                            <label for="irb_approval">Особенности</label>
+                                            <textarea name="" id="irb_approval" id="" cols="30" rows="10"> </textarea>
+
+
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="level">Уровень</label>
+                                            <input type="text" id="level" class="form-control"
+                                                   value="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="level_id">Уровень лаборатории New</label>
+                                                <select name="" id="level_id" class="form-control">
+                                                    <option value="0">Выберите уровень</option>
+                                                    {% for level in lab_levels %}
+                                                        <option value="{{ level.id }}">{{ level.level_name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="processing">Кто процессирует</label>
+                                            <input type="text" id="processing" class="form-control"
+                                                   value="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="misc"> Ответственный за процессинг</label>
+                                            <textarea name="" id="misc" id="" cols="30" rows="10">
+                                             </textarea>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <button class="btn btn-default btn-success b10" type="button"
+                                                    id="form-button-save-fixed">
+                                                <i class="fa fa-check"></i>
+                                                Сохранить
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+    </div>
+</div>
+
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        document.getElementById('form-button-save-fixed').addEventListener('click', () => {
+            saveOrder();
+        });
+
+
+        let role = `{{ role }}`;
+
+
+        let saveOrder = () => {
+
+
+            let site_type = document.getElementById('site_type').value;
+            let site_name = document.getElementById('site_name').value;
+            let city = document.getElementById('city').value;
+            let contract = document.getElementById('contract').value;
+            let term_validity = document.getElementById('term_validity').value;
+            let approved = document.getElementById('approved').value;
+            let site_status = document.getElementById('site_status').value;
+            let processing = document.getElementById('processing').value;
+            let level = document.getElementById('level').value;
+            let level_id = document.getElementById('level_id').value;
+
+            let misc = tinymce.get('misc').getContent()
+            let irb_approval = tinymce.get('irb_approval').getContent()
+
+            if (site_type == 0) {
+                toastr.error('Выберите тип сайта');
+            } else if (city == 0) {
+                toastr.error('Выберите город');
+            }  else if (site_name == '') {
+                toastr.error('Введите название сайта');
+            } /*else if (!level_id || level_id !== '0') {
+                toastr.error('Выберите уровень лаборатории');
+            }*/ else {
+                $.ajax({
+                    url: '/sites/save/',
+                    method: 'POST',
+                    data: {
+                        site_name: site_name,
+                        site_type: site_type,
+                        city: city,
+                        contract: contract,
+                        term_validity: term_validity,
+                        approved: approved,
+                        site_status: site_status,
+                        irb_approval: irb_approval,
+                        processing: processing,
+                        level: level,
+                        misc: misc,
+                        level_id: level_id
+                    }
+                })
+                    .done(function (res) {
+                        let data = JSON.parse(res);
+                        if(data.result > 0) {
+                            location.href = '../sites/info/?site=' + data.result;
+                        }
+                    });
+
+            }
+
+    }
+    })
+
+</script>
+

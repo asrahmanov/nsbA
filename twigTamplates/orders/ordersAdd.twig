@@ -1,0 +1,441 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><h2>Добавление новой заявки</h2></h4>
+                        </div>
+                        <div class="card-content ">
+
+
+                            <div class="card-body card-dashboard ">
+                                <div class="row">
+
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <h2>FR TABLE</h2>
+
+
+                                        <div class="form-group">
+                                            <label for="fr_date">FR date</label>
+                                            <input type="date" id="fr_date" class="form-control"
+                                                   value="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="linked_fr_id">Linked FR id</label>
+                                            <input type="text" id="linked_fr_id" class="form-control"
+                                                   value="">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="script_id">Fr script id</label>
+
+                                            <select class="form-control" id="fr_script_id">
+                                                <option value="0">Выберите компанию</option>
+                                                {% for item in company %}
+                                                    <option value="{{ item.script_id }}">{{ item.script }}
+                                                        - {{ item.company_name }} {{ item.last_script_num }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="fr_attention_to"><b>Attention to: </b></label>
+                                            <select class="form-control" id="fr_attention_to">
+                                                <option value="0">Веберите менеджера</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            <label for="external_id">external id</label>
+                                            <input type="text" id="external_id" class="form-control"
+                                                   value="{{ fr.external_id }}">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="internal_id">internal id</label>
+                                            <input type="text" id="internal_id" disabled class="form-control"
+                                                   value="">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="project_name">project name</label>
+                                            <input type="text" id="project_name" class="form-control"
+                                                   value="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="comments">comments</label>
+                                            <textarea id="comments" cols="30"
+                                                      rows="15"></textarea>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="feas_russian">Request(Russian text)</label>
+                                            <textarea id="feas_russian" cols="30"
+                                                      rows="15">
+                                        <p>Заболевание:</p>
+                                        <p>Тип образцов:</p>
+                                        <p>Количество:</p>
+                                        <p>Критерии включения:</p>
+                                        <p>Критерии исключения:</p>
+                                        <p>Информация о доноре:</p>
+                                        <p>Дополнительные анализы:</p>
+                                        <p>Сроки выполнения проекта:</p>
+                                            </textarea>
+                                        </div>
+
+
+                                        <div class="form-group" style="display:none;">
+                                            <label for="basicSelect">Fr status</label>
+
+                                            <select class="form-control" id="fr_status_id" disabled>
+                                                <option value="0">Выберите статус</option>
+                                                {% for item in status %}
+                                                    <option value="{{ item.fr_status_id }}">{{ item.fr_status_values }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group" style="display: none">
+                                            <label for="fr_date">FR status_date</label>
+                                            <input type="date" id="fr_status_date" class="form-control"
+                                                   value="" name="fr_status_date"
+                                                   data-toggle="tooltip"
+                                                   data-trigger="hover" data-placement="top"
+                                                   data-title="Date Opened">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="project_details">Request(Original text)</label>
+                                            <textarea name="project_details" id="project_details" cols="30"
+                                                      rows="15"></textarea>
+                                        </div>
+
+
+                                        <div class="form-group" style="display:none;">
+                                            <label for="currency">currency</label>
+                                            <input type="text" id="currency" class="form-control"
+                                                   value="1">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="clinical_inclusion">Specific feature</label>
+                                            <textarea name="clinical_inclusion" id="clinical_inclusion" cols="30"
+                                                      rows="15"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <h2>FR PRICE</h2>
+
+                                        <div class="form-group" style="display: none">
+                                            <label for="quote_date">Quote date</label>
+                                            <input type="date" id="quote_date" class="form-control"
+                                                   value="" name="quote_date"
+                                                   data-toggle="tooltip"
+                                                   data-trigger="hover" data-placement="top"
+                                                   data-title="Date Opened">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="unformal_quote">Historical Quotes</label>
+                                            <textarea id="unformal_quote" cols="30" rows="15"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="history_po">Historical PO's</label>
+                                            <textarea id="history_po" cols="30" rows="15"></textarea>
+                                        </div>
+
+
+                                        <div class="form-group" style="display: none">
+                                            <label for="quotes_from_managers">Quotes from managers</label>
+                                            <textarea name="quotes_from_managers" id="quotes_from_managers"
+                                                      cols="30"
+                                                      rows="15"></textarea>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="basicSelect">Responsible User</label>
+
+                                            <select class="form-control" id="answering_id">
+
+                                                <option value="0">Не закреплен</option>
+                                                {% for item in users %}
+                                                    <option value="{{ item.id }}">{{ item.firstname }} {{ item.lasttname }} {{ item.patronymic }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="deadline">NBS Deadline</label>
+                                            <input type="date" id="deadline" class="form-control" value="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="deadline_post">Delivery Deadline</label>
+                                            <input type="date" id="deadline_post" class="form-control" value="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="deadline_quote">Proposal Deadline</label>
+                                            <input type="date" id="deadline_quote" class="form-control" value="">
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="status_client">Клиент</label>
+                                            <select class="form-control" id="status_client">
+                                                {% for item in orstatus %}
+                                                    {% if item.department_id == 7 %}
+                                                        <option value="{{ item.id }}"
+                                                            {% if item.id == 26 %}
+                                                                selected
+                                                            {% endif %}
+                                                        >{{ item.status_name }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="status_manager">Менеджер</label>
+                                            <select class="form-control" id="status_manager">
+                                                {% for item in orstatus %}
+                                                    {% if item.department_id == 2 %}
+                                                        <option value="{{ item.id }}"
+                                                                {% if item.id == 5 %}
+                                                                    selected
+                                                                {% endif %}
+
+                                                        >{{ item.status_name }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="status_project">Проектный отдел</label>
+                                            <select class="form-control" id="status_project">
+                                                {% for item in orstatus %}
+                                                    {% if item.department_id == 3 %}
+                                                        <option value="{{ item.id }}"
+                                                                {% if item.id == 10 %}
+                                                                    selected
+                                                                {% endif %}
+
+                                                        >{{ item.status_name }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="status_lpo">ЛТО</label>
+                                            <select class="form-control" id="status_lpo">
+                                                {% for item in orstatus %}
+                                                    {% if item.department_id == 4 %}
+                                                        <option value="{{ item.id }}"
+                                                                {% if item.id == 15 %}
+                                                                    selected
+                                                                {% endif %}
+
+                                                        >{{ item.status_name }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="status_ved">Отдел ВЕД</label>
+                                            <select class="form-control" id="status_ved">
+                                                {% for item in orstatus %}
+                                                    {% if item.department_id == 5 %}
+                                                        <option value="{{ item.id }}"
+                                                                {% if item.id == 20 %}
+                                                                    selected
+                                                                {% endif %}
+
+                                                        >{{ item.status_name }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="status_boss">Руководство</label>
+                                            <select class="form-control" id="status_boss">
+                                                {% for item in orstatus %}
+                                                    {% if item.department_id == 6 %}
+                                                        <option value="{{ item.id }}"
+                                                                {% if item.id == 21 %}
+                                                                    selected
+                                                                {% endif %}
+
+                                                        >{{ item.status_name }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        {% if user_id != '32' %}
+                                            <div class="form-group">
+                                                <label for="comments">Reminder comments</label>
+                                                <textarea id="historical_data" cols="30" rows="15"></textarea>
+                                            </div>
+                                        {% endif %}
+
+                                    </div>
+                                    <button class="btn btn-default btn-success b10 " type="button"
+                                            id="form-button-save">
+                                        <i class="fa fa-check"></i>
+                                        ADD FR
+                                    </button>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+</div>
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Выделяем нужны select
+        {#document.getElementById('fr_status_id').value = {{ fr.fr_status }};#}
+        {#document.getElementById('fr_script_id').value = {{ fr.fr_script_id }};#}
+        {#document.getElementById('answering_id').value = {{ fr.answering_id }};#}
+
+        let script_id = $('#fr_script_id').val()
+        $.get({
+            url: `/staff/GetByCompany/?script_id=${script_id}`
+        }).done((result) => {
+            let managers = (JSON.parse(result))['result'], attention_to = $("#fr_attention_to"), current_attention = {{ attention_to }}
+                attention_to.html('<option value="0">Веберите менеджера</option>')
+            managers.forEach(manager => {
+                attention_to.append(`<option value="${manager.id}" ${current_attention == manager.id ? 'selected' : ''}>
+                    ${manager.name || ''} ${manager.position || ''}</option>`)
+            })
+        })
+        $('#fr_script_id').change(() => {
+            let script_id = $('#fr_script_id').val()
+            $.get({
+                url: `/staff/GetByCompany/?script_id=${script_id}`
+            }).done((result) => {
+                let managers = (JSON.parse(result))['result'], attention_to = $("#fr_attention_to"), current_attention = {{ attention_to }}
+                    attention_to.html('<option value="0">Веберите менеджера</option>')
+                managers.forEach(manager => {
+                    attention_to.append(`<option value="${manager.id}" ${current_attention == manager.id ? 'selected' : ''}>
+                    ${manager.name || ''} ${manager.position || ''}</option>`)
+                })
+            })
+        })
+
+    })
+
+
+    document.getElementById('form-button-save').addEventListener('click', () => {
+
+        let fr_date = document.getElementById('fr_date').value;
+
+
+        let linked_fr_id = document.getElementById('linked_fr_id').value;
+        let fr_script_id = document.getElementById('fr_script_id').value;
+        let internal_id = document.getElementById('internal_id').value;
+        let project_name = document.getElementById('project_name').value;
+        let quote_date = document.getElementById('quote_date').value;
+        let external_id = document.getElementById('external_id').value;
+        // let comments = document.getElementById('comments');
+        let comments = tinymce.get('comments').getContent()
+        let feas_russian = tinymce.get('feas_russian').getContent()
+        let unformal_quote = tinymce.get('unformal_quote').getContent()
+        let history_po = tinymce.get('history_po').getContent()
+        let clinical_inclusion = tinymce.get('clinical_inclusion').getContent()
+        let quotes_from_managers = tinymce.get('quotes_from_managers').getContent()
+        let project_details = tinymce.get('project_details').getContent()
+
+        let fr_status_id = document.getElementById('fr_status_id').value;
+        let fr_status_date = document.getElementById('fr_status_date').value;
+        let currency = document.getElementById('currency').value;
+
+        let deadline = document.getElementById('deadline').value;
+        let answering_id = document.getElementById('answering_id').value;
+
+        let deadline_quote = document.getElementById('deadline_quote').value;
+        let deadline_post = document.getElementById('deadline_post').value;
+
+
+        let status_manager = document.getElementById('status_manager').value;
+        let status_project = document.getElementById('status_project').value;
+        let status_lpo = document.getElementById('status_lpo').value;
+        let status_ved = document.getElementById('status_ved').value;
+        let status_boss = document.getElementById('status_boss').value;
+        let status_client = document.getElementById('status_client').value;
+        let attention_to = document.getElementById('fr_attention_to').value;
+
+        if (deadline == '') {
+            toastr.error('Заполните поле deadline');
+        } else if (answering_id == 0) {
+            toastr.error('Выберите ответственного');
+        } else if (fr_date == '') {
+            toastr.error('Заполните поле FR date');
+        } else if (attention_to == 0) {
+            toastr.error('Заполните поле attention_to');
+        }
+
+        else {
+            if (document.getElementById('form-button-save')) {
+                //document.getElementById('form-button-save').remove();
+            }
+            let data = {
+                fr_date, linked_fr_id, fr_script_id, internal_id, project_name,
+                comments, feas_russian, fr_status_id, fr_status_date, project_details,
+                currency, clinical_inclusion, unformal_quote, quote_date, quotes_from_managers,
+                answering_id, external_id, deadline, deadline_post, deadline_quote,
+                status_manager, status_project, status_lpo, status_ved, status_boss,
+                status_client, attention_to, history_po
+            }
+            if (document.getElementById('historical_data'))
+                data.historical_data = tinymce.get('historical_data').getContent()
+            $.post({
+                url: '/orders/save/',
+                data
+            }).done(function (id) {
+                if (id > 0) {
+                    location.href = '../orders/info/?idFR=' + id;
+                } else {
+                    toastr.error('Ошибка сохранения');
+                }
+            });
+        }
+
+    });
+
+
+</script>
+

@@ -1,0 +1,164 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                             <div class="col-md-3 col-sm-12">
+                             <label for="">Дата с</label>
+                             <input type="date" class="form-control" id="dateOne" value="{{ dateOne }}">
+                             </div>
+                             <div class="col-md-3 col-sm-12">
+                             <label for="">Дата по</label>
+                             <input type="date" class="form-control" id="dateTwo" value="{{ dateTwo }}">
+                             </div> <div class="col-md-3 col-sm-12">
+                             <label for="">Действие</label><br>
+                             <button class="btn btn-success" id="load">Загрузить</button>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12" id="canvasBlock">
+                                <canvas id="managersChart" width="1200" height="450"
+                                        style="max-width: 1200px;"></canvas>
+                            </div>
+                            <div class="col-12">
+                                <table class="table table-striped table-bordered file-export" id="report_datatable">
+                                    <thead>
+                                    <th>ФИО менеджера</th>
+                                    <th>Максимальные баллы</th>
+                                    <th>Текущие баллы</th>
+                                    <th>Коэффициент</th>
+                                    <th>Всего заявок</th>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/app-assets/vendors/js/chart.min.js"></script>
+<script>
+
+    function getGraphic() {
+        let mount = document.getElementById('mount').value;
+        location.href = `../../newTickets/GraphicReport/?mount=${mount}`
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+
+
+        let  report = $("#report_datatable tbody"),
+            managerScores = {}
+
+        let loadChart = () => {
+
+          document.getElementById('canvasBlock').innerHTML = `  <canvas id="managersChart" width="1200" height="450"
+                                        style="max-width: 1200px;"></canvas>`;
+
+            let labels = [], coefData = [], backgroundColor = [], borderColor = []
+            for (let mId in managerScores) {
+                let manColor = (mId + 100) % 255 + ',' + (mId * 100) % 255 + ',' + (mId * 50) % 255
+                labels.push(`${managerScores[mId].fullName} (${managerScores[mId].applications})`)
+                coefData.push(parseInt(managerScores[mId].efficiency))
+                backgroundColor.push(`rgba(${manColor}, 0.2)`)
+                borderColor.push(`rgba(${manColor})`)
+            }
+            new Chart(document.getElementById("managersChart"), {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: "Коэффициент",
+                        backgroundColor,
+                        borderColor,
+                        borderWidth: 1,
+                        data: coefData
+                    }]
+                },
+                options: {
+                    legend: {display: false},
+                    title: {
+                        display: true,
+                        text: 'Коэффициенты менеджеров'
+                    }
+                }
+            });
+        }
+
+        let loadReport = () => {
+            // let dateFrom = dateInputFrom.val(), dateTo = dateInputTo.val()
+            $.get({url: '/users/getEverybody'}).done((res) => {
+                let Users = JSON.parse(res)
+                Users.data
+                    .filter(u => u.role_id === 'Менеджер' || u.role_id === 'Старший менеджер')
+                    .filter(u => u.deleted !== '1')
+                    .forEach(user => {
+                        let fullName = `${user.lasttname} ${user.firstname} ${user.patronymic || ''}`
+                        managerScores[user.id] = {fullName, max: 0, total: 0, efficiency: 0, applications: 0}
+                    })
+
+                let dateOne = document.getElementById('dateOne').value;
+                let dateTwo = document.getElementById('dateTwo').value;
+
+                $.get({url: `../../newTickets/getAllCheckVacation/?dateOne=${dateOne}&dateTwo=${dateTwo}`, cache: false}).done(res => {
+                    let response = JSON.parse(res), rawTickets = response.result, reportRows = []
+                    rawTickets
+                        .filter(t => t.reason === 'manager')
+                        // .filter(t => (t.created_at.split(' ')[0] >= dateFrom || !dateFrom))
+                        // .filter(t => (t.created_at.split(' ')[0] <= dateTo || !dateTo))
+                        .filter(t => t.done)
+                        .filter(t => t.closed_at)
+                        .forEach(t => {
+                            let userId = parseInt(t.target_id)
+                            if (managerScores.hasOwnProperty(userId)) {
+                                managerScores[userId].max += 25
+                                let score = !isNaN(parseInt(t.score)) ? parseInt(t.score) : 0
+                                managerScores[userId].total += score
+                                managerScores[userId].applications += 1
+                            }
+                        })
+                    for (let mId in managerScores)
+                        managerScores[mId].efficiency = parseInt(managerScores[mId].total / managerScores[mId].max * 100)
+                    report.empty()
+                    for (let i in managerScores) {
+                        if (managerScores[i].max > 0)
+                            reportRows.push(managerScores[i])
+                        else
+                            delete (managerScores[i])
+                    }
+                    reportRows.forEach(score => {
+                        report.append(`<tr>
+                            <td>${score.fullName}</td>
+                            <td>${score.max}</td>
+                            <td>${score.total}</td>
+                            <td>${score.efficiency}</td>
+                            <td>${score.applications}</td>
+                        </tr>`)
+                    })
+                    loadChart()
+                    $("#report_datatable").DataTable()
+                })
+            })
+        }
+
+        let btn = document.getElementById('load').addEventListener('click', loadReport)
+        loadReport();
+
+
+
+        // dateInputFrom.change(loadReport)
+        // dateInputTo.change(loadReport)
+
+    })
+
+</script>

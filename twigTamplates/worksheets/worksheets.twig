@@ -1,0 +1,40 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">worksheets</h4>
+                        </div>
+                        <div class="card-content ">
+                            <div class="card-body card-dashboard ">
+                                <div id="worksheets">
+                                    {% if user_id == 95 or  user_id == 96  or user_id == 91 %}
+                                    <worksheets  :languages = "'en'"></worksheets>
+                                    {% else %}
+                                    <worksheets  :languages = "'ru'"></worksheets>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+
+<script  src="../../../js/dist/vue.js"></script>
+<script  src="../../../js/components/worksheets.js"></script>
+<script  src="../../../js/components/quote.js?v=24"></script>
+<script  src="../../../js/components/sites.js?v=9"></script>
+<script  src="../../../js/main.js"></script>
+
+
+
+
+
+

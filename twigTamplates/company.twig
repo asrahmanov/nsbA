@@ -1,0 +1,215 @@
+    <div class="main-content" id="app">
+        <div class="content-wrapper"><!--Statistics cards Starts-->
+
+                                <section id="file-export">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">CUSTOMERS</h4>
+
+                                                    {% if role == '4' or role == '1' or role == '6' %}
+                                                        <a href="../company/add" class="btn btn-success btn-sm" >
+                                                            Добавить scripts
+                                                        </a>
+                                                    {% else %}
+
+                                                    {% endif %}
+                                                </div>
+                                                <div class="card-content ">
+                                                    <div class="card-body card-dashboard ">
+                                                        <!-- table-responsive -->
+                                                        <div>
+                                                            <table class="table table-striped table-bordered file-export" id="datatable_company">
+                                                                <thead>
+                                                                <th>Actions</th>
+                                                                <th>script</th>
+                                                                <th>company_name</th>
+                                                                <th>contacts</th>
+                                                                <th>last_script_num</th>
+                                                                <th>currency</th>
+                                                                <th>currency_string</th>
+                                                                <th>script_type</th>
+                                                                <th>priority</th>
+                                                                <th>payment_terms</th>
+                                                                <th>Valid date up to </th>
+                                                                <th>Valid text up to </th>
+                                                                <th>Contracts</th>
+                                                                <th>Status</th>
+                                                                <th>origin</th>
+                                                                </thead>
+                                                                <tbody>
+
+                                                                </tbody>
+                                                                <tfoot>
+                                                                <tr>
+                                                                    <th>Actions</th>
+                                                                    <th>script</th>
+                                                                    <th>company_name</th>
+                                                                    <th>contacts</th>
+                                                                    <th>last_script_num</th>
+                                                                    <th>currency</th>
+                                                                    <th>currency_string</th>
+                                                                    <th>script_type</th>
+                                                                    <th>priority</th>
+                                                                    <th>payment_terms</th>
+                                                                    <th>Valid date up to </th>
+                                                                    <th>Valid text up to </th>
+                                                                    <th>Contracts</th>
+                                                                    <th>Status</th>
+                                                                    <th>origin</th>
+                                                                </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+            <!--Line with Area Chart 1 Ends-->
+
+
+
+
+        </div>
+    </div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function(){
+
+        if ($.fn.DataTable.isDataTable('#tblRemittanceList') ) {
+            $('#tblRemittanceList').DataTable().destroy();
+        }
+
+         let datatable_fr = $('#datatable_company').DataTable({
+             "ajax": "/company/getCompanyAll/",
+
+             dom: 'Bfrtip',
+             buttons: [
+                 'excel',
+                 {
+                     extend: 'pdfHtml5',
+                     orientation: 'landscape',
+                     pageSize: 'LEGAL'
+                 }
+             ],
+
+             // dom: 'Bfrtip',
+             // buttons: [
+             //     'copy', 'csv', 'excel', 'pdf', 'print'
+             // ]
+
+             "columnDefs": [
+                 {
+                     "targets": 0,
+                     "data": 'script_id',
+                     'render': function (data, type, full, meta) {
+                         return `<a target="_blank" href="../../company/info/?companyId=${data}" class='btn  btn-block btn-outline-info pull-right'>Открыть</a>`;
+                     }
+                 },
+                 {
+                     "targets": 1,
+                     "data": 'script',
+                 },
+                 {
+                     "targets": 2,
+                     "data": 'company_name',
+                 },
+                 {
+                     "targets": 3,
+                     "data": 'contacts',
+                 },
+                 {
+                     "targets": 4,
+                     "data": 'last_script_num',
+                 },
+                 {
+                     "targets": 5,
+                     "data": 'currency',
+                 },
+                 {
+                     "targets": 6,
+                     "data": 'currency_string',
+                 },
+                               {
+                     "targets": 7,
+                     "data": 'script_type',
+                 },
+                 {
+                     "targets": 8,
+                     "data": 'priority',
+                 },
+
+                 {
+                     "targets": 9,
+                     "data": 'payment_terms',
+                 },
+                 {
+                     "targets": 10,
+                     "data": 'contract_off',
+                 },
+                 {
+                     "targets": 11,
+                     "data": 'contract_comm',
+                 },
+                 {
+                     "targets": 12,
+                     "data": 'is_contract',
+                 } ,
+                 {
+                     "targets": 13,
+                     "data": 'status',
+                 },
+                 {
+                     "targets": 14,
+                     "data": 'origin',
+                 }
+                 ],
+
+
+             language : {
+                 sLoadingRecords : '<span style="width:100%;"><img src="../app-assets/img/loaders/rolling.gif" alt="loading" class="loading_item"></span>'
+             },
+         });
+
+        function getDoubleScroll(elem) {
+            let element = document.querySelector(elem)
+            let table = element.querySelector('table')
+            let maxCount = 300
+            let intervalId = setInterval(()=>{
+                if(document.readyState === 'complete' && !table.querySelector('.loading_item')){
+                    initDoubleScroll(element)
+                    clearInterval(intervalId)
+                }
+                maxCount = maxCount - 1
+                if(maxCount === 0){
+                    clearInterval(intervalId)
+                }
+            }, 200)
+        }
+        function initDoubleScroll(element) {
+            var scrollbar = document.createElement('div');
+            scrollbar.appendChild(document.createElement('div'));
+            scrollbar.style.overflow = 'auto';
+            scrollbar.style.overflowY = 'hidden';
+            scrollbar.classList.add('scroll-block');
+            scrollbar.firstChild.style.width = element.scrollWidth + 'px';
+            scrollbar.firstChild.appendChild(document.createTextNode('\xA0'));
+            scrollbar.onscroll = function () {
+                element.scrollLeft = scrollbar.scrollLeft;
+            };
+            element.onscroll = function () {
+                scrollbar.scrollLeft = element.scrollLeft;
+            };
+            element.parentNode.insertBefore(scrollbar, element);
+        }
+        getDoubleScroll('.wrapper-table__scrolled')
+     });
+
+</script>
+
+{#ssd#}

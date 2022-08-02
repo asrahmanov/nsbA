@@ -1,0 +1,40 @@
+
+
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Commercial offer</h4>
+
+                        </div>
+                        <div class="card-content ">
+                            <offer
+                                    :proj_id="{{ fr.proj_id }}"
+                                    :script_id="{{ script_id }}"
+                                    :currency="'{{ currency }}'"
+                            ></offer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+
+
+<script src="../../../js/dist/vue.js"></script>
+<script src="../../../js/components/Orders/offer.js"></script>
+<script src="../../../js/main.js"></script>
+
+<script src="https://cdn.tiny.cloud/1/71j1qczmxow9ec79z0b3tz3q6rzzsq933b2rxwuc2lgjyxlu/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
+<script>tinymce.init({
+        selector: 'textarea',
+        height : "480"
+});</script>
+

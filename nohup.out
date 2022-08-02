@@ -1,0 +1,10 @@
+
+Fatal error: Uncaught Error: Class 'Pheanstalk\Pheanstalk' not found in /Users/aleksejrahmanov/Documents/nbs/services/MailWorker.php:5
+Stack trace:
+#0 {main}
+  thrown in /Users/aleksejrahmanov/Documents/nbs/services/MailWorker.php on line 5
+
+Fatal error: Uncaught Error: Class 'Pheanstalk\Pheanstalk' not found in /Users/aleksejrahmanov/Documents/nbs/services/MailWorker.php:5
+Stack trace:
+#0 {main}
+  thrown in /Users/aleksejrahmanov/Documents/nbs/services/MailWorker.php on line 5

@@ -1,0 +1,270 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12">
+                <div class="content-header">API</div>
+            </div>
+        </div>
+        <!-- Basic Usage -->
+        <section id="basic-usage" class="row">
+            <div class=" col-12">
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        <img src="../../../app-assets/img/api/disease.png" alt="" width="100%">
+                        <h4 class="card-title">Получение спика Категорий - GetDiseaseCategory()</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p>/api/GetDiseaseCategory/?token={TOKEN}</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Пример ответа:</p>
+                            <pre class="language-markup"><code class="language-markup">
+{
+   {
+   "result":[
+      {
+         "id":"1",
+         "category_name":"Oncology",
+         "created_at":"2020-09-11 10:39:38"
+      },
+      {
+         "id":"2",
+         "category_name":"Hematology",
+         "created_at":"2020-09-11 10:39:38"
+      }
+   ]
+}
+</code></pre>
+                            <p>Где</p>
+                            <pre class="language-css"><code class="language-css">
+
+"category_name" - Имя
+"created_at" - Дата создания
+
+
+</code></pre>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class=" col-12">
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        <img src="../../../app-assets/img/api/disease.png" alt="" width="100%">
+                        <h4 class="card-title">Получение спика Групп - GetDiseaseGroup()</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p>/api/GetDiseaseGroup/?token={TOKEN}</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Пример ответа:</p>
+                            <pre class="language-markup"><code class="language-markup">
+{
+   "result":[
+      {
+         "id":"1",
+         "category_id":"1",
+         "group_name":"Brain Tumor",
+         "created_at":"2020-09-11 10:39:38"
+      },
+      {
+         "id":"2",
+         "category_id":"1",
+         "group_name":"Head And Neck Cancer",
+         "created_at":"2020-09-11 10:39:38"
+      }
+   ]
+}
+</code></pre>
+                            <p>Где</p>
+                            <pre class="language-css"><code class="language-css">
+
+"category_id" - id каьегории
+"group_name" - Имя группы
+"created_at" - Дата создания
+
+
+</code></pre>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class=" col-12">
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        <img src="../../../app-assets/img/api/disease.png" alt="" width="100%">
+                        <h4 class="card-title">Получение спика болезней - GetDisease()</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p>/api/GetDisease/?token={TOKEN}</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Пример ответа:</p>
+                            <pre class="language-markup"><code class="language-markup">
+{
+   "result":[
+      {
+         "id":"1",
+         "group_id":"1",
+         "disease_name":"Brain cancer",
+         "disease_name_russian":"\u0420\u0430\u043a \u0433\u043e\u043b\u043e\u0432\u043d\u043e\u0433\u043e \u043c\u043e\u0437\u0433\u0430",
+         "disease_name_russian_old":"\u0420\u0430\u043a \u0433\u043e\u043b\u043e\u0432\u043d\u043e\u0433\u043e \u043c\u043e\u0437\u0433\u0430 (BrainCa)",
+         "created_at":"2020-09-11 10:39:38"
+      },
+      {
+         "id":"2",
+         "group_id":"2",
+         "disease_name":"Larynx \/ head and neck cancer",
+         "disease_name_russian":"\u0420\u0430\u043a \u0433\u043e\u043b\u043e\u0432\u044b \u0438 \u0448\u0435\u0438",
+         "disease_name_russian_old":"\u0420\u0430\u043a \u0433\u043e\u0440\u0442\u0430\u043d\u0438\/ \u0433\u043e\u043b\u043e\u0432\u044b \u0438 \u0448\u0435\u0438",
+         "created_at":"2020-09-11 10:39:38"
+      }
+   ]
+}
+</code></pre>
+                            <p>Где</p>
+                            <pre class="language-css"><code class="language-css">
+
+"group_id" - id группы
+"disease_name" - Наименование болезни
+"disease_name_russian" - Болезнь на русском
+"disease_name_russian_old" - Болезнь на русском + ( модификация ) используется
+"created_at" - Дата создания
+
+
+</code></pre>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-12">
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        <img src="../../../app-assets/img/api/nbs_biospecimen_type.png" alt="" width="50%">
+                        <h4 class="card-title">Получение спика Семплов - GetSample()</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p>/api/GetSample/?token={TOKEN}</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Пример ответа:</p>
+                            <pre><code class="language-css">
+{
+   "result":[
+                        {
+                        "id":"1",
+                        "biospecimen_type":"Frozen double spun plasma",
+                        "created_at":"2020-09-18 13:43:18",
+                        "deleted":"0",
+                        "biospecimen_type_russian":"\u0417\u0430\u043c\u043e\u0440\u043e\u0436\u0435\u043d\u043d\u0430\u044f \u043f\u043b\u0430\u0437\u043c\u0430 \u0434\u0432\u043e\u0439\u043d\u043e\u0439 \u043e\u0442\u043a\u0440\u0443\u0442\u043a\u0438"
+                        },
+                        {
+                        "id":"4",
+                        "biospecimen_type":"Frozen whole blood",
+                        "created_at":"2020-09-18 13:43:18",
+                        "deleted":"0",
+                        "biospecimen_type_russian":"\u0417\u0430\u043c\u043e\u0440\u043e\u0436\u0435\u043d\u043d\u0430\u044f \u0446\u0435\u043b\u044c\u043d\u0430\u044f \u043a\u0440\u043e\u0432\u044c"
+                        }
+   ]
+}
+</code></pre>
+                            <p>Где</p>
+                            <pre class="language-css"><code class="language-css">
+
+                        "id":"1" - id
+                        "biospecimen_type":"Frozen double spun plasma", - название на английском
+                        "created_at":"2020-09-18 13:43:18", - дата сооздания
+                        "deleted":"0", - удален или нет
+                        "biospecimen_type_russian":"Название на русском"
+
+
+</code></pre>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-12">
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        <img src="../../../app-assets/img/api/mod.png" alt="" width="200"><br>
+                        <br>
+                        <h4 class="card-title">Получение спика Модификаций - GetMod()</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p>/api/GetMod/?token={TOKEN}</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Пример ответа:</p>
+                            <pre><code class="language-css">
+{
+   "result":[
+      {
+         "id":"1",
+         "modification":"\u0422\u0435\u0441\u0442",
+         "created_at":"2020-11-24 09:59:52",
+         "deleted":"0"
+      },
+      {
+         "id":"2",
+         "modification":"0.3",
+         "created_at":"2020-11-25 10:07:38",
+         "deleted":"0"
+      }
+   ]
+}
+</code></pre>
+                            <p>Где</p>
+                            <pre class="language-css"><code class="language-css">
+"id":"1" - id
+"modification": - название на модийикации
+"created_at":"2020-09-18 13:43:18", - дата сооздания
+"deleted":"0", - удален или нет
+</code></pre>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-12">
+                <div class="card" name="#manager">
+                    <div class="card-header">
+                        <img src="../../../app-assets/img/api/mod.png" alt="" width="200"><br>
+                        <br>
+                        <h4 class="card-title">Создание модификации - CreateMod()</h4><a
+                                class="heading-elements-toggle"></a>
+                        <p>/api/CreateMod/?token={TOKEN}</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>Парамтеры :</p>
+                            <p>Ответом будет id вновь созданной модификации :</p>
+                            <pre><code class="language-css">
+
+      {
+         "modification": Наименование модификации
+      }
+
+</code></pre>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+    </div>
+</div>

@@ -1,0 +1,375 @@
+<div class="main-content" id="app">
+    <div class="content-wrapper">
+        <section id="file-export">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Quote {{ id }}</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body card-dashboard ">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        {% if user_id == 95 or  user_id == 96 or user_id == 91 %}
+                                            <h3>Information</h3>
+                                        {% else %}
+                                            <h3>Информация</h3>
+                                        {% endif %}
+
+                                        {% for item in order %}
+
+                                            {% if user_id == 95 or  user_id == 96 or user_id == 91 %}
+                                                <h5>Request № {{ item.proj_id }} - {{ item.fr_date }} </h5>
+                                            {% else %}
+                                                <div class="form-group">
+                                                    <h5>Запрос № {{ item.proj_id }} - {{ item.fr_date }} </h5>
+                                                </div>
+                                            {% endif %}
+
+
+
+                                            {% if user_id == 95 or  user_id == 96 or user_id == 91 %}
+                                                <div class="form-group">
+                                                    <p><b>Responsible manager of the BD
+                                                            department </b> {{ userNameFrEn }}</p>
+                                                </div>
+                                            {% else %}
+                                                <div class="form-group">
+                                                    <p><b>Ответственный менеджер отдела BD: </b> {{ userNameFr }}</p>
+                                                </div>
+                                            {% endif %}
+
+
+
+                                            {% if user_id == 95 or  user_id == 96 or user_id == 91 %}
+                                                 <div class="form-group">
+                                                <p><b>Status :</b> {{ item.worksheets_status }} </p>
+                                            </div>
+                                            {% else %}
+                                                <div class="form-group">
+                                                    <p><b>Status :</b> {{ item.worksheets_status }} </p>
+                                                </div>
+                                            {% endif %}
+
+
+
+
+                                            <div class="form-group">
+                                                <p><b>DeadLine :</b> <br> {{ item.deadline }} </p>
+                                            </div>
+                                            <div class="form-group">
+                                                <p><b>Project name :</b> <br> {{ item.project_name }} </p>
+                                            </div>
+                                            <div class="form-group">
+                                                <p><b>External Id: </b>{{ item.external_id }}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <p><b>Origin text </b></p>
+                                                {{ item.project_details | raw }}
+                                            </div>
+
+
+                                            {% if user_id == 95 or  user_id == 96 or user_id == 91 %}
+
+                                            {% else %}
+                                                <div class="form-group">
+                                                    <p><b>Russian text </b></p>
+                                                    {{ item.feas_russian | raw }}
+                                                </div>
+                                            {% endif %}
+
+
+
+                                            {% if user_id == 95 or  user_id == 96 or user_id == 91 %}
+
+                                            {% else %}
+
+                                                <div class="form-group">
+                                                    <p><b>Comments </b></p>
+                                                    {{ item.comments | raw }}
+                                                </div>
+
+                                            {% endif %}
+
+
+
+                                            <div class="form-group">
+                                                <p><b>Diseases:</b></p>
+                                                <ul>
+                                                    {% for order_disease in order_diseases_arr %}
+                                                        <li><h4><b>{{ order_disease['disease'] }}</b><br>
+                                                                {{ order_disease['mutation'] }}</h4>
+                                                            <ul>
+                                                                {% for sample in diseases_biospecimen_types_arr %}
+                                                                    {% if sample.disease_id == order_disease.disease_id %}
+                                                                        <li>
+                                                                            {{ sample.biospecimen_type }}
+                                                                            {{ sample.biospecimen_type_russian }}
+                                                                            {{ sample.modification }}
+                                                                        </li>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+
+
+                                    {% if user_id == 95 or  user_id == 96 or user_id == 91 %}
+                                        <div class="col-md-12 col-sm-12">
+                                            {% if role == '1' or role == '3' or role == '6' or role == '8' %}
+                                                <div class="form-group">
+                                                    <label for="basicSelect">Files for managers</label>
+                                                    <div id="file_list">
+                                                        {% for item in files %}
+                                                            {{ item.info }}
+                                                            {% if item.info == 'manager' %}
+                                                                <a href="../../{{ item.alias }}{{ item.name }}"
+                                                                   target="_blank"
+                                                                   id="file_{{ item.id }}">{{ item.name }}</a>
+                                                                <br>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+
+                                        </div>
+                                    {% else %}
+                                        <div class="col-md-12 col-sm-12">
+                                            {% if role == '1' or role == '3' or role == '6' or role == '8' %}
+                                                <div class="form-group">
+                                                    <label for="basicSelect">Файлы для менеджеров</label>
+                                                    <div id="file_list">
+                                                        {% for item in files %}
+                                                            {{ item.info }}
+                                                            {% if item.info == 'manager' %}
+                                                                <a href="../../{{ item.alias }}{{ item.name }}"
+                                                                   target="_blank"
+                                                                   id="file_{{ item.id }}">{{ item.name }}</a>
+                                                                <br>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+
+                                        </div>
+                                    {% endif %}
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    {% if user_id == 95 or  user_id == 96 or user_id == 91 %}
+
+                    {% else %}
+                        <div class="accordion" id="accordionExample18">
+                            <div class="card collapse-icon accordion-icon-rotate">
+                                <div class="accordion-header card-header" id="heading18">
+                                    <h2 class="mb-0">
+                                        <a class="btn btn-link mb-0 pb-3 text-decoration-none collapsed"
+                                           data-toggle="collapse"
+                                           data-target="#collapse18" aria-expanded="false" aria-controls="collapse18">
+                                            <h4 class="card-title"><h2>Исторические квоты</h2></h4>
+                                        </a>
+                                    </h2>
+                                </div>
+                                <div id="collapse18" class="collapse" aria-labelledby="heading18"
+                                     data-parent="#accordionExample18">
+                                    <div class="card-body pt-0">
+                                        <br><br>
+                                        <div class="row">
+                                            <div class="col-md-2 col-sm-12" style="display:none">
+                                                <label for="disease_filter">Disease</label>
+                                                <select id="disease_filter" class="form-control">
+                                                    {% for disease in order_diseases %}#}
+                                                        <option value="{{ disease.disease_id }}">
+                                                            {{ disease.disease }} ({{ disease.mutation }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 col-sm-12" style="display:none">
+                                                <label for="biospecimen_type_filter">Biospecimen type</label>
+                                                <select class="form-control" id="biospecimen_type_filter">
+                                                    {% for item in diseases_biospecimen_types %}
+                                                        <option value="{{ item.biospecimen_type_id }}">
+                                                            {{ item.biospecimen_type }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <div style="overflow-y: auto;">
+                                            <table class="table table-striped table-bordered file-export dataTable"
+                                                   id="HQTable">
+                                                <thead>
+                                                <tr>
+                                                    <th>Дата</th>
+                                                    <th>Сайт</th>
+                                                    <th>Кол-во в месяц</th>
+                                                    <th>Срок в днях</th>
+                                                    <th>Оплата сайту</th>
+                                                    <th>Оплаты доктору</th>
+                                                    <th>Комментарий</th>
+                                                    <th>Болезнь</th>
+                                                    <th>Образец</th>
+                                                    <th></th>
+                                                    <th>Менеджер</th>
+                                                    <th style="display: none;">disease_id</th>
+                                                    <th style="display: none;">biospecimen_type_id</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for quote in history_quotes %}
+                                                    <tr>
+                                                        <td>{{ quote.created_at }}</td>
+                                                        <td>{{ quote.site_name }}</td>
+                                                        <td>{{ quote.value_mount }}</td>
+                                                        <td>{{ quote.days }}</td>
+                                                        <td>{{ quote.price }}</td>
+                                                        <td>
+                                                            <table>
+                                                                {% for doc_payment in quote.doctor_payments %}
+                                                                    <tr>
+                                                                        <td>{{ doc_payment.doc_name }}</td>
+                                                                        <td>{{ doc_payment.doc_payment }}</td>
+                                                                    </tr>
+                                                                {% endfor %}
+                                                            </table>
+                                                        </td>
+                                                        <td>{{ quote.comment }}</td>
+                                                        <td>{{ quote.disease }}</td>
+                                                        <td>
+                                                            <table>
+                                                                {% for bio_type in quote.samples_table %}
+                                                                    <tr>
+                                                                        <td>{{ bio_type.biospecimen_type }}
+                                                                            <b>{{ bio_type.biospecimen_type_russian }}</b> {{ bio_type.mod }}
+                                                                        </td>
+                                                                    </tr>
+                                                                {% endfor %}
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-info btn-block quote_info"
+                                                                    id="qi_{{ quote.id }}"><i class="fa fa-info"
+                                                                                              aria-hidden="true"></i>
+                                                            </button>
+                                                        </td>
+                                                        <td>{{ quote.lasttname }} {{ quote.firstname }} {{ quote.patronymic }}</td>
+                                                        <td style="display: none;">{{ quote.disease_id }}</td>
+                                                        <td style="display: none;">{{ quote.biospecimen_type_id }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title"><h3>Quote {{ id }} </h3></h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body card-dashboard ">
+                                    {% if user_id == 95 or  user_id == 96 or user_id == 91 %}
+                                        {% for item in order %}
+                                            <quote
+                                                    :proj_id="{{ item.proj_id }}"
+                                                    :mode="0"
+                                                    :languages="'en'"
+                                                    :order_diseases="{{ order_diseases }}"
+                                                    :diseases_biospecimen_types="{{ diseases_biospecimen_types }}"
+                                                    :biospecimen_types="{{ biospecimen_types }}"
+                                                    :back_url="''"
+                                                    :quotecreatevisible="1"
+                                            ></quote>
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for item in order %}
+                                            <quote
+                                                    :proj_id="{{ item.proj_id }}"
+                                                    :mode="0"
+                                                    :languages="'ru'"
+                                                    :order_diseases="{{ order_diseases }}"
+                                                    :diseases_biospecimen_types="{{ diseases_biospecimen_types }}"
+                                                    :biospecimen_types="{{ biospecimen_types }}"
+                                                    :back_url="''"
+                                                    :quotecreatevisible="1"
+                                            ></quote>
+                                        {% endfor %}
+
+                                    {% endif %}
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+</div>
+
+<script src="https://cdn.tiny.cloud/1/71j1qczmxow9ec79z0b3tz3q6rzzsq933b2rxwuc2lgjyxlu/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: '#edit_comment',
+        height: "240"
+    })
+    tinymce.init({
+        selector: '#new_comment',
+        height: "240"
+    })
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let datatable = $('#HQTable').DataTable()
+
+        // $.fn.dataTable.ext.search.push(
+        //     function (settings, data, dataIndex) {
+        //         let disease_id = $("#disease_filter").val(),
+        //             biospecimen_type_id = $("#biospecimen_type_filter").val()
+        //         if (data[11] !== disease_id)
+        //             return false
+        //         if (data[12]  !== biospecimen_type_id)
+        //             return false
+        //         return true
+        //     }
+        // )
+
+        // $("#disease_filter, #biospecimen_type_filter").on('click change', () => {
+        //     datatable.draw();
+        // })
+    })
+</script>
+
+<script src="../../../js/dist/vue.js"></script>
+<script src="../../../js/components/worksheets.js?v=22"></script>
+<script src="../../../js/components/quote.js?v=24"></script>
+<script src="../../../js/components/sites.js?v=20"></script>
+<script src="../../../js/main.js?v=212"></script>
+
+
+

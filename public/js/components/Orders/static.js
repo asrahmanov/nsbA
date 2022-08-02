@@ -20,7 +20,7 @@ Vue.component('static', {
 
 
          urlSections : window.location.href.split("/"),
-         socket : io.connect('https://nbs-platforms.ru:8888'),
+         socket : io.connect('https://crm.i-bios.com:8888'),
 
 
         }

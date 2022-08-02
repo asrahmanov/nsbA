@@ -158,7 +158,7 @@
 
 
     let urlSections = window.location.href.split("/");
-    let socket = io.connect('https://nbs-platforms.ru:8888');
+    let socket = io.connect('https://crm.i-bios.com:8888');
     let user_id = `{{ user_id }}`;
 
     socket.on('reloadFrTable', (data) => {

@@ -25,7 +25,7 @@ Vue.component('dashbord', {
             frDateOne: localStorage.getItem('frDateOne'), //На три месяца раньше
             frDateTwo: localStorage.getItem('frDateTwo'), //Текущая
             urlSections: window.location.href.split("/"),
-            socket: io.connect('https://nbs-platforms.ru:8888'),
+            socket: io.connect('https://crm.i-bios.com:8888'),
             internal_id: '',
             task_offer_id: 0,
             // Массив для анализа

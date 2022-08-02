@@ -13,7 +13,7 @@ class SearchRequestMailController extends Controller
 
     public function actionSearchRequest()
     {
-        $imap = imap_open("{imap.mail.ru:993/imap/ssl}INBOX", "newrequest@nbs-platforms.ru", "ROIo2aA#pao4");
+        $imap = imap_open("{imap.mail.ru:993/imap/ssl}INBOX", "newrequest@crm.i-bios.com", "ROIo2aA#pao4");
         $mails_id = imap_search($imap, 'ALL');
 
         if(!$mails_id){
@@ -27,7 +27,7 @@ class SearchRequestMailController extends Controller
         $header = json_decode(json_encode($header), true);
         $email = mb_decode_mimeheader($header['from'][0]['mailbox']) . "@" . mb_decode_mimeheader($header['from'][0]['host']);
 
-        $approve = ['asrahmanov@gmail.com','newrequest@nbs-platforms.ru', 'maksim.zvyagintsev@nbioservice.com','sunabak@mail.ru'];
+        $approve = ['asrahmanov@gmail.com','newrequest@crm.i-bios.com', 'maksim.zvyagintsev@nbioservice.com','sunabak@mail.ru'];
 
         if (in_array($email, $approve)) {
 

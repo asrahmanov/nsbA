@@ -290,7 +290,7 @@ class OfferController extends Controller
                                             <p>Shipping costs mainly depend on (1) <i>the recipient country</i>, (2)
                                             <i>actual and bulk weight</i> (3) <i>number of shipments per PO</i>.</p>
                                             <p><b>The total shipment fee</b> will be billed based on actual costs incurred
-                                             under the mutual agreement of both Client and Supplier (NBS).</p>
+                                             under the mutual agreement of both Client and Supplier (I-BIOS).</p>
                                              <p><b>The cost of export permit</b> may be doubled in case there are two types of
                                              biospecimens to be shipped. In accordance with the requirements of the EEU customs
                                              legislation a separate permit is required for each of 2 classified types of samples:
@@ -321,7 +321,7 @@ class OfferController extends Controller
                                         <td width=\"12%\"><b>Dr. Rafayel Karapetyan</b> </td>
                                     </tr>
                                     <tr>
-                                        <td width=\"12%\"><b>Director of Business Development </b></td>
+                                        <td width=\"12%\"><b>CEO </b></td>
                                     </tr>
                                     </tbody>
                                 </table>";
@@ -762,7 +762,7 @@ class OfferController extends Controller
                                         <td width=\"12%\"><b>Dr. Rafayel Karapetyan</b> </td>
                                     </tr>
                                     <tr>
-                                        <td width=\"12%\"><b>Director of Business Development </b></td>
+                                        <td width=\"12%\"><b>CEO </b></td>
                                     </tr>
                                     </tbody>
                                 </table>";
@@ -1174,7 +1174,7 @@ class OfferController extends Controller
                                             <p>Shipping costs mainly depend on (1) <i>the recipient country</i>, (2)
                                             <i>actual and bulk weight</i> (3) <i>number of shipments per PO</i>.</p>
                                             <p><b>The total shipment fee</b> will be billed based on actual costs incurred
-                                             under the mutual agreement of both Client and Supplier (NBS).</p>
+                                             under the mutual agreement of both Client and Supplier (I-BIOS).</p>
                                              <p><b>The cost of export permit</b> may be doubled in case there are two types of
                                              biospecimens to be shipped. In accordance with the requirements of the EEU customs
                                              legislation a separate permit is required for each of 2 classified types of samples:
@@ -1205,7 +1205,7 @@ class OfferController extends Controller
                                         <td width=\"12%\"><b>Dr. Rafayel Karapetyan</b> </td>
                                     </tr>
                                     <tr>
-                                        <td width=\"12%\"><b>Director of Business Development </b></td>
+                                        <td width=\"12%\"><b>CEO </b></td>
                                     </tr>
                                     </tbody>
                                 </table>";

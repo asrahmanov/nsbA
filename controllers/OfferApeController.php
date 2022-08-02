@@ -278,7 +278,7 @@ class OfferApeController extends Controller
                                         <td width=\"12%\"><b>Dr. Rafayel Karapetyan</b> </td>
                                     </tr>
                                     <tr>
-                                        <td width=\"12%\"><b>Director of Business Development </b></td>
+                                        <td width=\"12%\"><b>CEO </b></td>
                                     </tr>
                                     </tbody>
                                 </table>";
@@ -682,7 +682,7 @@ class OfferApeController extends Controller
                                         <td width=\"12%\"><b>Dr. Rafayel Karapetyan</b> </td>
                                     </tr>
                                     <tr>
-                                        <td width=\"12%\"><b>Director of Business Development </b></td>
+                                        <td width=\"12%\"><b>CEO </b></td>
                                     </tr>
                                     </tbody>
                                 </table>";

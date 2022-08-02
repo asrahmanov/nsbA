@@ -56,7 +56,7 @@ clinicalCaseThursday.start();
 let checkClinicalCase = () => {
 
     request.post({
-        url: 'https://nbs-platforms.ru/ClinicalCase/sendMailLost'
+        url: 'https://crm.i-bios.com/ClinicalCase/sendMailLost'
     }, function (error, response, body) {
         console.log('Данные отправлены!');
 
@@ -77,7 +77,7 @@ let checkClinicalCase = () => {
 // let sendReportForClient = () => {
 //
 //     request.post({
-//         url: 'https://nbs-platforms.ru/ReportOrders/GenerateReportClient/?script_id=86&action=send'
+//         url: 'https://crm.i-bios.com/ReportOrders/GenerateReportClient/?script_id=86&action=send'
 //     }, function (error, response, body) {
 //         console.log('Письма отправлены отправлены!');
 //     });
@@ -89,7 +89,7 @@ let checkClinicalCase = () => {
 let TicketCheck = () => {
 
     request.post({
-        url: 'https://nbs-platforms.ru/api/TicketCheck'
+        url: 'https://crm.i-bios.com/api/TicketCheck'
     }, function (error, response, body) {
         console.log('Данные отправлены!');
 
@@ -115,7 +115,7 @@ let checkContracts = () => {
                     let month = date_contract.getMonth() + 1;
                     let day = date_contract.getDate();
 
-                    let textMail = `У компании <a href="https://nbs-platforms.ru/company/info/?companyId=${rows[i].script_id}" >${rows[i].script} ${rows[i].company_name}</a> - дата окончания договора ${day}.${month}.${fullYear}`;
+                    let textMail = `У компании <a href="https://crm.i-bios.com/company/info/?companyId=${rows[i].script_id}" >${rows[i].script} ${rows[i].company_name}</a> - дата окончания договора ${day}.${month}.${fullYear}`;
                     //let email = 'olga.karaeva@nbioservice.com';
                     let email = 'asrahmanov@gmail.com';
                     let subject = 'Необходима пролонгация договора';
@@ -194,7 +194,7 @@ let check = () => {
                                         for (let i = 0; i < dlina; i++) {
                                             attachments.push({   // utf-8 string as an attachment
                                                 filename: rows_files[i].name,
-                                                path: encodeURI(`https://nbs-platforms.ru/${rows_files[i].alias}/${rows_files[i].name}`),
+                                                path: encodeURI(`https://crm.i-bios.com/${rows_files[i].alias}/${rows_files[i].name}`),
                                             })
                                             console.log('attachments',attachments)
                                         }
@@ -246,7 +246,7 @@ async function main(textMail, email, subject, id, replyTo, action, attachments =
         port: 465,
         secure: true, // true for 465, false for other ports
         auth: {
-            user: "crm@nbs-platforms.ru", // generated ethereal user
+            user: "crm@crm.i-bios.com", // generated ethereal user
             pass: "frerfre2343y45y36453g" // generated ethereal password
         }
     });
@@ -257,7 +257,7 @@ async function main(textMail, email, subject, id, replyTo, action, attachments =
 
     // send mail with defined transport object
     let info = await transporter.sendMail({
-        from: 'crm@nbs-platforms.ru', // sender address
+        from: 'crm@crm.i-bios.com', // sender address
         to: email, // list of receivers
         replyTo: replyTo, // list of receivers
         subject: subject, // Subject line

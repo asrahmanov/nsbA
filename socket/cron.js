@@ -267,7 +267,6 @@ async function main(textMail, email, subject, id, replyTo, action, attachments =
         attachments: attachments
     });
 
-    сonsole.log('info',info);
 
     return id
 

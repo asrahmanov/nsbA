@@ -242,7 +242,7 @@ let check = () => {
 async function main(textMail, email, subject, id, replyTo, action, attachments = []) {
     console.log('id',id)
     let transporter = nodemailer.createTransport({
-        host: "smtp.mail.ru",
+        host: "smtp.yandex.ru",
         port: 465,
         secure: true, // true for 465, false for other ports
         auth: {

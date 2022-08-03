@@ -240,7 +240,7 @@ let check = () => {
 
 
 async function main(textMail, email, subject, id, replyTo, action, attachments = []) {
-    console.log(attachments)
+    console.log('id',id)
     let transporter = nodemailer.createTransport({
         host: "smtp.mail.ru",
         port: 465,

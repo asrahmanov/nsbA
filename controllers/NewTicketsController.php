@@ -586,8 +586,8 @@ class NewTicketsController extends Controller
             $mailSend = new Mail();
             if (($email !== '') && !is_null($email)) {
                 $mailSend->email = $email;
-                $mailSend->subject = "В nbs-platforms создана новая задача";
-                $mailSend->text_mail = "В nbs-platforms создана новая <a href='http://crm.i-bios.com/newTickets/index'>задача</a>";
+                $mailSend->subject = "В i-bios создана новая задача";
+                $mailSend->text_mail = "В i-bios создана новая <a href='http://crm.i-bios.com/newTickets/index'>задача</a>";
                 $mailSend->send_time = date('Y-m-d H:i:s');
                 $priority = App::call()->request->getParams()['priority'];
                 if (!$priority && date('H:i') > '18:30') {

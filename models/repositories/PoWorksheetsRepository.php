@@ -106,7 +106,7 @@ class PoWorksheetsRepository extends Repository
                 }
                 $order = App::call()->ordersRepository->GetOrdersOne($proj_id);
                 $subject = "Запрос на квотирование  проекта {$order['proj_id']}  {$order['project_name']}";
-                $text = "Добрый день, В NBS Platform Вам поступил запрос на квотирование 
+                $text = "Добрый день, В I-BIOSPlatform Вам поступил запрос на квотирование 
                 <a href='http://crm.i-bios.com/poworksheets/quote/?id={$resultW}'>{$order['proj_id']} </a>
                 {$order['project_name']}
                 {$order['feas_russian']}
@@ -152,7 +152,7 @@ class PoWorksheetsRepository extends Repository
                 }
                 $order = App::call()->ordersRepository->GetOrdersOne($proj_id);
                 $subject = "Запрос на квотирование проекта {$order['proj_id']}  {$order['project_name']}";
-                $text = "Добрый день, В NBS Platform Вам поступил запрос на квотирование 
+                $text = "Добрый день, В I-BIOSPlatform Вам поступил запрос на квотирование 
                 <a href='http://crm.i-bios.com/worksheets/quote/?id={$resultW}'>{$order['proj_id']} </a>
                 {$order['project_name']}
                 {$order['feas_russian']}

@@ -41,7 +41,7 @@ class MailController extends Controller
                                         <th>User</th>
                                         <th>script number</th>
                                         <th>priority</th>
-                                        <th>NBS Deadline</th>
+                                        <th>I-BIOSDeadline</th>
                                         <th>Quote mount</th>
                                         <th>Delivery Deadline</th>
                                         <th>Proposal Deadline</th>
@@ -72,7 +72,7 @@ class MailController extends Controller
                                             <th>User</th>
                                             <th>script number</th>
                                             <th>priority</th>
-                                            <th>NBS Deadline</th>
+                                            <th>I-BIOSDeadline</th>
                                             <th>Quote mount</th>
                                             <th>Delivery Deadline</th>
                                             <th>Proposal Deadline</th>
@@ -271,7 +271,7 @@ class MailController extends Controller
 
         $order = App::call()->ordersRepository->GetOrdersOne($proj_id);
         $subject = "ВНИМАНИЕ!!!  Запрос на квотирование запроса {$order['proj_id']}  {$order['project_name']}";
-        $text = "Добрый день, В NBS Platform Вам поступил запрос на квотирование 
+        $text = "Добрый день, В I-BIOSPlatform Вам поступил запрос на квотирование 
          {$order['proj_id']} 
                 {$order['project_name']}
                 
@@ -294,7 +294,7 @@ class MailController extends Controller
         $order = App::call()->ordersRepository->GetOrdersOne($proj_id);
 
         $subject = "ВНИМАНИЕ!!!  Изменилась информация в запросе {$order['proj_id']}  {$order['project_name']}";
-        $text = "Добрый день, В NBS Platform в запросе
+        $text = "Добрый день, В I-BIOSPlatform в запросе
          {$order['proj_id']}
          Изменилось информация:
          {$order['project_name']}

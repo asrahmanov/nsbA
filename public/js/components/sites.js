@@ -65,7 +65,7 @@ Vue.component('sites', {
     <thead>
     
     <tr>
-        <th>NBS №</th>
+        <th>I-BIOS№</th>
         <th><input type="text" class="form-control" placeholder="Сайт" v-model="siteFilter" @input="filter()"></th>
         <th>Тип</th>
         <th>Город</th>

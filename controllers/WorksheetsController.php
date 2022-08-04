@@ -56,7 +56,7 @@ class WorksheetsController extends Controller
                     $email = App::call()->usersRepository->getEmail($nbs_users[$j]['id']);
                     $order = App::call()->ordersRepository->GetOrdersOne($proj_id);
                     $subject = "Запрос на квотирование запроса {$order['proj_id']}  {$order['project_name']}";
-                    $text = "Добрый день, В NBS Platform Вам поступил запрос на квотирование 
+                    $text = "Добрый день, В I-BIOSPlatform Вам поступил запрос на квотирование 
                     <a href='http://crm.i-bios.com/worksheets/quote/?id={$result}'>{$order['internal_id']} </a>
                    
                     {$order['project_name']}
@@ -98,7 +98,7 @@ class WorksheetsController extends Controller
                     $email = App::call()->usersRepository->getEmail($nbs_users[$j]['id']);
                     $order = App::call()->ordersRepository->GetOrdersOne($proj_id);
                     $subject = "Запрос на квотирование запроса {$order['proj_id']}  {$order['project_name']}";
-                    $text = "Добрый день, В NBS Platform Вам поступил запрос на квотирование 
+                    $text = "Добрый день, В I-BIOSPlatform Вам поступил запрос на квотирование 
                     <a href='http://crm.i-bios.com/worksheets/quote/?id={$result}'>{$order['internal_id']} </a>
                    
                     {$order['project_name']}

@@ -94,7 +94,7 @@ class ReportOrdersController extends Controller
 //                $mailSend = new Mail();
 //                $mailSend->email = 'banked@ispecimen.com; ahayes@ispecimen.com; ddimezza@ispecimen.com; ablack@ispecimen.com; ehubbard@ispecimen.com; jraygoza@ispecimen.com; bd@nbioservice.com';
 //                $mailSend->send_time = DATE('Y-m-d H:i:s');
-//                $mailSend->subject = "Weekly updates NBS company";
+//                $mailSend->subject = "Weekly updates I-BIOScompany";
 //                $mailSend->send = "NO";
 //                $mailSend->text_mail = "Here is our weekly update on the status of all new requests we received from you in last 30 days." . PHP_EOL . "{$this->table}";
 //                App::call()->mailRepository->save($mailSend);
@@ -102,7 +102,7 @@ class ReportOrdersController extends Controller
                 $mailSend = new Mail();
                 $mailSend->email = 'asrahmanov@gmail.com';
                 $mailSend->send_time = DATE('Y-m-d H:i:s');
-                $mailSend->subject = "Weekly updates NBS company";
+                $mailSend->subject = "Weekly updates I-BIOScompany";
                 $mailSend->send = "NO";
                 $mailSend->text_mail = "Here is our weekly update on the status of all new requests we received from you in last 30 days." . PHP_EOL . "{$this->table}";
                 App::call()->mailRepository->save($mailSend);

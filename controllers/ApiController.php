@@ -800,7 +800,7 @@ class ApiController extends Controller
                     $day = date('Y-m-d');
                     $newDate = date('Y-m-d', strtotime($day . "+7 days"));
                     $order->communication_date = $newDate;
-                    $order->communication_comment = 'created at nbs platform auto';
+                    $order->communication_comment = 'created at I-BIOSplatform auto';
                 }
 
 

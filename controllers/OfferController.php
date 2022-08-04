@@ -307,7 +307,7 @@ class OfferController extends Controller
                                             <ul>
                                                 <li>In accordance with the courier company’s policy changing the shipping address affects the shipping cost.</li>
                                             </ul>
-                                            <p><b>Please note, that NBS offers the option for consolidated shipping costs by combining
+                                            <p><b>Please note, that I-BIOSoffers the option for consolidated shipping costs by combining
                                             <u>several Purchase Orders upon request and consent of the Client.</u></b></p>                                            
                                         </td>
                                     </tr>
@@ -1191,7 +1191,7 @@ class OfferController extends Controller
                                             <ul>
                                                 <li>In accordance with the courier company’s policy changing the shipping address affects the shipping cost.</li>
                                             </ul>
-                                            <p><b>Please note, that NBS offers the option for consolidated shipping costs by combining
+                                            <p><b>Please note, that I-BIOSoffers the option for consolidated shipping costs by combining
                                             <u>several Purchase Orders upon request and consent of the Client.</u></b></p>                                            
                                         </td>
                                     </tr>

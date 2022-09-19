@@ -77,6 +77,7 @@ class NewTicketsRepository extends Repository
         }
         $columsNames = substr($columsNames, 0, -5);
         $sql = "SELECT * FROM {$tableName} WHERE $columsNames
+        ORDER by id DESK
         LIMIT 100
         ";
         return Db::getInstance()->queryAll($sql, $params);

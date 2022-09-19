@@ -66,5 +66,21 @@ class NewTicketsRepository extends Repository
         return Db::getInstance()->queryAll($sql, $params);
     }
 
+    public function getWhere($columsAndParams)
+    {
+        $tableName = $this->getTableName();
+        $columsNames = '';
+        $params = [];
+        foreach ($columsAndParams as $key => $value) {
+            $columsNames .= $key . "=:{$key} AND ";
+            $params[$key] = $value;
+        }
+        $columsNames = substr($columsNames, 0, -5);
+        $sql = "SELECT * FROM {$tableName} WHERE $columsNames
+        LIMIT 100
+        ";
+        return Db::getInstance()->queryAll($sql, $params);
+    }
+
 
 }

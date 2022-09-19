@@ -510,8 +510,8 @@ class OfferController extends Controller
         }
 
         $generateNamePdf = "upload/{$proj_id}/{$filename}";
-      $res =   file_put_contents($generateNamePdf, $output);
-      var_dump($res);
+        $res = file_put_contents($generateNamePdf, $output);
+        var_dump(__DIR__);
         set_time_limit(0);
         $file = new Files();
         $file->name = $filename;
@@ -921,7 +921,6 @@ class OfferController extends Controller
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
         $output = $dompdf->output();
-
 
 
         $pdfDate = DATE("d.m.y");

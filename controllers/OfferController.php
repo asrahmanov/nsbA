@@ -504,12 +504,12 @@ class OfferController extends Controller
         $dirname = 'upload/' . $proj_id . '/';
 
         if (file_exists($dirname)) {
-            //echo "Директория существует";
+            echo "Директория существует";
         } else {
             mkdir($dirname);
         }
 
-        $generateNamePdf = "../public/upload/{$proj_id}/{$filename}";
+        $generateNamePdf = "upload/{$proj_id}/{$filename}";
         $res = file_put_contents($generateNamePdf, $output);
         var_dump($res);
         set_time_limit(0);

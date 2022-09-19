@@ -933,7 +933,7 @@ class ApiController extends Controller
                 $tick = new NewTickets($order->answering_id, 56, "Заявка {$order->proj_id} ({$order->internal_id})", $text, 0, 0, $order->proj_id, 0);
                 $tick_id = App::call()->newTicketsRepository->save($tick);
                 $mailSend = new Mail();
-                $mailSend->email = 'ops@nbioservice.com';
+                $mailSend->email = 'sergey.anisimov@i-bios.com';
                 $mailSend->subject = "Необходимо предоставить ответ на запрос № {$order->internal_id}";
                 $mailSend->text_mail = "Добрый день," . PHP_EOL . "Необходимо предоставить ответ на запрос № 
                     <a href='http://crm.i-bios.com/newTickets/view/?id=$tick_id'>{$order->internal_id}</a>";
@@ -944,7 +944,7 @@ class ApiController extends Controller
                 $tick = new NewTickets($order->answering_id, 56, "Заявка {$order->proj_id} ({$order->internal_id})", $text, 0, 0, $order->proj_id, 1);
                 $tick_id = App::call()->newTicketsRepository->save($tick);
                 $mailSend = new Mail();
-                $mailSend->email = 'ops@nbioservice.com';
+                $mailSend->email = 'sergey.anisimov@i-bios.com';
                 $mailSend->subject = "Необходимо предоставить ответ на запрос № {$order->internal_id}";
                 $mailSend->text_mail = "Добрый день," . PHP_EOL . "Необходимо предоставить ответ на запрос № 
                     <a href='http://crm.i-bios.com/newTickets/view/?id=$tick->id'>{$order->internal_id}</a>";
@@ -963,7 +963,7 @@ class ApiController extends Controller
                     $mailSendTime = date('Y-m-d 09:00:00');
                 }
                 $mailSend = new Mail();
-                $mailSend->email = 'oleg.granstrem@nbioservice.com';
+                $mailSend->email = 'oleg.granstrem@i-bios.com';
                 $mailSend->subject = "Reminder № {$order->internal_id}";
                 $mailSend->text_mail = "Добрый день," . PHP_EOL . "Необходимо предоставить ответ на запрос № 
                     <a href='http://crm.i-bios.com/newTickets/view/?id=$tick_id'>{$order->internal_id}  ($order->project_name)</a>";
@@ -971,7 +971,7 @@ class ApiController extends Controller
                 $mailSend->send = 'NO';
                 App::call()->mailRepository->save($mailSend);
                 $mailSend2 = new Mail();
-                $mailSend2->email = 'ops@nbioservice.com';
+                $mailSend2->email = 'sergey.anisimov@i-bios.com';
                 $mailSend2->subject = "Reminder № {$order->internal_id}";
                 $mailSend2->text_mail = "Добрый день," . PHP_EOL . "Необходимо предоставить ответ на запрос № 
                     <a href='http://crm.i-bios.com/newTickets/view/?id=$tick_id'>{$order->internal_id} ($order->project_name)</a>";
@@ -979,7 +979,7 @@ class ApiController extends Controller
                 $mailSend2->send = 'NO';
                 App::call()->mailRepository->save($mailSend2);
                 $mailSend3 = new Mail();
-                $mailSend3->email = 'coms@nbioservice.com';
+                $mailSend3->email = 'vitali.proutski@i-bios.com';
                 $mailSend3->subject = "Reminder № {$order->internal_id}";
                 $mailSend3->text_mail = "Добрый день," . PHP_EOL . "Необходимо предоставить ответ на запрос № 
                     <a href='http://crm.i-bios.com/newTickets/view/?id=$tick_id'>{$order->internal_id} ($order->project_name)</a>";

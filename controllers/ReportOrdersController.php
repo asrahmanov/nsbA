@@ -92,7 +92,7 @@ class ReportOrdersController extends Controller
 
             if ($this->script_id == 86) {
 //                $mailSend = new Mail();
-//                $mailSend->email = 'banked@ispecimen.com; ahayes@ispecimen.com; ddimezza@ispecimen.com; ablack@ispecimen.com; ehubbard@ispecimen.com; jraygoza@ispecimen.com; bd@nbioservice.com';
+//                $mailSend->email = 'banked@ispecimen.com; ahayes@ispecimen.com; ddimezza@ispecimen.com; ablack@ispecimen.com; ehubbard@ispecimen.com; jraygoza@ispecimen.com; bd@i-bios.com';
 //                $mailSend->send_time = DATE('Y-m-d H:i:s');
 //                $mailSend->subject = "Weekly updates I-BIOScompany";
 //                $mailSend->send = "NO";

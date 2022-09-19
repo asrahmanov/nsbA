@@ -100,8 +100,8 @@ class PoWorksheetsController extends Controller
                 $po = App::call()->poRepository->getObject($order['id']);
                 $email_lab = App::call()->request->getParams()['lab'];
                 App::call()->mailRepository->sendMail($email_lab, $subject, $text_po, 'send' ,$order['proj_id'], $date);
-                App::call()->mailRepository->sendMail('Finance@nbioservice.com', $subject, $text_po, 'send' ,$order['proj_id'], $date);
-                App::call()->mailRepository->sendMail('ProCor@nbioservice.com', $subject, $text_po, 'send' ,$order['proj_id'], $date);
+                App::call()->mailRepository->sendMail('Finance@i-bios.com', $subject, $text_po, 'send' ,$order['proj_id'], $date);
+                App::call()->mailRepository->sendMail('ProCor@i-bios.com', $subject, $text_po, 'send' ,$order['proj_id'], $date);
 
 
                 $subject_boss = "Распределение квот по проекту {$order['po_number']} по квоте {$order['proj_id']}";
@@ -111,7 +111,7 @@ class PoWorksheetsController extends Controller
                 ";
 
                 $send_time =  date( "Y-m-d H:i:s", strtotime( $date. "+1 day" ) );
-                App::call()->mailRepository->sendMail('Ops@nbioservice.com', $subject_boss, $text_boss, 'no', 0 , $send_time);
+                App::call()->mailRepository->sendMail('sergey.anisimov@i-bios.com', $subject_boss, $text_boss, 'no', 0 , $send_time);
 
                 $po->email_send = 1;
                 App::call()->poRepository->save($po);

@@ -260,13 +260,13 @@ class ClinicalCaseController extends Controller
                     $mailSend->text_mail = $text;
                     $mailSend->send_time = date('Y-m-d H:i:s');
                     $mailSend->send = 'NO';
-                    $mailSend->reply_to = 'crf@nbioservice.com';
+                    $mailSend->reply_to = 'crf@i-bios.com';
                     $clinicalCase->send_count = $clinicalCase->send_count + 1;
                     $clinicalCase->last_send = DATE('Y-m-d H:i:s');
                     App::call()->clinicalCaseRepository->save($clinicalCase);
                     App::call()->mailRepository->save($mailSend);
                     $mailSend->reply_to = $email;
-                    $mailSend->email = 'crf@nbioservice.com';
+                    $mailSend->email = 'crf@i-bios.com';
                     App::call()->mailRepository->save($mailSend);
                 }
             }
@@ -327,10 +327,10 @@ class ClinicalCaseController extends Controller
                 $mailSend->text_mail = $text;
                 $mailSend->send_time = date('Y-m-d H:i:s');
                 $mailSend->send = 'NO';
-                $mailSend->reply_to = 'crf@nbioservice.com';
+                $mailSend->reply_to = 'crf@i-bios.com';
                 App::call()->mailRepository->save($mailSend);
                 $mailSend->reply_to = $email;
-                $mailSend->email = 'crf@nbioservice.com';
+                $mailSend->email = 'crf@i-bios.com';
                 $result = App::call()->mailRepository->save($mailSend);
                 echo $result;
             }

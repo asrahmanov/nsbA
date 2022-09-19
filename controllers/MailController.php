@@ -373,8 +373,8 @@ class MailController extends Controller
                 ";
             }
         }
-        App::call()->mailRepository->sendMail('ProCor@nbioservice.com', $subject, $text, $action ,$proj_id);
-        App::call()->mailRepository->sendMail('Finance@nbioservice.com', $subject, $text, $action ,$proj_id);
+        App::call()->mailRepository->sendMail('ProCor@i-bios.com', $subject, $text, $action ,$proj_id);
+        App::call()->mailRepository->sendMail('Finance@i-bios.com', $subject, $text, $action ,$proj_id);
         App::call()->mailRepository->sendMail( $email_lab, $subject, $text, $action ,$proj_id);
 
     }

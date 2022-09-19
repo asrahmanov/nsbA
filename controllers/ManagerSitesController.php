@@ -35,7 +35,7 @@ class ManagerSitesController extends Controller
         $site_name = $site->site_name;
         $mailSend = new Mail();
         $site_num = $site_id - 1;
-        $mailSend->email = 'Regist@nbioservice.com';
+        $mailSend->email = 'Regist@i-bios.com';
         $mailSend->subject = "Внимание произошли изменения для сайта \"$site_num\"";
         $mailSend->text_mail = "Внимание! Для сайта \"$site_num\" $site_name добавлен ответственный менеджер : $fullname.";
         $mailSend->send_time = date('Y-m-d H:i:s');
@@ -43,7 +43,7 @@ class ManagerSitesController extends Controller
         App::call()->mailRepository->save($mailSend);
 
         $mailSend_finance = new Mail();
-        $mailSend_finance->email = 'finance@nbioservice.com';
+        $mailSend_finance->email = 'Finance@i-bios.com';
         $mailSend_finance->subject = "Внимание произошли изменения для сайта \"$site_num\"";
         $mailSend_finance->text_mail = "Внимание! Для сайта \"$site_num\" $site_name добавлен ответственный менеджер : $fullname.";
         $mailSend_finance->send_time = date('Y-m-d H:i:s');
@@ -51,7 +51,7 @@ class ManagerSitesController extends Controller
         App::call()->mailRepository->save($mailSend_finance);
 
         $mailSend_bd = new Mail();
-        $mailSend_bd->email = 'bd@nbioservice.com';
+        $mailSend_bd->email = 'bd@i-bios.com';
         $mailSend_bd->subject = "Внимание произошли изменения для сайта \"$site_num\"";
         $mailSend_bd->text_mail = "Внимание! Для сайта \"$site_num\" $site_name добавлен ответственный менеджер : $fullname.";
         $mailSend_bd->send_time = date('Y-m-d H:i:s');
@@ -116,7 +116,7 @@ class ManagerSitesController extends Controller
         $site_name = $site->site_name;
         $site_num = $site_id - 1;
         $mailSend = new Mail();
-        $mailSend->email = 'Regist@nbioservice.com';
+        $mailSend->email = 'Regist@i-bios.com';
         $mailSend->subject = "Внимание произошли изменения для сайта \"$site_num\"";
         $mailSend->text_mail = "Внимание! Для сайта \"$site_num\" $site_name удален ответственный менеджер : $fullname.";
         $mailSend->send_time = date('Y-m-d H:i:s');

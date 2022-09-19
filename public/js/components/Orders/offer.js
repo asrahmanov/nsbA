@@ -1043,7 +1043,7 @@ Vue.component('offer', {
 
             this.$parent.putJson(`../../../offer/generatePdf`, data)
                 .then(response => {
-                    // location.href = "../../../orders/info/?idFR=" + this.proj_id;
+                    location.href = "../../../orders/info/?idFR=" + this.proj_id;
                 })
 
 

@@ -510,7 +510,8 @@ class OfferController extends Controller
         }
 
         $generateNamePdf = "upload/{$proj_id}/{$filename}";
-        file_put_contents($generateNamePdf, $output);
+      $res =   file_put_contents($generateNamePdf, $output);
+      var_dump($res);
         set_time_limit(0);
         $file = new Files();
         $file->name = $filename;

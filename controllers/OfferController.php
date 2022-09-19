@@ -509,9 +509,9 @@ class OfferController extends Controller
             mkdir($dirname);
         }
 
-        $generateNamePdf = "upload/{$proj_id}/{$filename}";
+        $generateNamePdf = "../public/upload/{$proj_id}/{$filename}";
         $res = file_put_contents($generateNamePdf, $output);
-        var_dump(__DIR__);
+        var_dump($res);
         set_time_limit(0);
         $file = new Files();
         $file->name = $filename;

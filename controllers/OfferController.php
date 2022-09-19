@@ -1362,7 +1362,7 @@ class OfferController extends Controller
 
         $html = mb_convert_encoding($html, 'utf-8', mb_detect_encoding($html));
 
-        echo $this->render('orders/offerPrint', [
+        $this->render('orders/offerPrint', [
             'html' => $html
         ]);
 

@@ -476,7 +476,7 @@ class OfferController extends Controller
 
 
         $table_body = "<table class=\"offer__table\" cellpadding=\"0\" cellspacing=\"0\" >{$table_body}</table>";
-        echo $table_body;
+//        echo $table_body;
         $html = "<html>" . $head . $style . $header . $table_one . $table_body . $table_two . $table3 . $block . $footer . "</html>";
 
         //$html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');

@@ -31,39 +31,39 @@ var errorRemainder = new CronJob('* * * * * *', function () {
 errorRemainder.start();
 
 // Отправка просроченных договоро в для юриста
-let checkContract = new CronJob('0 15 11 * * *', function () {
-    checkContracts();
-}, null, true, 'Europe/Moscow');
-
-checkContract.start();
+// let checkContract = new CronJob('0 15 11 * * *', function () {
+//     checkContracts();
+// }, null, true, 'Europe/Moscow');
+//
+// checkContract.start();
 
 
 
 
 // Рассылка на почтук информации по не предоставленной информации по образцам
-let clinicalCaseMonday = new CronJob('0 30 10 * * 1', function () {
-    checkClinicalCase();
-}, null, true, 'Europe/Moscow');
+// let clinicalCaseMonday = new CronJob('0 30 10 * * 1', function () {
+//     checkClinicalCase();
+// }, null, true, 'Europe/Moscow');
+//
+// let clinicalCaseThursday = new CronJob('0 0 10 * * 4', function () {
+//     checkClinicalCase();
+// }, null, true, 'Europe/Moscow');
 
-let clinicalCaseThursday = new CronJob('0 0 10 * * 4', function () {
-    checkClinicalCase();
-}, null, true, 'Europe/Moscow');
-
-clinicalCaseMonday.start();
-clinicalCaseThursday.start();
-
-
-let checkClinicalCase = () => {
-
-    request.post({
-        url: 'https://crm.i-bios.com/ClinicalCase/sendMailLost'
-    }, function (error, response, body) {
-        console.log('Данные отправлены!');
-
-    });
+// clinicalCaseMonday.start();
+// clinicalCaseThursday.start();
 
 
-};
+// let checkClinicalCase = () => {
+//
+//     request.post({
+//         url: 'https://crm.i-bios.com/ClinicalCase/sendMailLost'
+//     }, function (error, response, body) {
+//         console.log('Данные отправлены!');
+//
+//     });
+//
+//
+// };
 
 
 // let cronSendReportForClient = new CronJob('0 0 17 * * 5', function () {
@@ -100,42 +100,42 @@ let TicketCheck = () => {
 
 
 
-let checkContracts = () => {
-    connection.query(`SELECT DATEDIFF(NOW(),fr_scripts.contract_off ) as total, contract_off, company_name, script, script_id FROM fr_scripts
-                      HAVING total > -30`, function (error, rows) {
-        if (!error) {
-            console.log('что то нашел');
-            let dlina = rows.length;
-            if (dlina != 0) {
-                for (let i = 0; i < dlina; i++) {
-                    console.log('что то нашел ' + i);
-                    let date_contract = rows[i].contract_off;
-
-                    let fullYear = date_contract.getFullYear();
-                    let month = date_contract.getMonth() + 1;
-                    let day = date_contract.getDate();
-
-                    let textMail = `У компании <a href="https://crm.i-bios.com/company/info/?companyId=${rows[i].script_id}" >${rows[i].script} ${rows[i].company_name}</a> - дата окончания договора ${day}.${month}.${fullYear}`;
-                    //let email = 'olga.karaeva@nbioservice.com';
-                    let email = 'asrahmanov@gmail.com';
-                    let subject = 'Необходима пролонгация договора';
-
-                    main(textMail, email, subject, 1).then(() => {
-                        console.log(`Send mail to email ${email}`);
-                    })
-
-
-                }
-            }
-
-
-        } else {
-            console.log('Ошибка запроса');
-        }
-
-    });
-
-};
+// let checkContracts = () => {
+//     connection.query(`SELECT DATEDIFF(NOW(),fr_scripts.contract_off ) as total, contract_off, company_name, script, script_id FROM fr_scripts
+//                       HAVING total > -30`, function (error, rows) {
+//         if (!error) {
+//             console.log('что то нашел');
+//             let dlina = rows.length;
+//             if (dlina != 0) {
+//                 for (let i = 0; i < dlina; i++) {
+//                     console.log('что то нашел ' + i);
+//                     let date_contract = rows[i].contract_off;
+//
+//                     let fullYear = date_contract.getFullYear();
+//                     let month = date_contract.getMonth() + 1;
+//                     let day = date_contract.getDate();
+//
+//                     let textMail = `У компании <a href="https://crm.i-bios.com/company/info/?companyId=${rows[i].script_id}" >${rows[i].script} ${rows[i].company_name}</a> - дата окончания договора ${day}.${month}.${fullYear}`;
+//                     //let email = 'olga.karaeva@nbioservice.com';
+//                     let email = 'asrahmanov@gmail.com';
+//                     let subject = 'Необходима пролонгация договора';
+//
+//                     main(textMail, email, subject, 1).then(() => {
+//                         console.log(`Send mail to email ${email}`);
+//                     })
+//
+//
+//                 }
+//             }
+//
+//
+//         } else {
+//             console.log('Ошибка запроса');
+//         }
+//
+//     });
+//
+// };
 
 let chekErrorRemainder = () => {
     connection.query(`update nbs_new_tickets set done = 0 where isnull(done)`, function (error, rows) {

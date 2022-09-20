@@ -247,7 +247,7 @@ async function main(textMail, email, subject, id, replyTo, action, attachments =
         secure: true, // true for 465, false for other ports
         auth: {
             user: "crmibios@yandex.ru", // generated ethereal user
-            pass: "zvackcdiaylsblds" // generated ethereal password
+            pass: "zvAdJNkcdiaylsblds323242" // generated ethereal password
             // pass: "t*poYagKI1I2" // generated ethereal password
         }
     });
@@ -266,6 +266,7 @@ async function main(textMail, email, subject, id, replyTo, action, attachments =
         html: textMail, // html body
         attachments: attachments
     });
+
 
 
     return id

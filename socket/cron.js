@@ -240,15 +240,14 @@ let check = () => {
 
 
 async function main(textMail, email, subject, id, replyTo, action, attachments = []) {
-    console.log('id',id)
+    console.log(attachments)
     let transporter = nodemailer.createTransport({
-        host: "smtp.yandex.ru",
+        host: "smtp.mail.ru",
         port: 465,
         secure: true, // true for 465, false for other ports
         auth: {
-            user: "crmibios@yandex.ru", // generated ethereal user
-            pass: "gtcubsrzhtqpnmit" // generated ethereal password
-            // pass: "t*poYagKI1I2" // generated ethereal password
+            user: "crm@nbs-platforms.ru", // generated ethereal user
+            pass: "frerfre2343y45y36453g" // generated ethereal password
         }
     });
 
@@ -258,7 +257,7 @@ async function main(textMail, email, subject, id, replyTo, action, attachments =
 
     // send mail with defined transport object
     let info = await transporter.sendMail({
-        from: 'crmibios@yandex.ru', // sender address
+        from: 'crm@nbs-platforms.ru', // sender address
         to: email, // list of receivers
         replyTo: replyTo, // list of receivers
         subject: subject, // Subject line
@@ -266,8 +265,6 @@ async function main(textMail, email, subject, id, replyTo, action, attachments =
         html: textMail, // html body
         attachments: attachments
     });
-
-
 
     return id
 

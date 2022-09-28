@@ -1296,6 +1296,8 @@ class OrdersController extends Controller
             }
         }
 
+        var_dump($orderOld->status_boss);
+        var_dump(App::call()->request->getParams()['status_boss']);
         // Проект квоты отправлен на одобрение
         if (isset(App::call()->request->getParams()['status_boss'])) {
             // Проект квоты отправлен на одобрение

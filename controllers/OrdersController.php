@@ -1322,6 +1322,7 @@ class OrdersController extends Controller
                     <a href='http://crm.i-bios.com/orders/info/?idFR={$order->proj_id}'>{$order->internal_id} ($order->project_name)</a>";
                 $tick = new NewTickets($order->answering_id, 2, "Заявка {$order->proj_id} ({$order->internal_id})", $text, 0, 0, $order->proj_id, 0);
                 App::call()->newTicketsRepository->save($tick);
+                echo "попали 1";
             } else if ($orderOld->status_boss != 42 && App::call()->request->getParams()['status_boss'] == 42) {
                 $text = "Добрый день," . PHP_EOL . "Необходимо предоставить ответ на запрос № 
                     <a href='http://crm.i-bios.com/orders/info/?idFR={$order->proj_id}'>{$order->internal_id} ($order->project_name)</a>";
@@ -1333,6 +1334,7 @@ class OrdersController extends Controller
                 $mailSend->text_mail = "Добрый день," . PHP_EOL . "Необходимо предоставить ответ на запрос № 
                     <a href='http://crm.i-bios.com/newTickets/view/?id=$tick_id'>{$order->internal_id}</a>";
                 App::call()->mailRepository->save($mailSend);
+                echo "попали 2";
             } else if ($orderOld->status_boss != 43 && App::call()->request->getParams()['status_boss'] == 43) {
                 $text = "Добрый день," . PHP_EOL . "Необходимо предоставить ответ на запрос № 
                     <a href='http://crm.i-bios.com/orders/info/?idFR={$order->proj_id}'>{$order->internal_id}  ($order->project_name)</a>";
@@ -1344,6 +1346,7 @@ class OrdersController extends Controller
                 $mailSend->text_mail = "Добрый день," . PHP_EOL . "Необходимо предоставить ответ на запрос № 
                     <a href='http://crm.i-bios.com/newTickets/view/?id=$tick->id'>{$order->internal_id}</a>";
                 App::call()->mailRepository->save($mailSend);
+                echo "попали 3";
             } else if (($orderOld->status_boss != 44 && App::call()->request->getParams()['status_boss'] == 44) ||
                 ($orderOld->status_boss != 45 && App::call()->request->getParams()['status_boss'] == 45)) {
                 $text = "Добрый день," . PHP_EOL . "Необходимо предоставить ответ на запрос № 

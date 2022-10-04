@@ -33,6 +33,8 @@ class WorksheetsInvertoryRepository extends Repository
         $sql = "SELECT * FROM nbs_worksheets_invertory
         INNER JOIN fr_main_table ON fr_main_table.proj_id = nbs_worksheets_invertory.proj_id
         WHERE fr_main_table.status_client -- NOT IN (27, 28, 29, 33)
+        AND fr_main_table.fr_date >= '2022-01-01'
+        ORDER by fr_main_table.fr_date DESC
         ";
         return Db::getInstance()->queryAll($sql);
     }

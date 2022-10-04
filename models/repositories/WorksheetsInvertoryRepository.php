@@ -34,7 +34,7 @@ class WorksheetsInvertoryRepository extends Repository
         INNER JOIN fr_main_table ON fr_main_table.proj_id = nbs_worksheets_invertory.proj_id
         WHERE fr_main_table.status_client -- NOT IN (27, 28, 29, 33)te
         AND fr_main_table.fr_date >= '2022-01-01'
-        ORDER by fr_main_table.fr_date DESC
+        ORDER by fr_main_table.proj_id DESC
         ";
         return Db::getInstance()->queryAll($sql);
     }

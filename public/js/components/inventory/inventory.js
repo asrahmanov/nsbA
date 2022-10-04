@@ -28,11 +28,9 @@ Vue.component('inventory', {
                     }
                     this.filter('all');
 
-                //     setTimeout(() => {
-                //     $("#table").dataTable()
-                //     }, 500)
+
                 //
-                // });
+                });
         },
 
         filter(value) {

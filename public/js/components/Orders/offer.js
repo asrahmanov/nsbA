@@ -445,36 +445,36 @@ Vue.component('offer', {
             this.$parent.getJson(`../../container/getAll`)
                 .then(data => {
                     this.container = data.result;
-                    this.container.forEach(el => {
-                        if (el.id == 1) {
-                            if (this.currency === 'USD') {
-                                this.thermologger_price = el.price_usd;
-                            } else {
-                                this.thermologger_price = el.price_euro;
-                            }
-                        }
-                        if (el.id == 2) {
-                            if (this.currency === 'USD') {
-                                this.export_permit_price = el.price_usd;
-                            } else {
-                                this.export_permit_price = el.price_euro;
-                            }
-                        }
-                        if (el.id == 3) {
-                            if (this.currency === 'USD') {
-                                this.customs_clearance_price = el.price_usd;
-                            } else {
-                                this.customs_clearance_price = el.price_euro;
-                            }
-                        }
-                        if (el.id == 4) {
-                            if (this.currency === 'USD') {
-                                this.packaging_price = el.price_usd;
-                            } else {
-                                this.packaging_price = el.price_euro;
-                            }
-                        }
-                    });
+                    // this.container.forEach(el => {
+                    //     if (el.id == 1) {
+                    //         if (this.currency === 'USD') {
+                    //             this.thermologger_price = el.price_usd;
+                    //         } else {
+                    //             this.thermologger_price = el.price_euro;
+                    //         }
+                    //     }
+                    //     if (el.id == 2) {
+                    //         if (this.currency === 'USD') {
+                    //             this.export_permit_price = el.price_usd;
+                    //         } else {
+                    //             this.export_permit_price = el.price_euro;
+                    //         }
+                    //     }
+                    //     if (el.id == 3) {
+                    //         if (this.currency === 'USD') {
+                    //             this.customs_clearance_price = el.price_usd;
+                    //         } else {
+                    //             this.customs_clearance_price = el.price_euro;
+                    //         }
+                    //     }
+                    //     if (el.id == 4) {
+                    //         if (this.currency === 'USD') {
+                    //             this.packaging_price = el.price_usd;
+                    //         } else {
+                    //             this.packaging_price = el.price_euro;
+                    //         }
+                    //     }
+                    // });
                 });
             // this.$parent.getJSON('')
         },

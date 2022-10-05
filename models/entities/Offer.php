@@ -31,6 +31,11 @@ class Offer extends Model
     protected $count_packaging;
     protected $deleted;
     protected $text_offer;
+    protected $price_packagin;
+    protected $price_thermologger;
+    protected $price_customs;
+    protected $price_permit;
+    protected $price_shipping;
 
 
     public function __construct(
@@ -56,7 +61,12 @@ class Offer extends Model
         $packaging = 'no',
         $count_packaging = 1,
         $text_offer = '',
-        $deleted = null
+        $deleted = null,
+        $price_packagin = 0,
+        $price_thermologger = 0,
+        $price_customs = 0,
+        $price_permit = 0,
+        $price_shipping = 0
 
     )
     {
@@ -83,6 +93,11 @@ class Offer extends Model
         $this->count_packaging = $count_packaging;
         $this->deleted = $deleted;
         $this->text_offer = $text_offer;
+        $this->price_packagin = $price_packagin;
+        $this->price_thermologger = $price_thermologger;
+        $this->price_customs = $price_customs;
+        $this->price_permit = $price_permit;
+        $this->price_shipping = $price_shipping;
 
         $this->arrayParams['proj_id'] = false;
         $this->arrayParams['date_offer'] = false;
@@ -107,6 +122,11 @@ class Offer extends Model
         $this->arrayParams['count_packaging'] = false;
         $this->arrayParams['deleted'] = false;
         $this->arrayParams['text_offer'] = false;
+        $this->arrayParams['price_packagin'] = false;
+        $this->arrayParams['price_thermologger'] = false;
+        $this->arrayParams['price_customs'] = false;
+        $this->arrayParams['price_permit'] = false;
+        $this->arrayParams['price_shipping'] = false;
 
     }
 

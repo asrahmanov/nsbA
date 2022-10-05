@@ -1462,6 +1462,11 @@ class OfferController extends Controller
                 $offer->count_shipping = $count_shipping;
             }
 
+            if (isset(App::call()->request->getParams()['price_shipping'])) {
+                $price_shipping = App::call()->request->getParams()['price_shipping'];
+                $offer->price_shipping = $price_shipping;
+            }
+
             if (isset(App::call()->request->getParams()['export_permit'])) {
                 $export_permit = App::call()->request->getParams()['export_permit'];
                 $offer->export_permit = $export_permit;
@@ -1472,9 +1477,19 @@ class OfferController extends Controller
                 $offer->count_export_permit = $count_export_permit;
             }
 
+            if (isset(App::call()->request->getParams()['price_permit'])) {
+                $price_permit = App::call()->request->getParams()['price_permit'];
+                $offer->price_permit = $price_permit;
+            }
+
             if (isset(App::call()->request->getParams()['customs_clearance'])) {
                 $customs_clearance = App::call()->request->getParams()['customs_clearance'];
                 $offer->customs_clearance = $customs_clearance;
+            }
+
+            if (isset(App::call()->request->getParams()['price_customs'])) {
+                $price_customs = App::call()->request->getParams()['price_customs'];
+                $offer->price_customs = $price_customs;
             }
 
             if (isset(App::call()->request->getParams()['count_customs_clearance'])) {
@@ -1487,6 +1502,11 @@ class OfferController extends Controller
                 $offer->thermologger = $thermologger;
             }
 
+            if (isset(App::call()->request->getParams()['price_thermologger'])) {
+                $price_thermologger = App::call()->request->getParams()['price_thermologger'];
+                $offer->price_thermologger = $price_thermologger;
+            }
+
             if (isset(App::call()->request->getParams()['count_thermologger'])) {
                 $count_thermologger = App::call()->request->getParams()['count_thermologger'];
                 $offer->count_thermologger = $count_thermologger;
@@ -1495,6 +1515,11 @@ class OfferController extends Controller
             if (isset(App::call()->request->getParams()['packaging'])) {
                 $packaging = App::call()->request->getParams()['packaging'];
                 $offer->packaging = $packaging;
+            }
+
+            if (isset(App::call()->request->getParams()['price_packagin'])) {
+                $price_packagin = App::call()->request->getParams()['price_packagin'];
+                $offer->price_packagin = $price_packagin;
             }
 
             if (isset(App::call()->request->getParams()['count_packaging'])) {

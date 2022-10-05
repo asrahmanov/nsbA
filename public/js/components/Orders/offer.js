@@ -203,6 +203,13 @@ Vue.component('offer', {
                 this.courierSelect = data.result[0].courier_id;
                 this.text_offer = data.result[0].text_offer;
 
+                this.shipping_fee_price = data.result[0].price_shipping;
+                this.export_permit_price = data.result[0].price_permit;
+                this.customs_clearance_price = data.result[0].price_customs;
+                this.thermologger_price = data.result[0].price_thermologger;
+                this.packaging_price = data.result[0].price_packagin;
+
+
                 if (data.result[0].scripts_staff_id !== null) {
                     this.staff = data.result[0].scripts_staff_id;
                 }
@@ -970,6 +977,14 @@ Vue.component('offer', {
 
                 packaging: this.packaging,
                 count_packaging: this.packaging_value,
+
+                price_shipping: this.shipping_fee_price,
+                price_permit: this.export_permit_price,
+                price_customs: this.customs_clearance_price,
+                price_thermologger: this.thermologger_price,
+                price_packagin: this.packaging_price
+
+
             }
 
             this.$parent.putJson(`../../../offer/save`, data)
@@ -1095,13 +1110,13 @@ Vue.component('offer', {
                 .then(data => {
                     for (let key in data.result) {
                         this.shipping.push(data.result[key]);
-                        if (data.result[key].id == this.shipping_fee) {
-                            if (this.currency == 'USD') {
-                                this.shipping_fee_price = data.result[key].price_usd;
-                            } else {
-                                this.shipping_fee_price = data.result[key].price_euro;
-                            }
-                        }
+                        // if (data.result[key].id == this.shipping_fee) {
+                        //     if (this.currency == 'USD') {
+                        //         this.shipping_fee_price = data.result[key].price_usd;
+                        //     } else {
+                        //         this.shipping_fee_price = data.result[key].price_euro;
+                        //     }
+                        // }
                     }
                 });
 
@@ -1110,14 +1125,14 @@ Vue.component('offer', {
 
         changeShoppping() {
             this.shipping.forEach(el => {
-                if (el.id == this.shipping_fee) {
-                    if (this.currency == 'USD') {
-                        this.shipping_fee_price = el.price_usd;
-                    } else {
-                        this.shipping_fee_price = el.price_euro;
-                    }
-                    this.totalShipping();
-                }
+                // if (el.id == this.shipping_fee) {
+                //     if (this.currency == 'USD') {
+                //         this.shipping_fee_price = el.price_usd;
+                //     } else {
+                //         this.shipping_fee_price = el.price_euro;
+                //     }
+                //     this.totalShipping();
+                // }
             })
 
 
@@ -1680,10 +1695,10 @@ Vue.component('offer', {
                                         <td>Total price ({{ currency }})</td>
                                     </tr>
                                     
-                                      <tr class="xl91">
+                                     <tr class="xl91">
                                         <td style="text-align: left; padding-left: 5px"><b>Courier shipping fee </b></td>
                                         <td style="text-align: left; padding-left: 5px">
-                                         <select name="" v-model="shipping_fee" class="form-control" @change="changeShoppping()">
+                                         <select name="" v-model="shipping_fee" class="form-control" >
                                          <option v-for="item in shipping" :value="item.id">{{ item.shipping_name }}</option>
                                        
                                         </select>   
@@ -1691,14 +1706,14 @@ Vue.component('offer', {
                                         <td style="text-align: center; padding-left: 5px">
                                         <input type="number" v-model="shipping_fee_value" class="form-control" @input="totalShipping()">
                                         </td>
-                                        <td style="text-align: right; padding-left: 5px">     {{
-                                          new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(shipping_fee_price)
-                                          }}</td>
+                                        <td style="text-align: right; padding-left: 5px">     
+                                            <input type="number" v-model="shipping_fee_price" class="form-control" @input="totalShipping()">
+                                          </td>
                                         <td  style="text-align: right; padding-left: 5px">{{ new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(shipping_fee_price*shipping_fee_value)  }}</td>
                                         
                                     </tr>
                                    
-                                    <tr class="xl91">
+                                     <tr class="xl91">
                                         <td style="text-align: left; padding-left: 5px"><b>Export permit </b></td>
                                         <td style="text-align: left; padding-left: 5px">
                                          <select name="" v-model="export_permit" class="form-control" @change="totalShipping()">
@@ -1709,15 +1724,15 @@ Vue.component('offer', {
                                         <td style="text-align: center; padding-left: 5px">
                                         <input type="number" v-model="export_permit_value" class="form-control" @input="totalShipping()">
                                         </td>
-                                        <td style="text-align: right; padding-left: 5px">     {{
-                                          new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(export_permit_price)
+                                        <td style="text-align: right; padding-left: 5px">
+                                           <input type="number" v-model="export_permit_price" class="form-control" @input="totalShipping()">
                                           
-                                          }}</td>
+                                          </td>
                                         <td v-if="export_permit== 'yes'" style="text-align: right; padding-left: 5px">{{ new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(export_permit_price*export_permit_value)  }}</td>
                                          <td v-else style="text-align: right; padding-left: 5px">{{ new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(0)  }}    </td>
                                     </tr>
                                     
-                                      <tr class="xl91">
+                                       <tr class="xl91">
                                         <td style="text-align: left; padding-left: 5px"><b>Export сustoms clearance (broker's fee) </b></td>
                                         <td style="text-align: left; padding-left: 5px">
                                          <select name="" v-model="customs_clearance" class="form-control" @change="totalShipping()">
@@ -1728,16 +1743,15 @@ Vue.component('offer', {
                                         <td style="text-align: center; padding-left: 5px">
                                         <input type="number" v-model="customs_clearance_value" class="form-control" @input="totalShipping()">
                                         </td>
-                                        <td style="text-align: right; padding-left: 5px">     {{
-                                          new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(customs_clearance_price)
-                                          
-                                          }}</td>
+                                        <td style="text-align: right; padding-left: 5px">
+                                           <input type="number" v-model="customs_clearance_price" class="form-control" @input="totalShipping()">
+                                          </td>
                                         <td v-if="customs_clearance == 'yes'" style="text-align: right; padding-left: 5px">{{ new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(customs_clearance_price*customs_clearance_value)  }}</td>
                                          <td v-else style="text-align: right; padding-left: 5px">{{ new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(0)  }}    </td>
                                     </tr>
                                    
                                     
-                                     <tr class="xl91">
+                                  <tr class="xl91">
                                         <td style="text-align: left; padding-left: 5px"><b>Thermologger</b></td>
                                         <td style="text-align: left; padding-left: 5px">
                                          <select name="" v-model="thermologger" class="form-control" @change="totalShipping()">
@@ -1749,16 +1763,15 @@ Vue.component('offer', {
                                         <td style="text-align: center; padding-left: 5px">
                                         <input type="number" v-model="thermologger_value" class="form-control" @input="totalShipping()">
                                         </td>
-                                        <td style="text-align: right; padding-left: 5px">     {{
-                                          new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(thermologger_price)
-                                          
-                                          }}</td>
+                                        <td style="text-align: right; padding-left: 5px">  
+                                            <input type="number" v-model="thermologger_price" class="form-control" @input="totalShipping()">
+                                         </td>
                                         <td v-if="thermologger == 'yes'" style="text-align: right; padding-left: 5px">{{ new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(thermologger_price*thermologger_value)  }}</td>
                                          <td v-else style="text-align: right; padding-left: 5px">{{ new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(0)  }}    </td>
                                     </tr>
                                     
                                     
-                                     <tr class="xl91">
+                                 <tr class="xl91">
                                         <td style="text-align: left; padding-left: 5px"><b>Packaging & handling</b></td>
                                         <td style="text-align: left; padding-left: 5px">
                                          <select name="" v-model="packaging" class="form-control" @change="totalShipping()">
@@ -1769,10 +1782,9 @@ Vue.component('offer', {
                                         <td style="text-align: center; padding-left: 5px">
                                         <input type="number" v-model="packaging_value" class="form-control" @input="totalShipping()">
                                         </td>
-                                        <td style="text-align: right; padding-left: 5px">     {{
-                                          new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(packaging_price)
-                                          
-                                          }}</td>
+                                        <td style="text-align: right; padding-left: 5px">   
+                                           <input type="number" v-model="packaging_price" class="form-control" @input="totalShipping()">
+                                          </td>
                                         <td v-if="packaging == 'yes'" style="text-align: right; padding-left: 5px">{{ new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(packaging_price*packaging_value)  }}</td>
                                          <td v-else style="text-align: right; padding-left: 5px">{{ new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(0)  }}    </td>
                                     </tr>

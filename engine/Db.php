@@ -13,8 +13,8 @@ class Db
     private $config = [
         'driver' => 'mysql',
         'host' => 'localhost',
-        'login' => 'root',
-        'password' => 'ghjuhfvvf',
+        'login' => 'admin',
+        'password' => 'Arahmanov1488!',
         'database' => '_nbs',
         'charset' => 'utf8',
         'port' => '3306'

@@ -178,12 +178,12 @@ Vue.component('offer', {
         splaceStr(anyString,n){
 
             if(n == 2) {
-                let array = this.splitString(2000, anyString)
+                let array = this.splitString(2500, anyString)
                 return array[1]
             }
 
             if(n == 1) {
-                let array = this.splitString(2000, anyString)
+                let array = this.splitString(2500, anyString)
                 return array[0]
             }
 
@@ -490,7 +490,7 @@ Vue.component('offer', {
                         modification = $(`#samplesid_${this.descriptionRow - 2} option:selected`).attr('modification')
                     $(`#samplesid_${index}`).val(sample_id)
                     $(`#samples_${index}`).val(modification)
-                }, 2000)
+                }, 2500)
                 this.descriptionRow++;
             } else {
                 if (this.descriptionRow == 1) {
@@ -935,7 +935,7 @@ Vue.component('offer', {
                     $(`#samples_${index}`).val(timelinesArr[index]['samples'])
                     $(`#samplesid_${index} option[value="${timelinesArr[index]['sample_id']}"][modification="${timelinesArr[index]['samples']}"]`).prop('selected', true)
                     // $(`#samplesid_${index} option[modification="${timelinesArr[index]['samples']}"]`).prop('selected', true)
-                }, 2000)
+                }, 2500)
             })
             this.descriptionArray = item.timelines;
             this.inclusionCriteriaArray = item.inclusion_criterias;
@@ -1553,13 +1553,13 @@ Vue.component('offer', {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class="xl91" v-for="(item, index) in offerArray" v-if="item.description.length < 2000">
+                                        <tr class="xl91" v-for="(item, index) in offerArray" v-if="item.description.length < 2500">
                                             <td style="text-align: center; padding: 10px; vertical-align: middle; border: 0.5pt solid #000;" valign="center" @dblclick="openEditOfferItem(item)">{{ index + 1 }}</td>
                                             <td style="text-align: center; padding: 10px; vertical-align: middle; border: 0.5pt solid #000;" valign="center" align="cen">
                                             {{ item.disease }}
                                             </td>
     <!--                                        <td style="text-align: center; padding: 10px; vertical-align: middle;" valign="center">{{ item.hbs_text }}</td>-->
-                                            <td  v-if="item.description.length > 2000" style="text-align: left; padding: 10px; vertical-align: middle; border: 0.5pt solid #000;" valign="center" v-html="splaceStr(item.description, 1)" @dblclick="openEdit(item)"></td>              
+                                            <td  v-if="item.description.length > 2500" style="text-align: left; padding: 10px; vertical-align: middle; border: 0.5pt solid #000;" valign="center" v-html="splaceStr(item.description, 1)" @dblclick="openEdit(item)"></td>              
                                             <td v-else style="text-align: left; padding: 10px; vertical-align: middle; border: 0.5pt solid #000;" valign="center" v-html="item.description" @dblclick="openEdit(item)"></td>              
                                             
                                             <td style="text-align: center; vertical-align: middle; border: 0.5pt solid #000;" valign="center">{{ item.quantity }}</td>
@@ -1567,13 +1567,13 @@ Vue.component('offer', {
                                             <td style="text-align: center; vertical-align: middle; border: 0.5pt solid #000;" valign="center">{{ new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(item.totalPrice)}}</td>
                                         </tr>
                                         
-                                          <tr class="xl91" v-for="(item, index) in offerArray" v-if="item.description.length > 2000" >
+                                          <tr class="xl91" v-for="(item, index) in offerArray" v-if="item.description.length > 2500" >
                                             <td style="text-align: center; padding: 10px; vertical-align: middle; border: 0.5pt solid #000;" valign="center" @dblclick="openEditOfferItem(item)">{{ index + 1 }}</td>
                                             <td style="text-align: center; padding: 10px; vertical-align: middle; border: 0.5pt solid #000;" valign="center" align="cen">
                                             {{ item.disease }}
                                             </td>
     <!--                                        <td style="text-align: center; padding: 10px; vertical-align: middle;" valign="center">{{ item.hbs_text }}</td>-->
-                                            <td  v-if="item.description.length > 2000" style="text-align: left; padding: 10px; vertical-align: middle; border-bottom: 0" valign="center" v-html="splaceStr(item.description, 1)" @dblclick="openEdit(item)"></td>              
+                                            <td  v-if="item.description.length > 2500" style="text-align: left; padding: 10px; vertical-align: middle; border-bottom: 0" valign="center" v-html="splaceStr(item.description, 1)" @dblclick="openEdit(item)"></td>              
                                             <td v-else style="text-align: left; padding: 10px; vertical-align: middle; border: 0.5pt solid #000;" valign="center" v-html="splaceStr(item.description, 1)" @dblclick="openEdit(item)"></td>              
                                             
                                             <td style="text-align: center; vertical-align: middle; border: 0.5pt solid #000;" valign="center">{{ item.quantity }}</td>
@@ -1581,7 +1581,7 @@ Vue.component('offer', {
                                             <td style="text-align: center; vertical-align: middle; border: 0.5pt solid #000;" valign="center">{{ new Intl.NumberFormat('ru-RU', { style: 'currency', currency: currency }).format(item.totalPrice)}}</td>
                                         </tr>
                                         
-                                         <tr class="xl91" v-for="(item, index) in offerArray" v-if="item.description.length > 2000" style="border-top: 0">
+                                         <tr class="xl91" v-for="(item, index) in offerArray" v-if="item.description.length > 2500" style="border-top: 0">
                                             <td style="text-align: center; padding: 10px; vertical-align: middle; border: 0.5pt solid #000;" valign="center" ></td>
                                             <td style="text-align: center; padding: 10px; vertical-align: middle; border: 0.5pt solid #000;" valign="center" align="cen">
                                            

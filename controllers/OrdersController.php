@@ -570,7 +570,7 @@ class OrdersController extends Controller
 
 
         $users = [];
-        $nbs_users = App::call()->usersRepository->getWhere(['role_id' => 1]);
+        $nbs_users = App::call()->usersRepository->getUsersAdminNotDelete(1);
         for ($i = 0; $i < count($nbs_users); $i++) {
             $users[] = $nbs_users[$i];
         }

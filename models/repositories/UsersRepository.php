@@ -403,4 +403,20 @@ class UsersRepository extends Repository
 
     }
 
+
+    public function getUsersAdminNotDelete($role_id)
+    {
+
+        $tableName = $this->getTableName();
+        $sql = "SELECT * FROM {$tableName} 
+        WHERE role_id=:role_id
+        AND deleted != 1
+        ";
+        $params = [
+            'role_id' => $role_id,
+        ];
+        return Db::getInstance()->queryAll($sql, $params);
+
+    }
+
 }

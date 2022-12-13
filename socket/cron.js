@@ -247,7 +247,7 @@ async function main(textMail, email, subject, id, replyTo, action, attachments =
         secure: true, // true for 465, false for other ports
         auth: {
             user: "crm@nbs-platforms.ru", // generated ethereal user
-            pass: "frerfre2343y45y36453g" // generated ethereal password
+            pass: "vqrxNHDUKpQZkXuufGxH" // generated ethereal password
         }
     });
 
